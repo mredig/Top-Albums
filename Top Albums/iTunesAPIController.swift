@@ -54,8 +54,7 @@ class iTunesAPIController {
 	var allowExplicitResults = false
 	var maxResults = 100
 
-	init() {
-	}
+	init() {}
 
 	func generateUrl() -> URL {
 		guard let baseURL = URL(string: "https://rss.itunes.apple.com/api/v1/us/") else { fatalError("Base URL is broken! \(#file): \(#line)")}
