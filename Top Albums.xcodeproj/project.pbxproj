@@ -3,23 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3339DA6424636D1E001CC492 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3339DA6324636D1E001CC492 /* AppDelegate.swift */; };
-		3339DA6824636D1E001CC492 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3339DA6724636D1E001CC492 /* ViewController.swift */; };
+		3339DA6824636D1E001CC492 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3339DA6724636D1E001CC492 /* ResultsViewController.swift */; };
 		3339DA6D24636D20001CC492 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3339DA6C24636D20001CC492 /* Assets.xcassets */; };
 		3339DA7024636D20001CC492 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3339DA6E24636D20001CC492 /* LaunchScreen.storyboard */; };
+		3339DA7B24637358001CC492 /* NetworkHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 3339DA7A24637358001CC492 /* NetworkHandler */; };
+		3339DA7D246375C2001CC492 /* iTunesAPIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3339DA7C246375C2001CC492 /* iTunesAPIController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3339DA6024636D1E001CC492 /* Top Albums.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Top Albums.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3339DA6324636D1E001CC492 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3339DA6724636D1E001CC492 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3339DA6724636D1E001CC492 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		3339DA6C24636D20001CC492 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3339DA6F24636D20001CC492 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3339DA7124636D20001CC492 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3339DA7C246375C2001CC492 /* iTunesAPIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesAPIController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3339DA7B24637358001CC492 /* NetworkHandler in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				3339DA6324636D1E001CC492 /* AppDelegate.swift */,
-				3339DA6724636D1E001CC492 /* ViewController.swift */,
+				3339DA6724636D1E001CC492 /* ResultsViewController.swift */,
+				3339DA7C246375C2001CC492 /* iTunesAPIController.swift */,
 				3339DA6C24636D20001CC492 /* Assets.xcassets */,
 				3339DA6E24636D20001CC492 /* LaunchScreen.storyboard */,
 				3339DA7124636D20001CC492 /* Info.plist */,
@@ -77,6 +82,9 @@
 			dependencies = (
 			);
 			name = "Top Albums";
+			packageProductDependencies = (
+				3339DA7A24637358001CC492 /* NetworkHandler */,
+			);
 			productName = "Top Albums";
 			productReference = 3339DA6024636D1E001CC492 /* Top Albums.app */;
 			productType = "com.apple.product-type.application";
@@ -105,6 +113,9 @@
 				Base,
 			);
 			mainGroup = 3339DA5724636D1E001CC492;
+			packageReferences = (
+				3339DA7924637358001CC492 /* XCRemoteSwiftPackageReference "NetworkHandler" */,
+			);
 			productRefGroup = 3339DA6124636D1E001CC492 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -131,7 +142,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3339DA6824636D1E001CC492 /* ViewController.swift in Sources */,
+				3339DA6824636D1E001CC492 /* ResultsViewController.swift in Sources */,
+				3339DA7D246375C2001CC492 /* iTunesAPIController.swift in Sources */,
 				3339DA6424636D1E001CC492 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,6 +334,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3339DA7924637358001CC492 /* XCRemoteSwiftPackageReference "NetworkHandler" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mredig/NetworkHandler.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.10;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3339DA7A24637358001CC492 /* NetworkHandler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3339DA7924637358001CC492 /* XCRemoteSwiftPackageReference "NetworkHandler" */;
+			productName = NetworkHandler;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3339DA5824636D1E001CC492 /* Project object */;
 }
