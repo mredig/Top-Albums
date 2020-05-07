@@ -12,7 +12,7 @@ class ResultsViewController: UITableViewController {
 
 	weak var mainCoordinator: MainCoordinator?
 
-	init(mainCoordinator: MainCoordinator) {
+	init(mainCoordinator: MainCoordinator?) {
 		self.mainCoordinator = mainCoordinator
 		super.init(nibName: nil, bundle: nil)
 	}

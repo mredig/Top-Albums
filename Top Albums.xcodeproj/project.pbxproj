@@ -84,12 +84,9 @@
 			isa = PBXGroup;
 			children = (
 				33B215782463816C00CA64ED /* Coordinator */,
-				3339DA6324636D1E001CC492 /* AppDelegate.swift */,
-				3339DA6724636D1E001CC492 /* ResultsViewController.swift */,
-				3339DA7C246375C2001CC492 /* iTunesAPIController.swift */,
-				3339DA6C24636D20001CC492 /* Assets.xcassets */,
-				3339DA6E24636D20001CC492 /* LaunchScreen.storyboard */,
-				3339DA7124636D20001CC492 /* Info.plist */,
+				33B2157F2463898900CA64ED /* Results Table */,
+				33B2157E2463898100CA64ED /* Helpers */,
+				33B2157D2463892900CA64ED /* Support */,
 			);
 			path = "Top Albums";
 			sourceTree = "<group>";
@@ -110,6 +107,33 @@
 				33B2157B246381D400CA64ED /* MainCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		33B2157D2463892900CA64ED /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				3339DA6324636D1E001CC492 /* AppDelegate.swift */,
+				3339DA6C24636D20001CC492 /* Assets.xcassets */,
+				3339DA6E24636D20001CC492 /* LaunchScreen.storyboard */,
+				3339DA7124636D20001CC492 /* Info.plist */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		33B2157E2463898100CA64ED /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3339DA7C246375C2001CC492 /* iTunesAPIController.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		33B2157F2463898900CA64ED /* Results Table */ = {
+			isa = PBXGroup;
+			children = (
+				3339DA6724636D1E001CC492 /* ResultsViewController.swift */,
+			);
+			path = "Results Table";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,7 +400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5UZAT7KA9;
-				INFOPLIST_FILE = "Top Albums/Info.plist";
+				INFOPLIST_FILE = "Top Albums/Support/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -394,7 +418,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5UZAT7KA9;
-				INFOPLIST_FILE = "Top Albums/Info.plist";
+				INFOPLIST_FILE = "Top Albums/Support/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
