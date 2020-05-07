@@ -56,4 +56,8 @@ class MainCoordinator: Coordinator {
 			}
 		}
 	}
+
+	func getImageLoader() -> ImageLoader {
+		itunesApi
+	}
 }

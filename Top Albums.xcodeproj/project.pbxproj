@@ -15,6 +15,7 @@
 		3339DA7D246375C2001CC492 /* iTunesAPIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3339DA7C246375C2001CC492 /* iTunesAPIController.swift */; };
 		33AC19FE24649CD8007F2CEC /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC19FD24649CD8007F2CEC /* TitleView.swift */; };
 		33AC1A062464B8FA007F2CEC /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */; };
+		33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */; };
 		33B2157024637D7700CA64ED /* Top_AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2156F24637D7700CA64ED /* Top_AlbumsTests.swift */; };
 		33B2157A2463818900CA64ED /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B215792463818900CA64ED /* Coordinator.swift */; };
 		33B2157C246381D400CA64ED /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2157B246381D400CA64ED /* MainCoordinator.swift */; };
@@ -42,6 +43,7 @@
 		3339DA7C246375C2001CC492 /* iTunesAPIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesAPIController.swift; sourceTree = "<group>"; };
 		33AC19FD24649CD8007F2CEC /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
+		33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		33B2156D24637D7700CA64ED /* Top AlbumsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Top AlbumsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B2156F24637D7700CA64ED /* Top_AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top_AlbumsTests.swift; sourceTree = "<group>"; };
 		33B2157124637D7700CA64ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				3339DA7C246375C2001CC492 /* iTunesAPIController.swift */,
+				33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */,
 				33B2158324638C9800CA64ED /* Optional+Throw.swift */,
 			);
 			path = Helpers;
@@ -264,6 +267,7 @@
 			files = (
 				33B2157A2463818900CA64ED /* Coordinator.swift in Sources */,
 				33B2158424638C9800CA64ED /* Optional+Throw.swift in Sources */,
+				33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */,
 				3339DA6824636D1E001CC492 /* ResultsViewController.swift in Sources */,
 				33B2158224638A2E00CA64ED /* MusicResult.swift in Sources */,
 				3339DA7D246375C2001CC492 /* iTunesAPIController.swift in Sources */,

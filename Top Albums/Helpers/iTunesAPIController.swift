@@ -100,10 +100,11 @@ class iTunesAPIController {
 			}
 		}
 	}
+}
 
-	func fetchImage(for musicResult: MusicResult, completion: @escaping (Result<Data, NetworkError>) -> Void) -> URLSessionDataTask? {
+extension iTunesAPIController: ImageLoader {
+	func fetchImage(for musicResult: MusicResult, completion: @escaping (Result<Data, NetworkError>) -> Void) -> ImageLoadOperation? {
 		let request = musicResult.artworkUrl100.request
 		return networkHandler.transferMahDatas(with: request, usingCache: true, completion: completion)
 	}
-
 }

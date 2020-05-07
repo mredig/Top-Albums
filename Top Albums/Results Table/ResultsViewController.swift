@@ -77,7 +77,7 @@ extension ResultsViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: .resultCellIdentifier, for: indexPath)
 		guard let resultCell = cell as? ResultTableViewCell else { return cell }
-		resultCell.iTunesApi = mainCoordinator?.itunesApi
+		resultCell.imageLoader = mainCoordinator?.getImageLoader()
 		resultCell.musicResult = musicResults[indexPath.row]
 
 		return resultCell

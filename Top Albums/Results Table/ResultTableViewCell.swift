@@ -21,8 +21,8 @@ class ResultTableViewCell: UITableViewCell {
 		}
 	}
 
-	var iTunesApi: iTunesAPIController?
-	private var imageFetchOperation: URLSessionDataTask?
+	var imageLoader: ImageLoader?
+	private var imageLoadOperation: ImageLoadOperation?
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -95,7 +95,7 @@ class ResultTableViewCell: UITableViewCell {
 		albumArtView.image = ResultTableViewCell.defaultImage
 		albumNameLabel.text = ""
 		artistNameLabel.text = ""
-		imageFetchOperation?.cancel()
+		imageLoadOperation?.cancel()
 	}
 
 	private func updateViews() {
@@ -104,7 +104,7 @@ class ResultTableViewCell: UITableViewCell {
 		artistNameLabel.text = musicResult.artistName
 		albumNameLabel.text = musicResult.name
 
-		imageFetchOperation = iTunesApi?.fetchImage(for: musicResult, completion: { [weak self] result in
+		imageLoadOperation = imageLoader?.fetchImage(for: musicResult, completion: { [weak self] result in
 			DispatchQueue.main.async {
 				do {
 					let imageData = try result.get()
