@@ -9,6 +9,7 @@
 import UIKit
 
 class MainCoordinator: Coordinator {
+	// MARK: - Properties
 	var childCoordinators: [Coordinator] = []
 	let navigationController: UINavigationController
 
@@ -20,6 +21,7 @@ class MainCoordinator: Coordinator {
 		itunesApi.isResultsLoadInProgress
 	}
 
+	// MARK: - Lifecycle
 	init(navigationController: UINavigationController) {
 		self.navigationController = navigationController
 		resultsViewController = ResultsViewController()
@@ -37,6 +39,7 @@ class MainCoordinator: Coordinator {
 		fetchResults()
 	}
 
+	// MARK: - Interface
 	func showFilters() {
 		print("show filters invoked")
 	}

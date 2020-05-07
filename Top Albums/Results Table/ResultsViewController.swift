@@ -10,6 +10,7 @@ import UIKit
 
 class ResultsViewController: UITableViewController {
 
+	// MARK: - Properties
 	weak var mainCoordinator: MainCoordinator?
 
 	lazy var refreshControlIndicator: UIRefreshControl = {
@@ -25,6 +26,7 @@ class ResultsViewController: UITableViewController {
 		}
 	}
 
+	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		registerCell()
@@ -50,6 +52,7 @@ class ResultsViewController: UITableViewController {
 		tableView.reloadData()
 	}
 
+	// MARK: - User Interactions
 	@objc func showFilterTapped(_ sender: Any) {
 		mainCoordinator?.showFilters()
 	}
