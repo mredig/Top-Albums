@@ -42,6 +42,7 @@ struct MusicResult: Decodable {
 	let copyright: String?
 	let artistId: Int?
 	let artistUrl: URL?
+	let artworkUrl100: URL
 	let genres: [Genre]
 	let url: URL
 
@@ -54,6 +55,7 @@ struct MusicResult: Decodable {
 		case copyright
 		case artistId
 		case artistUrl
+		case artworkUrl100
 		case genres
 		case url
 	}
@@ -77,6 +79,7 @@ struct MusicResult: Decodable {
 		let artistIdStr = try container.decodeIfPresent(String.self, forKey: .artistId)
 		artistId = try? Int(artistIdStr ?? "nan").unwrap()
 		artistUrl = try container.decodeIfPresent(URL.self, forKey: .artistUrl)
+		artworkUrl100 = try container.decode(URL.self, forKey: .artworkUrl100)
 		genres = try container.decode([Genre].self, forKey: .genres)
 		url = try container.decode(URL.self, forKey: .url)
 	}
