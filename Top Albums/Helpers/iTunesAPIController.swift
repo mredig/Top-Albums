@@ -54,6 +54,10 @@ class iTunesAPIController {
 	var allowExplicitResults = false
 	var maxResults = 100
 
+	var isResultsLoadInProgress: Bool {
+		currentResultOperation?.state == .running
+	}
+
 	private var currentResultOperation: URLSessionDataTask?
 
 	init() {}
@@ -91,10 +95,6 @@ class iTunesAPIController {
 					return
 				}
 				completion(.success(results.results))
-//				print(results.results)
-				for result in results.results {
-					print(result)
-				}
 			case .failure(let error):
 				completion(.failure(error))
 			}

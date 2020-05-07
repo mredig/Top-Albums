@@ -16,10 +16,20 @@ class MainCoordinator: Coordinator {
 
 	let itunesApi = iTunesAPIController()
 
+	var isResultsLoadInProgress: Bool {
+		itunesApi.isResultsLoadInProgress
+	}
+
 	init(navigationController: UINavigationController) {
 		self.navigationController = navigationController
 		resultsViewController = ResultsViewController()
 		resultsViewController.mainCoordinator = self
+
+		stylizeNavController()
+	}
+
+	private func stylizeNavController() {
+		// FIXME: Remove if not used
 	}
 
 	func start() {

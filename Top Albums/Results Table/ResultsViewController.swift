@@ -12,6 +12,13 @@ class ResultsViewController: UITableViewController {
 
 	weak var mainCoordinator: MainCoordinator?
 
+	lazy var refreshControlIndicator: UIRefreshControl = {
+		let refreshCtrl = UIRefreshControl()
+		refreshCtrl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+		refreshCtrl.attributedTitle = NSAttributedString(string: " ")
+		return refreshCtrl
+	}()
+
 	var musicResults: [MusicResult] = [] {
 		didSet {
 			updateResults()
@@ -21,7 +28,17 @@ class ResultsViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		registerCell()
+
 		navigationItem.rightBarButtonItem = .init(image: UIImage(systemName: "ellipsis"), style: .done, target: self, action: #selector(showFilterTapped(_:)))
+
+		let titleView = TitleView()
+		titleView.text = "Music Results"
+		navigationItem.titleView = titleView
+
+		refreshControl = refreshControlIndicator
+		if mainCoordinator?.isResultsLoadInProgress == true {
+			refreshControl?.beginRefreshing()
+		}
 	}
 
 	private func registerCell() {
@@ -29,11 +46,16 @@ class ResultsViewController: UITableViewController {
 	}
 
 	private func updateResults() {
+		refreshControl?.endRefreshing()
 		tableView.reloadData()
 	}
 
 	@objc func showFilterTapped(_ sender: Any) {
 		mainCoordinator?.showFilters()
+	}
+
+	@objc func pullToRefresh(_ sender: UIRefreshControl) {
+		mainCoordinator?.fetchResults()
 	}
 }
 
