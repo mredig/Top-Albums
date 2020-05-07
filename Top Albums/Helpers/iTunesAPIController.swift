@@ -101,4 +101,9 @@ class iTunesAPIController {
 		}
 	}
 
+	func fetchImage(for musicResult: MusicResult, completion: @escaping (Result<Data, NetworkError>) -> Void) -> URLSessionDataTask? {
+		let request = musicResult.artworkUrl100.request
+		return networkHandler.transferMahDatas(with: request, usingCache: true, completion: completion)
+	}
+
 }
