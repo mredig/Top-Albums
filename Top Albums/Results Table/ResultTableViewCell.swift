@@ -43,23 +43,15 @@ class ResultTableViewCell: UITableViewCell {
 		rootStack.axis = .horizontal
 		rootStack.alignment = .fill
 		rootStack.distribution = .fill
-		rootStack.spacing = 20
-		addSubview(rootStack)
+		rootStack.spacing = 16
+		contentView.addSubview(rootStack)
 		rootStack.translatesAutoresizingMaskIntoConstraints = false
 
-		let stackTrailingAnchor: NSLayoutConstraint
-		if let accessoryView = accessoryView {
-			stackTrailingAnchor = rootStack.trailingAnchor.constraint(equalTo: accessoryView.leadingAnchor, constant: -8)
-		} else {
-			stackTrailingAnchor = rootStack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -8)
-
-		}
-
 		NSLayoutConstraint.activate([
-			rootStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-			rootStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-			rootStack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
-			stackTrailingAnchor,
+			rootStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+			rootStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+			rootStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+			rootStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
 
 			albumArtView.heightAnchor.constraint(equalToConstant: 76),
 			albumArtView.widthAnchor.constraint(equalTo: albumArtView.heightAnchor),
@@ -81,6 +73,9 @@ class ResultTableViewCell: UITableViewCell {
 
 	private func configureLabels() {
 		albumNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
+		albumNameLabel.lineBreakMode = .byTruncatingMiddle
+		albumNameLabel.adjustsFontSizeToFitWidth = true
+		albumNameLabel.minimumScaleFactor = 0.85
 		artistNameLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
 		artistNameLabel.textColor = .secondaryLabel
 	}

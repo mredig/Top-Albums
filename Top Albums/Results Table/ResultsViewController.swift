@@ -66,6 +66,7 @@ class ResultsViewController: UITableViewController {
 extension ResultsViewController {
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		// image height set to 76 + 8 padding top and bottom
 		76 + 16
 	}
 
