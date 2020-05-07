@@ -44,7 +44,7 @@ class ResultsViewController: UITableViewController {
 	}
 
 	private func registerCell() {
-		tableView.register(UITableViewCell.self, forCellReuseIdentifier: .resultCellIdentifier)
+		tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: .resultCellIdentifier)
 	}
 
 	private func updateResults() {
@@ -64,15 +64,21 @@ class ResultsViewController: UITableViewController {
 
 // MARK: - TableView Data stuff
 extension ResultsViewController {
+
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		76 + 16
+	}
+
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		musicResults.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: .resultCellIdentifier, for: indexPath)
+		guard let resultCell = cell as? ResultTableViewCell else { return cell }
+		resultCell.musicResult = musicResults[indexPath.row]
 
-		cell.textLabel?.text = musicResults[indexPath.row].artistName
-		return cell
+		return resultCell
 	}
 }
 

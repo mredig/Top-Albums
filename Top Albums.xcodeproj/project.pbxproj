@@ -14,6 +14,7 @@
 		3339DA7B24637358001CC492 /* NetworkHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 3339DA7A24637358001CC492 /* NetworkHandler */; };
 		3339DA7D246375C2001CC492 /* iTunesAPIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3339DA7C246375C2001CC492 /* iTunesAPIController.swift */; };
 		33AC19FE24649CD8007F2CEC /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC19FD24649CD8007F2CEC /* TitleView.swift */; };
+		33AC1A062464B8FA007F2CEC /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */; };
 		33B2157024637D7700CA64ED /* Top_AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2156F24637D7700CA64ED /* Top_AlbumsTests.swift */; };
 		33B2157A2463818900CA64ED /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B215792463818900CA64ED /* Coordinator.swift */; };
 		33B2157C246381D400CA64ED /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2157B246381D400CA64ED /* MainCoordinator.swift */; };
@@ -40,6 +41,7 @@
 		3339DA7124636D20001CC492 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3339DA7C246375C2001CC492 /* iTunesAPIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesAPIController.swift; sourceTree = "<group>"; };
 		33AC19FD24649CD8007F2CEC /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		33B2156D24637D7700CA64ED /* Top AlbumsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Top AlbumsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B2156F24637D7700CA64ED /* Top_AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top_AlbumsTests.swift; sourceTree = "<group>"; };
 		33B2157124637D7700CA64ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				3339DA6724636D1E001CC492 /* ResultsViewController.swift */,
 				33AC19FD24649CD8007F2CEC /* TitleView.swift */,
+				33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */,
 			);
 			path = "Results Table";
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				3339DA7D246375C2001CC492 /* iTunesAPIController.swift in Sources */,
 				33B2157C246381D400CA64ED /* MainCoordinator.swift in Sources */,
 				3339DA6424636D1E001CC492 /* AppDelegate.swift in Sources */,
+				33AC1A062464B8FA007F2CEC /* ResultTableViewCell.swift in Sources */,
 				33AC19FE24649CD8007F2CEC /* TitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
