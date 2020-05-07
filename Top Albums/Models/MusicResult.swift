@@ -34,14 +34,14 @@ struct MusicResults: Decodable {
 }
 
 struct MusicResult: Decodable {
-	let artistName: String
-	let id: Int
-	let releaseDate: Date
+	let artistName: String?
+	let id: String
+	let releaseDate: Date?
 	let name: String
 	let kind: String
-	let copyright: String
-	let artistId: Int
-	let artistUrl: URL
+	let copyright: String?
+	let artistId: Int?
+	let artistUrl: URL?
 	let genres: [Genre]
 	let url: URL
 
@@ -67,17 +67,16 @@ struct MusicResult: Decodable {
 	init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 
-		artistName = try container.decode(String.self, forKey: .artistName)
-		let idStr = try container.decode(String.self, forKey: .id)
-		id = try Int(idStr).unwrap()
-		let releaseDateStr = try container.decode(String.self, forKey: .releaseDate)
-		releaseDate = try MusicResult.dateFormatter.date(from: releaseDateStr).unwrap()
+		artistName = try container.decodeIfPresent(String.self, forKey: .artistName)
+		id = try container.decode(String.self, forKey: .id)
+		let releaseDateStr = try container.decodeIfPresent(String.self, forKey: .releaseDate)
+		releaseDate = MusicResult.dateFormatter.date(from: releaseDateStr ?? "")
 		name = try container.decode(String.self, forKey: .name)
 		kind = try container.decode(String.self, forKey: .kind)
-		copyright = try container.decode(String.self, forKey: .copyright)
-		let artistIdStr = try container.decode(String.self, forKey: .artistId)
-		artistId = try Int(artistIdStr).unwrap()
-		artistUrl = try container.decode(URL.self, forKey: .artistUrl)
+		copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
+		let artistIdStr = try container.decodeIfPresent(String.self, forKey: .artistId)
+		artistId = try? Int(artistIdStr ?? "nan").unwrap()
+		artistUrl = try container.decodeIfPresent(URL.self, forKey: .artistUrl)
 		genres = try container.decode([Genre].self, forKey: .genres)
 		url = try container.decode(URL.self, forKey: .url)
 	}
