@@ -12,16 +12,35 @@ class MainCoordinator: Coordinator {
 	var childCoordinators: [Coordinator] = []
 	let navigationController: UINavigationController
 
+	let resultsViewController: ResultsViewController
+
+	let itunesApi = iTunesAPIController()
+
 	init(navigationController: UINavigationController) {
 		self.navigationController = navigationController
+		resultsViewController = ResultsViewController()
+		resultsViewController.mainCoordinator = self
 	}
 
 	func start() {
-		let vc = ResultsViewController(mainCoordinator: self)
-		navigationController.pushViewController(vc, animated: false)
+		navigationController.pushViewController(resultsViewController, animated: false)
+		fetchResults()
 	}
 
 	func showFilters() {
 		print("show filters invoked")
+	}
+
+	func fetchResults() {
+		itunesApi.fetchResults { result in
+			switch result {
+			case .success(let results):
+				DispatchQueue.main.async {
+					self.resultsViewController.musicResults = results
+				}
+			case .failure(let error):
+				NSLog("Error fetching results: \(error)")
+			}
+		}
 	}
 }

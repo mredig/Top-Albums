@@ -54,6 +54,8 @@ class iTunesAPIController {
 	var allowExplicitResults = false
 	var maxResults = 100
 
+	private var currentResultOperation: URLSessionDataTask?
+
 	init() {}
 
 	func generateUrl() -> URL {
@@ -74,6 +76,29 @@ class iTunesAPIController {
 			.appendingPathComponent("\(maxResults)")
 			.appendingPathComponent(allowExplicitResults ? "explicit" : "non-explicit")
 			.appendingPathExtension("json")
+	}
+
+	func fetchResults(completion: @escaping (Result<[MusicResult], NetworkError>) -> Void) {
+		currentResultOperation?.cancel()
+		let request = generateUrl().request
+
+		currentResultOperation = networkHandler.transferMahCodableDatas(with: request) { (result: Result<[String: MusicResults], NetworkError>) in
+			switch result {
+			case .success(let resultsDict):
+				guard let results = resultsDict["feed"] else {
+					completion(.failure(NetworkError.dataWasNull))
+					print("iTunes has changed their results feed format.")
+					return
+				}
+				completion(.success(results.results))
+//				print(results.results)
+				for result in results.results {
+					print(result)
+				}
+			case .failure(let error):
+				completion(.failure(error))
+			}
+		}
 	}
 
 }
