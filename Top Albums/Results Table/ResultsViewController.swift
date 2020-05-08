@@ -28,6 +28,10 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 
 	// MARK: - Subviews
 	var loadingIndicatorContainerView: UIView?
+	private lazy var prototypeResultCell = {
+		tableView.dequeueReusableCell(withIdentifier: .resultCellIdentifier) as? ResultTableViewCell
+	}()
+	private var heightCache = [IndexPath: CGFloat]()
 
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
@@ -45,7 +49,12 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 		tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: .resultCellIdentifier)
 	}
 
+	private func resetHeightCache() {
+		heightCache.removeAll()
+	}
+
 	private func updateResults() {
+		resetHeightCache()
 		tableView.reloadData()
 	}
 
@@ -63,8 +72,19 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 extension ResultsViewController {
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		// image height set to 76 + 8 padding top and bottom
-		76 + 16
+		if let height = heightCache[indexPath] {
+			return height
+		}
+		guard let prototypeCell = prototypeResultCell else { return 44 }
+		prototypeCell.prepareForReuse()
+		configureResultCell(prototypeCell, withMusicResult: musicResults[indexPath.row])
+		let size = prototypeCell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+		heightCache[indexPath] = size.height;
+		return size.height
+	}
+
+	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		100
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -88,6 +108,7 @@ extension ResultsViewController {
 		cell.artistName = musicResult.artistName
 		cell.albumName = musicResult.name
 
+		guard cell !== prototypeResultCell else { return }
 		let imageLoadOp = coordinator?.getImageLoader().fetchImage(for: musicResult, attemptHighRes: false, completion: { [weak self] result in
 			DispatchQueue.main.async {
 				self?.imageLoadingOperations[musicResult.artworkUrl100] = nil
