@@ -8,12 +8,13 @@
 
 import UIKit
 
-class MainCoordinator: Coordinator {
+class MainCoordinator: NSObject, Coordinator {
 	// MARK: - Properties
 	var childCoordinators: [Coordinator] = []
 	let navigationController: UINavigationController
 
 	let resultsViewController: ResultsViewController
+	weak var resultDetailViewController: ResultDetailViewController?
 
 	let itunesApi = iTunesAPIController()
 
@@ -25,9 +26,15 @@ class MainCoordinator: Coordinator {
 	init(navigationController: UINavigationController) {
 		self.navigationController = navigationController
 		resultsViewController = ResultsViewController()
+		super.init()
 		resultsViewController.mainCoordinator = self
+		navigationController.delegate = self
 
 		stylizeNavController()
+	}
+
+	convenience override init() {
+		self.init(navigationController: UINavigationController())
 	}
 
 	private func stylizeNavController() {
@@ -57,7 +64,25 @@ class MainCoordinator: Coordinator {
 		}
 	}
 
+	func showDetail(for musicResult: MusicResult) {
+		guard resultDetailViewController == nil else { return }
+		let resultVC = ResultDetailViewController(musicResult: musicResult, mainCoordinator: self)
+		resultDetailViewController = resultVC
+		navigationController.pushViewController(resultVC, animated: true)
+	}
+
 	func getImageLoader() -> ImageLoader {
 		itunesApi
+	}
+}
+
+extension MainCoordinator: UINavigationControllerDelegate {
+
+	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+//		guard let fromController = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
+	}
+
+	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+
 	}
 }

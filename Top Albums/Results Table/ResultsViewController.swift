@@ -82,6 +82,12 @@ extension ResultsViewController {
 
 		return resultCell
 	}
+
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let musicResult = musicResults[indexPath.row]
+
+		mainCoordinator?.showDetail(for: musicResult)
+	}
 }
 
 fileprivate extension String {
