@@ -16,6 +16,7 @@
 		33AC19FE24649CD8007F2CEC /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC19FD24649CD8007F2CEC /* TitleView.swift */; };
 		33AC1A062464B8FA007F2CEC /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */; };
 		33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */; };
+		33AC1A112464E7CF007F2CEC /* ResultDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A102464E7CF007F2CEC /* ResultDetailViewController.swift */; };
 		33B2157024637D7700CA64ED /* Top_AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2156F24637D7700CA64ED /* Top_AlbumsTests.swift */; };
 		33B2157A2463818900CA64ED /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B215792463818900CA64ED /* Coordinator.swift */; };
 		33B2157C246381D400CA64ED /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2157B246381D400CA64ED /* MainCoordinator.swift */; };
@@ -44,6 +45,7 @@
 		33AC19FD24649CD8007F2CEC /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		33AC1A102464E7CF007F2CEC /* ResultDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewController.swift; sourceTree = "<group>"; };
 		33B2156D24637D7700CA64ED /* Top AlbumsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Top AlbumsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B2156F24637D7700CA64ED /* Top_AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top_AlbumsTests.swift; sourceTree = "<group>"; };
 		33B2157124637D7700CA64ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,10 +98,19 @@
 				33B21580246389D200CA64ED /* Models */,
 				33B215782463816C00CA64ED /* Coordinator */,
 				33B2157F2463898900CA64ED /* Results Table */,
+				33AC1A0F2464E7B4007F2CEC /* Result Detail */,
 				33B2157E2463898100CA64ED /* Helpers */,
 				33B2157D2463892900CA64ED /* Support */,
 			);
 			path = "Top Albums";
+			sourceTree = "<group>";
+		};
+		33AC1A0F2464E7B4007F2CEC /* Result Detail */ = {
+			isa = PBXGroup;
+			children = (
+				33AC1A102464E7CF007F2CEC /* ResultDetailViewController.swift */,
+			);
+			path = "Result Detail";
 			sourceTree = "<group>";
 		};
 		33B2156E24637D7700CA64ED /* Top AlbumsTests */ = {
@@ -268,6 +279,7 @@
 				33B2157A2463818900CA64ED /* Coordinator.swift in Sources */,
 				33B2158424638C9800CA64ED /* Optional+Throw.swift in Sources */,
 				33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */,
+				33AC1A112464E7CF007F2CEC /* ResultDetailViewController.swift in Sources */,
 				3339DA6824636D1E001CC492 /* ResultsViewController.swift in Sources */,
 				33B2158224638A2E00CA64ED /* MusicResult.swift in Sources */,
 				3339DA7D246375C2001CC492 /* iTunesAPIController.swift in Sources */,
