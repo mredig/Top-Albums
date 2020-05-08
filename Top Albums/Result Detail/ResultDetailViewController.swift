@@ -8,11 +8,15 @@
 
 import UIKit
 
+protocol ResultDetailViewControllerDelegate {
+	func getImageLoader() -> ImageLoader
+}
+
 class ResultDetailViewController: UIViewController {
 
 	// MARK: - Properties
 	let musicResult: MusicResult
-	let mainCoordinator: MainCoordinator
+	let coordinator: ResultDetailViewControllerDelegate
 
 	private static let dateFormatter: DateFormatter = {
 		let dateFormatter = DateFormatter()
@@ -30,9 +34,9 @@ class ResultDetailViewController: UIViewController {
 	private let itunesStoreButton = UIButton()
 
 	// MARK: - Lifecycle
-	init(musicResult: MusicResult, mainCoordinator: MainCoordinator) {
+	init(musicResult: MusicResult, coordinator: ResultDetailViewControllerDelegate) {
 		self.musicResult = musicResult
-		self.mainCoordinator = mainCoordinator
+		self.coordinator = coordinator
 		super.init(nibName: nil, bundle: nil)
 		configureLayout()
 		configureLabels()
@@ -52,7 +56,6 @@ class ResultDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
 		view.backgroundColor = .secondarySystemBackground
     }
 
@@ -129,7 +132,7 @@ class ResultDetailViewController: UIViewController {
 		}
 		copyrightLabel.text = musicResult.copyright ?? "Unknown copyright"
 
-		let imageLoader = mainCoordinator.getImageLoader()
+		let imageLoader = coordinator.getImageLoader()
 		_ = imageLoader.fetchImage(for: musicResult, attemptHighRes: true) { [weak self] result in
 			DispatchQueue.main.async {
 				do {

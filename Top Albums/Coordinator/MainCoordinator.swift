@@ -83,7 +83,7 @@ extension MainCoordinator: ResultsViewControllerDelegate {
 
 	func showDetail(for musicResult: MusicResult) {
 		guard resultDetailViewController == nil else { return }
-		let resultVC = ResultDetailViewController(musicResult: musicResult, mainCoordinator: self)
+		let resultVC = ResultDetailViewController(musicResult: musicResult, coordinator: self)
 		resultDetailViewController = resultVC
 		navigationController.pushViewController(resultVC, animated: true)
 		navigationController.hidesBarsOnTap = true
@@ -102,6 +102,8 @@ extension MainCoordinator: FiltersViewControllerDelegate {
 		fetchResults()
 	}
 }
+
+extension MainCoordinator: ResultDetailViewControllerDelegate {}
 
 extension MainCoordinator: UINavigationControllerDelegate {
 
