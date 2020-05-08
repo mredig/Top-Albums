@@ -55,10 +55,6 @@ class iTunesAPIController {
 	var allowExplicitResults = false
 	var maxResults = 100
 
-	var isResultsLoadInProgress: Bool {
-		currentResultOperation?.state == .running
-	}
-
 	private var currentResultOperation: URLSessionDataTask?
 
 	init() {}

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ResultsViewControllerDelegate: AnyObject {
+protocol ResultsViewControllerCoordinator: AnyObject {
 	func showFilters(via barButtonItem: UIBarButtonItem)
 	func fetchResults()
 	func getImageLoader() -> ImageLoader
@@ -18,7 +18,7 @@ protocol ResultsViewControllerDelegate: AnyObject {
 class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 
 	// MARK: - Properties
-	weak var coordinator: ResultsViewControllerDelegate?
+	weak var coordinator: ResultsViewControllerCoordinator?
 	var musicResults: [MusicResult] = [] {
 		didSet {
 			updateResults()

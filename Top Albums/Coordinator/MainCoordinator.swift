@@ -18,18 +18,6 @@ class MainCoordinator: NSObject, Coordinator {
 
 	private let iTunesApi = iTunesAPIController()
 
-	var isResultsLoadInProgress: Bool {
-		iTunesApi.isResultsLoadInProgress
-	}
-	var searchOptions: MediaType {
-		get { iTunesApi.mediaSearch }
-		set { iTunesApi.mediaSearch = newValue }
-	}
-	var allowExplicitResults: Bool {
-		get { iTunesApi.allowExplicitResults }
-		set { iTunesApi.allowExplicitResults = newValue }
-	}
-
 	// MARK: - Lifecycle
 	init(navigationController: UINavigationController) {
 		self.navigationController = navigationController
@@ -56,7 +44,7 @@ class MainCoordinator: NSObject, Coordinator {
 }
 
 // MARK: - Interface
-extension MainCoordinator: ResultsViewControllerDelegate {
+extension MainCoordinator: ResultsViewControllerCoordinator {
 	func showFilters(via barButtonItem: UIBarButtonItem) {
 		let filterVC = FiltersViewController(controller: self)
 		filterVC.modalPresentationStyle = .popover
@@ -95,6 +83,15 @@ extension MainCoordinator: ResultsViewControllerDelegate {
 }
 
 extension MainCoordinator: FiltersViewControllerDelegate {
+	var searchOptions: MediaType {
+		get { iTunesApi.mediaSearch }
+		set { iTunesApi.mediaSearch = newValue }
+	}
+	var allowExplicitResults: Bool {
+		get { iTunesApi.allowExplicitResults }
+		set { iTunesApi.allowExplicitResults = newValue }
+	}
+
 	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool) {
 		guard iTunesApi.mediaSearch != searchFilter || iTunesApi.allowExplicitResults != showExplicit else { return }
 		iTunesApi.mediaSearch = searchFilter
@@ -106,16 +103,11 @@ extension MainCoordinator: FiltersViewControllerDelegate {
 extension MainCoordinator: ResultDetailViewControllerDelegate {}
 
 extension MainCoordinator: UINavigationControllerDelegate {
-
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
 		guard let fromController = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
 		if fromController == resultDetailViewController {
 			navigationController.hidesBarsOnTap = false
 		}
-	}
-
-	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-
 	}
 }
 
@@ -128,5 +120,4 @@ extension MainCoordinator: UIPopoverPresentationControllerDelegate {
 	func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
 		true
 	}
-
 }

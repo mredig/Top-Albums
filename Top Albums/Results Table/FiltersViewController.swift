@@ -113,7 +113,6 @@ extension FiltersViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 	// component 0 determines service
 	// component 1 determines which feed from said service
 
-
 	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 		if component == 0 {
 			switch row {

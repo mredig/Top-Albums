@@ -46,5 +46,4 @@ class TitleView: UIView {
 			stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
 		])
 	}
-
 }
