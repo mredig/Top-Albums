@@ -15,14 +15,20 @@ class ResultTableViewCell: UITableViewCell {
 	private let albumNameLabel = UILabel()
 	private let artistNameLabel = UILabel()
 
-	var musicResult: MusicResult? {
-		didSet {
-			updateViews()
-		}
+	var artistName: String? {
+		get { artistNameLabel.text }
+		set { artistNameLabel.text = newValue }
 	}
 
-	var imageLoader: ImageLoader?
-	private var imageLoadOperation: ImageLoadOperation?
+	var albumName: String? {
+		get { albumNameLabel.text }
+		set { albumNameLabel.text = newValue }
+	}
+
+	var albumArt: UIImage? {
+		get { albumArtView.image }
+		set { albumArtView.image = newValue }
+	}
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -86,30 +92,9 @@ class ResultTableViewCell: UITableViewCell {
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		musicResult = nil
 		albumArtView.image = ResultTableViewCell.defaultImage
 		albumNameLabel.text = ""
 		artistNameLabel.text = ""
-		imageLoadOperation?.cancel()
-	}
-
-	private func updateViews() {
-		guard let musicResult = musicResult else { return }
-
-		artistNameLabel.text = musicResult.artistName
-		albumNameLabel.text = musicResult.name
-
-		imageLoadOperation = imageLoader?.fetchImage(for: musicResult, attemptHighRes: false, completion: { [weak self] result in
-			DispatchQueue.main.async {
-				do {
-					let imageData = try result.get()
-					let image = UIImage(data: imageData)
-					self?.albumArtView.image = image
-				} catch {
-					print("Error fetching image for \(musicResult.name)-\(musicResult.artistName ?? ""): \(error)")
-				}
-			}
-		})
 	}
 
 }

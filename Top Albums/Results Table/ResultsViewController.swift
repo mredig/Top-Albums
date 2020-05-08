@@ -24,6 +24,7 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 			updateResults()
 		}
 	}
+	private var imageLoadingOperations: [URL: ImageLoadOperation] = [:]
 
 	// MARK: - Subviews
 	var loadingIndicatorContainerView: UIView?
@@ -73,10 +74,34 @@ extension ResultsViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: .resultCellIdentifier, for: indexPath)
 		guard let resultCell = cell as? ResultTableViewCell else { return cell }
-		resultCell.imageLoader = controller?.getImageLoader()
-		resultCell.musicResult = musicResults[indexPath.row]
+		configureResultCell(resultCell, withMusicResult: musicResults[indexPath.row])
 
 		return resultCell
+	}
+
+	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		let musicResult = musicResults[indexPath.row]
+		imageLoadingOperations[musicResult.artworkUrl100]?.cancel()
+	}
+
+	private func configureResultCell(_ cell: ResultTableViewCell, withMusicResult musicResult: MusicResult) {
+		cell.artistName = musicResult.artistName
+		cell.albumName = musicResult.name
+
+		let imageLoadOp = coordinator?.getImageLoader().fetchImage(for: musicResult, attemptHighRes: false, completion: { [weak self] result in
+			DispatchQueue.main.async {
+				self?.imageLoadingOperations[musicResult.artworkUrl100] = nil
+				do {
+					let imageData = try result.get()
+					let image = UIImage(data: imageData)
+					cell.albumArt = image
+				} catch {
+					print("Error fetching image for \(musicResult.name)-\(musicResult.artistName ?? ""): \(error)")
+				}
+			}
+		})
+		imageLoadingOperations[musicResult.artworkUrl100]?.cancel()
+		imageLoadingOperations[musicResult.artworkUrl100] = imageLoadOp
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
