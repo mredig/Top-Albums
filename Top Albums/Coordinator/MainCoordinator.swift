@@ -25,16 +25,10 @@ class MainCoordinator: NSObject, Coordinator {
 		super.init()
 		resultsViewController.coordinator = self
 		navigationController.delegate = self
-
-		stylizeNavController()
 	}
 
 	convenience override init() {
 		self.init(navigationController: UINavigationController())
-	}
-
-	private func stylizeNavController() {
-		// FIXME: Remove if not used
 	}
 
 	func start() {
@@ -45,6 +39,11 @@ class MainCoordinator: NSObject, Coordinator {
 
 // MARK: - Interface
 extension MainCoordinator: ResultsViewControllerCoordinator {
+	func getTitle() -> String {
+		let mediaTypeVM = MediaTypeViewModel(mediaType: iTunesApi.mediaSearch)
+		return mediaTypeVM.fullString
+	}
+
 	func showFilters(via barButtonItem: UIBarButtonItem) {
 		let filterVC = FiltersViewController(controller: self)
 		filterVC.modalPresentationStyle = .popover

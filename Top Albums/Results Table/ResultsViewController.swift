@@ -9,6 +9,7 @@
 import UIKit
 
 protocol ResultsViewControllerCoordinator: AnyObject {
+	func getTitle() -> String
 	func showFilters(via barButtonItem: UIBarButtonItem)
 	func fetchResults()
 	func getImageLoader() -> ImageLoader
@@ -41,8 +42,9 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 		navigationItem.rightBarButtonItem = .init(image: UIImage(systemName: "ellipsis"), style: .done, target: self, action: #selector(showFilterTapped(_:)))
 
 		let titleView = TitleView()
-		titleView.text = "Music Results"
+		titleView.text = "Top Results"
 		navigationItem.titleView = titleView
+		updateTitle()
 	}
 
 	private func registerCell() {
@@ -53,9 +55,14 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 		heightCache.removeAll()
 	}
 
+	private func updateTitle() {
+		navigationItem.title = coordinator?.getTitle()
+	}
+
 	private func updateResults() {
 		resetHeightCache()
 		tableView.reloadData()
+		updateTitle()
 	}
 
 	// MARK: - User Interactions
