@@ -16,10 +16,15 @@ class MainCoordinator: NSObject, Coordinator {
 	let resultsViewController: ResultsViewController
 	weak var resultDetailViewController: ResultDetailViewController?
 
-	let itunesApi = iTunesAPIController()
+	private let itunesApi = iTunesAPIController()
 
 	var isResultsLoadInProgress: Bool {
 		itunesApi.isResultsLoadInProgress
+	}
+
+	var searchOptions: MediaType {
+		get { itunesApi.mediaSearch }
+		set { itunesApi.mediaSearch = newValue }
 	}
 
 	// MARK: - Lifecycle
@@ -48,7 +53,8 @@ class MainCoordinator: NSObject, Coordinator {
 
 	// MARK: - Interface
 	func showFilters(via barButtonItem: UIBarButtonItem?) {
-		let filterVC = FiltersViewController()
+		let filterVC = FiltersViewController(mainCoordinator: self)
+		filterVC.delegate = self
 		filterVC.modalPresentationStyle = .popover
 		filterVC.popoverPresentationController?.barButtonItem = barButtonItem
 		filterVC.popoverPresentationController?.delegate = self
@@ -97,12 +103,17 @@ extension MainCoordinator: UINavigationControllerDelegate {
 }
 
 
-extension MainCoordinator: UIPopoverPresentationControllerDelegate {
+extension MainCoordinator: UIPopoverPresentationControllerDelegate, FiltersViewControllerDelegate {
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
 		.none
 	}
 
 	func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
 		true
+	}
+
+	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType) {
+		itunesApi.mediaSearch = searchFilter
+		fetchResults()
 	}
 }

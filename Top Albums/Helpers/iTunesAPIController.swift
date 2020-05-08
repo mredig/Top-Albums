@@ -10,7 +10,8 @@ import Foundation
 import NetworkHandler
 
 enum MediaType {
-	enum AppleMusicType: String {
+
+	enum AppleMusicType: String, CaseIterable {
 		case comingSoon = "coming-soon"
 		case hotTracks = "hot-tracks"
 		case newReleases = "new-releases"
@@ -18,7 +19,7 @@ enum MediaType {
 		case topSongs = "top-songs"
 	}
 
-	enum iTunesMusicFeedType: String {
+	enum iTunesMusicFeedType: String, CaseIterable {
 		case hotTracks = "hot-tracks"
 		case newMusic = "new-music"
 		case recentReleases = "recent-releases"
