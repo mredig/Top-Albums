@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol ResultsViewControllerDelegate: AnyObject {
+	func showFilters(via barButtonItem: UIBarButtonItem)
+	func fetchResults()
+	func getImageLoader() -> ImageLoader
+	func showDetail(for musicResult: MusicResult)
+}
+
 class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 
 	// MARK: - Properties
-	weak var mainCoordinator: MainCoordinator?
+	weak var controller: ResultsViewControllerDelegate?
 	var musicResults: [MusicResult] = [] {
 		didSet {
 			updateResults()
@@ -43,11 +50,11 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 
 	// MARK: - User Interactions
 	@objc func showFilterTapped(_ sender: UIBarButtonItem) {
-		mainCoordinator?.showFilters(via: sender)
+		controller?.showFilters(via: sender)
 	}
 
 	@objc func pullToRefresh(_ sender: UIRefreshControl) {
-		mainCoordinator?.fetchResults()
+		controller?.fetchResults()
 	}
 }
 
@@ -66,7 +73,7 @@ extension ResultsViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: .resultCellIdentifier, for: indexPath)
 		guard let resultCell = cell as? ResultTableViewCell else { return cell }
-		resultCell.imageLoader = mainCoordinator?.getImageLoader()
+		resultCell.imageLoader = controller?.getImageLoader()
 		resultCell.musicResult = musicResults[indexPath.row]
 
 		return resultCell
@@ -75,7 +82,7 @@ extension ResultsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let musicResult = musicResults[indexPath.row]
 
-		mainCoordinator?.showDetail(for: musicResult)
+		controller?.showDetail(for: musicResult)
 	}
 }
 

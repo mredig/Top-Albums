@@ -9,23 +9,24 @@
 import UIKit
 
 protocol FiltersViewControllerDelegate: AnyObject {
+	var searchOptions: MediaType { get set }
+	var allowExplicitResults: Bool { get set }
+
 	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool)
 }
 
 class FiltersViewController: UIViewController {
 
 	// MARK: - Properties
-	let mainCoordinator: MainCoordinator
-
-	weak var delegate: FiltersViewControllerDelegate?
+	let controller: FiltersViewControllerDelegate
 
 	// MARK: - Subviews
 	let picker = UIPickerView()
 	let explicitToggle = UISwitch()
 
 	// MARK: - Lifecycle
-	init(mainCoordinator: MainCoordinator) {
-		self.mainCoordinator = mainCoordinator
+	init(controller: FiltersViewControllerDelegate) {
+		self.controller = controller
 		super.init(nibName: nil, bundle: nil)
 		configureLayout()
 		configureViews()
@@ -79,7 +80,7 @@ class FiltersViewController: UIViewController {
 	private func configureViews() {
 		let comp1: Int
 		let comp0: Int
-		switch mainCoordinator.searchOptions {
+		switch controller.searchOptions {
 		case .appleMusic(type: let type):
 			comp0 = 0
 			comp1 = MediaType.AppleMusicType.allCases.firstIndex(of: type) ?? 0
@@ -90,7 +91,7 @@ class FiltersViewController: UIViewController {
 		picker.selectRow(comp0, inComponent: 0, animated: false)
 		picker.selectRow(comp1, inComponent: 1, animated: false)
 
-		explicitToggle.isOn = mainCoordinator.allowExplicitResults
+		explicitToggle.isOn = controller.allowExplicitResults
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -104,7 +105,7 @@ class FiltersViewController: UIViewController {
 			newSearch = .iTunesMusic(type: MediaType.iTunesMusicFeedType.allCases[picker.selectedRow(inComponent: 1)])
 		}
 
-		delegate?.didFinishSelectingSearchFilters(on: self, searchFilter: newSearch, showExplicit: explicitToggle.isOn)
+		controller.didFinishSelectingSearchFilters(on: self, searchFilter: newSearch, showExplicit: explicitToggle.isOn)
 	}
 }
 

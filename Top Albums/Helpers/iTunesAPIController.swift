@@ -9,7 +9,7 @@
 import Foundation
 import NetworkHandler
 
-enum MediaType {
+enum MediaType: Equatable {
 
 	enum AppleMusicType: String, CaseIterable {
 		case comingSoon = "coming-soon"

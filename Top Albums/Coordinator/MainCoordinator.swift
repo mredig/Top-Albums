@@ -35,7 +35,7 @@ class MainCoordinator: NSObject, Coordinator {
 		self.navigationController = navigationController
 		resultsViewController = ResultsViewController()
 		super.init()
-		resultsViewController.mainCoordinator = self
+		resultsViewController.controller = self
 		navigationController.delegate = self
 
 		stylizeNavController()
@@ -53,11 +53,12 @@ class MainCoordinator: NSObject, Coordinator {
 		navigationController.pushViewController(resultsViewController, animated: false)
 		fetchResults()
 	}
+}
 
-	// MARK: - Interface
-	func showFilters(via barButtonItem: UIBarButtonItem?) {
-		let filterVC = FiltersViewController(mainCoordinator: self)
-		filterVC.delegate = self
+// MARK: - Interface
+extension MainCoordinator: ResultsViewControllerDelegate {
+	func showFilters(via barButtonItem: UIBarButtonItem) {
+		let filterVC = FiltersViewController(controller: self)
 		filterVC.modalPresentationStyle = .popover
 		filterVC.popoverPresentationController?.barButtonItem = barButtonItem
 		filterVC.popoverPresentationController?.delegate = self
@@ -93,6 +94,15 @@ class MainCoordinator: NSObject, Coordinator {
 	}
 }
 
+extension MainCoordinator: FiltersViewControllerDelegate {
+	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool) {
+		guard iTunesApi.mediaSearch != searchFilter || iTunesApi.allowExplicitResults != showExplicit else { return }
+		iTunesApi.mediaSearch = searchFilter
+		iTunesApi.allowExplicitResults = showExplicit
+		fetchResults()
+	}
+}
+
 extension MainCoordinator: UINavigationControllerDelegate {
 
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
@@ -108,7 +118,7 @@ extension MainCoordinator: UINavigationControllerDelegate {
 }
 
 
-extension MainCoordinator: UIPopoverPresentationControllerDelegate, FiltersViewControllerDelegate {
+extension MainCoordinator: UIPopoverPresentationControllerDelegate {
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
 		.none
 	}
@@ -117,9 +127,4 @@ extension MainCoordinator: UIPopoverPresentationControllerDelegate, FiltersViewC
 		true
 	}
 
-	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool) {
-		iTunesApi.mediaSearch = searchFilter
-		iTunesApi.allowExplicitResults = showExplicit
-		fetchResults()
-	}
 }
