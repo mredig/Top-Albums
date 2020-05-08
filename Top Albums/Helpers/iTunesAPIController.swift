@@ -9,45 +9,6 @@
 import Foundation
 import NetworkHandler
 
-enum MediaType: Equatable {
-
-	enum AppleMusicType: String, CaseIterable {
-		case comingSoon = "coming-soon"
-		case hotTracks = "hot-tracks"
-		case newReleases = "new-releases"
-		case topAlbums = "top-albums"
-		case topSongs = "top-songs"
-	}
-
-	enum iTunesMusicFeedType: String, CaseIterable {
-		case hotTracks = "hot-tracks"
-		case newMusic = "new-music"
-		case recentReleases = "recent-releases"
-		case topAlbums = "top-albums"
-		case topSongs = "top-songs"
-	}
-
-	case appleMusic(type: AppleMusicType)
-	case iTunesMusic(type: iTunesMusicFeedType)
-
-	var urlComponent: String {
-		switch self {
-		case .appleMusic:
-			return "apple-music"
-		case .iTunesMusic:
-			return "itunes-music"
-		}
-	}
-}
-
-//https://rss.itunes.apple.com/api/v1/us/apple-music	/hot-tracks/all/100/explicit.json
-//https://rss.itunes.apple.com/api/v1/us/itunes-music	/hot-tracks/all/100/explicit.json
-//https://rss.itunes.apple.com/api/v1/us/ios-apps		/new-apps-we-love/all/100/explicit.json
-//https://rss.itunes.apple.com/api/v1/us/audiobooks		/top-audiobooks/all/100/explicit.json
-//https://rss.itunes.apple.com/api/v1/us/books			/top-free/all/100/explicit.json
-//https://rss.itunes.apple.com/api/v1/us/tv-shows		/top-tv-episodes/all/100/explicit.json
-//https://rss.itunes.apple.com/api/v1/us/movies			/top-movies/all/100/explicit.json
-
 class iTunesAPIController {
 	private let networkHandler = NetworkHandler.default
 
@@ -71,7 +32,7 @@ class iTunesAPIController {
 		}
 
 		return baseURL
-			.appendingPathComponent(mediaSearch.urlComponent)
+			.appendingPathComponent(MediaTypeViewModel(mediaType: mediaSearch).urlComponent)
 			.appendingPathComponent(feedType)
 			.appendingPathComponent("all")
 			.appendingPathComponent("\(maxResults)")
