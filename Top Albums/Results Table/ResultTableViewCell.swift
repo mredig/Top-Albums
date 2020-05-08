@@ -69,6 +69,7 @@ class ResultTableViewCell: UITableViewCell {
 		nestedStackView.spacing = UIStackView.spacingUseDefault
 		rootStack.addArrangedSubview(nestedStackView)
 
+		// set to 251 to tie break between labels
 		artistNameLabel.setContentHuggingPriority(.init(rawValue: 251), for: .vertical)
 		nestedStackView.addArrangedSubview(albumNameLabel)
 		nestedStackView.addArrangedSubview(artistNameLabel)
