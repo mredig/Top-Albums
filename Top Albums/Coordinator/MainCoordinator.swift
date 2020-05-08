@@ -47,8 +47,13 @@ class MainCoordinator: NSObject, Coordinator {
 	}
 
 	// MARK: - Interface
-	func showFilters() {
-		print("show filters invoked")
+	func showFilters(via barButtonItem: UIBarButtonItem?) {
+		let filterVC = FiltersViewController()
+		filterVC.modalPresentationStyle = .popover
+		filterVC.popoverPresentationController?.barButtonItem = barButtonItem
+		filterVC.popoverPresentationController?.delegate = self
+
+		navigationController.present(filterVC, animated: true)
 	}
 
 	func fetchResults() {
@@ -88,5 +93,16 @@ extension MainCoordinator: UINavigationControllerDelegate {
 
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
 
+	}
+}
+
+
+extension MainCoordinator: UIPopoverPresentationControllerDelegate {
+	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+		.none
+	}
+
+	func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+		true
 	}
 }

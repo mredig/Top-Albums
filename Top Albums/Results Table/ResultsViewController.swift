@@ -53,8 +53,8 @@ class ResultsViewController: UITableViewController {
 	}
 
 	// MARK: - User Interactions
-	@objc func showFilterTapped(_ sender: Any) {
-		mainCoordinator?.showFilters()
+	@objc func showFilterTapped(_ sender: UIBarButtonItem) {
+		mainCoordinator?.showFilters(via: sender)
 	}
 
 	@objc func pullToRefresh(_ sender: UIRefreshControl) {
