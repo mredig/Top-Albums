@@ -36,6 +36,7 @@ class ResultDetailViewController: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 		configureLayout()
 		configureLabels()
+		configureInteraction()
 
 		updateViews()
 	}
@@ -64,7 +65,6 @@ class ResultDetailViewController: UIViewController {
 												   genreLabel,
 												   releaseDateLabel,
 												   UIView(),
-												   itunesStoreButton,
 												   copyrightLabel
 		])
 		stack.axis = .vertical
@@ -73,6 +73,9 @@ class ResultDetailViewController: UIViewController {
 		stack.spacing = UIStackView.spacingUseSystem
 		view.addSubview(stack)
 		stack.translatesAutoresizingMaskIntoConstraints = false
+
+		view.addSubview(itunesStoreButton)
+		itunesStoreButton.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
 			albumImageView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -84,6 +87,10 @@ class ResultDetailViewController: UIViewController {
 			stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
 			stack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
 			stack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+
+			itunesStoreButton.bottomAnchor.constraint(equalTo: copyrightLabel.topAnchor, constant: -20),
+			itunesStoreButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+			itunesStoreButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
 		])
 	}
 
@@ -94,13 +101,19 @@ class ResultDetailViewController: UIViewController {
 		artistLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
 		artistLabel.textColor = .secondaryLabel
 		genreLabel.font = UIFont.systemFont(ofSize: 17, weight: .light)
-		releaseDateLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+		genreLabel.adjustsFontSizeToFitWidth = true
+		genreLabel.minimumScaleFactor = 0.65
+		releaseDateLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
 		copyrightLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
 		copyrightLabel.textColor = .secondaryLabel
 
 		itunesStoreButton.setTitle("iTunes Store", for: .normal)
 		itunesStoreButton.setImage(UIImage(systemName: "cart"), for: .normal)
 		itunesStoreButton.setTitleColor(.systemBlue, for: .normal)
+	}
+
+	private func configureInteraction() {
+		itunesStoreButton.addTarget(self, action: #selector(itunesButtonPressed(_:)), for: .touchUpInside)
 	}
 
 	private func updateViews() {
@@ -129,4 +142,10 @@ class ResultDetailViewController: UIViewController {
 		}
 	}
 
+	// MARK: - User Interaction
+	@objc func itunesButtonPressed(_ sender: UITapGestureRecognizer) {
+		if UIApplication.shared.canOpenURL(musicResult.url) {
+			UIApplication.shared.open(musicResult.url, options: [:])
+		}
+	}
 }
