@@ -35,7 +35,7 @@ class MainCoordinator: NSObject, Coordinator {
 		self.navigationController = navigationController
 		resultsViewController = ResultsViewController()
 		super.init()
-		resultsViewController.controller = self
+		resultsViewController.coordinator = self
 		navigationController.delegate = self
 
 		stylizeNavController()

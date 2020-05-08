@@ -18,7 +18,7 @@ protocol ResultsViewControllerDelegate: AnyObject {
 class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 
 	// MARK: - Properties
-	weak var controller: ResultsViewControllerDelegate?
+	weak var coordinator: ResultsViewControllerDelegate?
 	var musicResults: [MusicResult] = [] {
 		didSet {
 			updateResults()
@@ -50,11 +50,11 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 
 	// MARK: - User Interactions
 	@objc func showFilterTapped(_ sender: UIBarButtonItem) {
-		controller?.showFilters(via: sender)
+		coordinator?.showFilters(via: sender)
 	}
 
 	@objc func pullToRefresh(_ sender: UIRefreshControl) {
-		controller?.fetchResults()
+		coordinator?.fetchResults()
 	}
 }
 
@@ -82,7 +82,7 @@ extension ResultsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let musicResult = musicResults[indexPath.row]
 
-		controller?.showDetail(for: musicResult)
+		coordinator?.showDetail(for: musicResult)
 	}
 }
 
