@@ -69,6 +69,7 @@ class MainCoordinator: NSObject, Coordinator {
 		let resultVC = ResultDetailViewController(musicResult: musicResult, mainCoordinator: self)
 		resultDetailViewController = resultVC
 		navigationController.pushViewController(resultVC, animated: true)
+		navigationController.hidesBarsOnTap = true
 	}
 
 	func getImageLoader() -> ImageLoader {
@@ -79,7 +80,10 @@ class MainCoordinator: NSObject, Coordinator {
 extension MainCoordinator: UINavigationControllerDelegate {
 
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-//		guard let fromController = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
+		guard let fromController = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
+		if fromController == resultDetailViewController {
+			navigationController.hidesBarsOnTap = false
+		}
 	}
 
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {

@@ -48,10 +48,6 @@ class ResultDetailViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	deinit {
-		print("Deinited result detailvc")
-	}
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -100,6 +96,7 @@ class ResultDetailViewController: UIViewController {
 		genreLabel.font = UIFont.systemFont(ofSize: 17, weight: .light)
 		releaseDateLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
 		copyrightLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+		copyrightLabel.textColor = .secondaryLabel
 
 		itunesStoreButton.setTitle("iTunes Store", for: .normal)
 		itunesStoreButton.setImage(UIImage(systemName: "cart"), for: .normal)
