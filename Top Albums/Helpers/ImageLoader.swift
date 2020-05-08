@@ -10,7 +10,7 @@ import Foundation
 import NetworkHandler
 
 protocol ImageLoader {
-	func fetchImage(for musicResult: MusicResult, completion: @escaping (Result<Data, NetworkError>) -> Void) -> ImageLoadOperation?
+	func fetchImage(for musicResult: MusicResult, attemptHighRes: Bool, completion: @escaping (Result<Data, NetworkError>) -> Void) -> ImageLoadOperation?
 }
 
 protocol ImageLoadOperation {

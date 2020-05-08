@@ -130,7 +130,7 @@ class ResultDetailViewController: UIViewController {
 		copyrightLabel.text = musicResult.copyright ?? "Unknown copyright"
 
 		let imageLoader = mainCoordinator.getImageLoader()
-		_ = imageLoader.fetchImage(for: musicResult) { [weak self] result in
+		_ = imageLoader.fetchImage(for: musicResult, attemptHighRes: true) { [weak self] result in
 			DispatchQueue.main.async {
 				do {
 					let imageData = try result.get()

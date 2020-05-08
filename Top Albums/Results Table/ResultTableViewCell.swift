@@ -104,7 +104,7 @@ class ResultTableViewCell: UITableViewCell {
 		artistNameLabel.text = musicResult.artistName
 		albumNameLabel.text = musicResult.name
 
-		imageLoadOperation = imageLoader?.fetchImage(for: musicResult, completion: { [weak self] result in
+		imageLoadOperation = imageLoader?.fetchImage(for: musicResult, attemptHighRes: false, completion: { [weak self] result in
 			DispatchQueue.main.async {
 				do {
 					let imageData = try result.get()
