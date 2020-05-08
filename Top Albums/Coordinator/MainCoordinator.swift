@@ -63,6 +63,7 @@ class MainCoordinator: NSObject, Coordinator {
 	}
 
 	func fetchResults() {
+		resultsViewController.showLoadingIndicator()
 		itunesApi.fetchResults { result in
 			switch result {
 			case .success(let results):
@@ -72,6 +73,7 @@ class MainCoordinator: NSObject, Coordinator {
 			case .failure(let error):
 				NSLog("Error fetching results: \(error)")
 			}
+			self.resultsViewController.dismissLoadingIndicator()
 		}
 	}
 

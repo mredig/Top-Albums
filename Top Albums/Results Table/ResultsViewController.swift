@@ -8,23 +8,18 @@
 
 import UIKit
 
-class ResultsViewController: UITableViewController {
+class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 
 	// MARK: - Properties
 	weak var mainCoordinator: MainCoordinator?
-
-	lazy var refreshControlIndicator: UIRefreshControl = {
-		let refreshCtrl = UIRefreshControl()
-		refreshCtrl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-		refreshCtrl.attributedTitle = NSAttributedString(string: " ")
-		return refreshCtrl
-	}()
-
 	var musicResults: [MusicResult] = [] {
 		didSet {
 			updateResults()
 		}
 	}
+
+	// MARK: - Subviews
+	var loadingIndicatorContainerView: UIView?
 
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
@@ -36,11 +31,6 @@ class ResultsViewController: UITableViewController {
 		let titleView = TitleView()
 		titleView.text = "Music Results"
 		navigationItem.titleView = titleView
-
-		refreshControl = refreshControlIndicator
-		if mainCoordinator?.isResultsLoadInProgress == true {
-			refreshControl?.beginRefreshing()
-		}
 	}
 
 	private func registerCell() {
@@ -48,7 +38,6 @@ class ResultsViewController: UITableViewController {
 	}
 
 	private func updateResults() {
-		refreshControl?.endRefreshing()
 		tableView.reloadData()
 	}
 
