@@ -9,7 +9,7 @@
 import UIKit
 
 protocol FiltersViewControllerDelegate: AnyObject {
-	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType)
+	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool)
 }
 
 class FiltersViewController: UIViewController {
@@ -21,6 +21,7 @@ class FiltersViewController: UIViewController {
 
 	// MARK: - Subviews
 	let picker = UIPickerView()
+	let explicitToggle = UISwitch()
 
 	// MARK: - Lifecycle
 	init(mainCoordinator: MainCoordinator) {
@@ -41,18 +42,38 @@ class FiltersViewController: UIViewController {
 	private func configureLayout() {
 		preferredContentSize = CGSize(width: preferredContentSize.width, height: 250)
 
+		let stack = UIStackView()
+		stack.axis = .vertical
+		stack.alignment = .fill
+		stack.distribution = .fill
+		stack.spacing = UIStackView.spacingUseSystem
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(stack)
+
+		stack.addArrangedSubview(picker)
+
 		picker.delegate = self
 		picker.dataSource = self
-		picker.translatesAutoresizingMaskIntoConstraints = false
-
-		view.addSubview(picker)
 
 		NSLayoutConstraint.activate([
-			picker.topAnchor.constraint(equalTo: view.topAnchor),
-			picker.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-			picker.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			picker.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			stack.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+			stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+			stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+			stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 		])
+
+		let substack = UIStackView()
+		substack.axis = .horizontal
+		substack.alignment = .fill
+		substack.distribution = .fill
+		substack.spacing = UIStackView.spacingUseSystem
+		stack.addArrangedSubview(substack)
+
+		let label = UILabel()
+		label.text = "Show Explicit Results"
+		substack.addArrangedSubview(label)
+
+		substack.addArrangedSubview(explicitToggle)
 	}
 
 	private func configureViews() {
@@ -68,6 +89,8 @@ class FiltersViewController: UIViewController {
 		}
 		picker.selectRow(comp0, inComponent: 0, animated: false)
 		picker.selectRow(comp1, inComponent: 1, animated: false)
+
+		explicitToggle.isOn = mainCoordinator.allowExplicitResults
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -81,8 +104,7 @@ class FiltersViewController: UIViewController {
 			newSearch = .iTunesMusic(type: MediaType.iTunesMusicFeedType.allCases[picker.selectedRow(inComponent: 1)])
 		}
 
-
-		delegate?.didFinishSelectingSearchFilters(on: self, searchFilter: newSearch)
+		delegate?.didFinishSelectingSearchFilters(on: self, searchFilter: newSearch, showExplicit: explicitToggle.isOn)
 	}
 }
 

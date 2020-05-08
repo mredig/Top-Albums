@@ -16,15 +16,18 @@ class MainCoordinator: NSObject, Coordinator {
 	let resultsViewController: ResultsViewController
 	weak var resultDetailViewController: ResultDetailViewController?
 
-	private let itunesApi = iTunesAPIController()
+	private let iTunesApi = iTunesAPIController()
 
 	var isResultsLoadInProgress: Bool {
-		itunesApi.isResultsLoadInProgress
+		iTunesApi.isResultsLoadInProgress
 	}
-
 	var searchOptions: MediaType {
-		get { itunesApi.mediaSearch }
-		set { itunesApi.mediaSearch = newValue }
+		get { iTunesApi.mediaSearch }
+		set { iTunesApi.mediaSearch = newValue }
+	}
+	var allowExplicitResults: Bool {
+		get { iTunesApi.allowExplicitResults }
+		set { iTunesApi.allowExplicitResults = newValue }
 	}
 
 	// MARK: - Lifecycle
@@ -64,7 +67,7 @@ class MainCoordinator: NSObject, Coordinator {
 
 	func fetchResults() {
 		resultsViewController.showLoadingIndicator()
-		itunesApi.fetchResults { result in
+		iTunesApi.fetchResults { result in
 			switch result {
 			case .success(let results):
 				DispatchQueue.main.async {
@@ -86,7 +89,7 @@ class MainCoordinator: NSObject, Coordinator {
 	}
 
 	func getImageLoader() -> ImageLoader {
-		itunesApi
+		iTunesApi
 	}
 }
 
@@ -114,8 +117,9 @@ extension MainCoordinator: UIPopoverPresentationControllerDelegate, FiltersViewC
 		true
 	}
 
-	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType) {
-		itunesApi.mediaSearch = searchFilter
+	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool) {
+		iTunesApi.mediaSearch = searchFilter
+		iTunesApi.allowExplicitResults = showExplicit
 		fetchResults()
 	}
 }
