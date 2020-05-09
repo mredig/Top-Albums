@@ -11,6 +11,7 @@ import NetworkHandler
 
 class iTunesAPIController {
 	private let networkHandler = NetworkHandler.default
+	private let session: NetworkLoader
 
 	var mediaSearch = MediaType.appleMusic(type: .topAlbums)
 	var allowExplicitResults = false
@@ -18,11 +19,16 @@ class iTunesAPIController {
 
 	private var currentResultOperation: URLSessionDataTask?
 
-	init() {}
+	private let baseURL: URL
+	init(baseURLString: String, session: NetworkLoader = URLSession.shared) {
+		guard let baseURL = URL(string: baseURLString) else {
+			fatalError("Base URL is invalid (\(baseURLString)) \(#file): \(#line)")
+		}
+		self.baseURL = baseURL
+		self.session = session
+	}
 
 	func generateUrl() -> URL {
-		guard let baseURL = URL(string: "https://rss.itunes.apple.com/api/v1/us/") else { fatalError("Base URL is broken! \(#file): \(#line)")}
-
 		let feedType: String
 		switch mediaSearch {
 		case .appleMusic(type: let type):
@@ -44,7 +50,7 @@ class iTunesAPIController {
 		currentResultOperation?.cancel()
 		let request = generateUrl().request
 
-		currentResultOperation = networkHandler.transferMahCodableDatas(with: request) { (result: Result<[String: MusicResults], NetworkError>) in
+		currentResultOperation = networkHandler.transferMahCodableDatas(with: request, session: session) { (result: Result<[String: MusicResults], NetworkError>) in
 			switch result {
 			case .success(let resultsDict):
 				guard let results = resultsDict["feed"] else {
@@ -68,6 +74,6 @@ extension iTunesAPIController: ImageLoader {
 		} else {
 			request = musicResultVM.normalArtworkURL.request
 		}
-		return networkHandler.transferMahDatas(with: request, usingCache: true, completion: completion)
+		return networkHandler.transferMahDatas(with: request, usingCache: true, session: session, completion: completion)
 	}
 }

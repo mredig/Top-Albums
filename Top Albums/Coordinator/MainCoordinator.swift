@@ -16,7 +16,7 @@ class MainCoordinator: NSObject, Coordinator {
 	let resultsViewController: ResultsViewController
 	weak var resultDetailViewController: ResultDetailViewController?
 
-	private let iTunesApi = iTunesAPIController()
+	private let iTunesApi = iTunesAPIController(baseURLString: "https://rss.itunes.apple.com/api/v1/us/")
 
 	// MARK: - Lifecycle
 	init(navigationController: UINavigationController) {
