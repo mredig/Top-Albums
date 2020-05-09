@@ -13,6 +13,7 @@ class LargeTitleNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		navigationBar.prefersLargeTitles = true
+		navigationBar.isTranslucent = true
 	}
 
 }

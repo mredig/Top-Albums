@@ -62,6 +62,16 @@ class ResultDetailViewController: UIViewController {
 		view.addSubview(albumImageView)
 		albumImageView.translatesAutoresizingMaskIntoConstraints = false
 
+		let scrollView = UIScrollView()
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(scrollView)
+
+		let clearView = UIView()
+		clearView.backgroundColor = .clear // UIColor.systemRed.withAlphaComponent(0.3)
+		clearView.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.addSubview(clearView)
+
+
 		let stack = UIStackView(arrangedSubviews: [genreLabel,
 												   releaseDateLabel,
 												   UIView(),
@@ -71,24 +81,44 @@ class ResultDetailViewController: UIViewController {
 		stack.alignment = .fill
 		stack.distribution = .fill
 		stack.spacing = UIStackView.spacingUseSystem
-		view.addSubview(stack)
 		stack.translatesAutoresizingMaskIntoConstraints = false
+
+		let wrapper = UIView()
+		wrapper.translatesAutoresizingMaskIntoConstraints = false
+		wrapper.backgroundColor = .secondarySystemBackground
+		wrapper.addSubview(stack)
+		scrollView.addSubview(wrapper)
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
 
 		view.addSubview(itunesStoreButton)
 		itunesStoreButton.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
-			albumImageView.topAnchor.constraint(equalTo: view.topAnchor),
+			albumImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			albumImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			albumImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			albumImageView.heightAnchor.constraint(equalTo: albumImageView.widthAnchor),
 
-			stack.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: 8),
-			stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
-			stack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-			stack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+			clearView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+			clearView.heightAnchor.constraint(equalTo: albumImageView.heightAnchor, constant: -8),
 
-			itunesStoreButton.bottomAnchor.constraint(equalTo: copyrightLabel.topAnchor, constant: -20),
+			scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+			wrapper.topAnchor.constraint(equalTo: clearView.bottomAnchor),
+			wrapper.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+			wrapper.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+			wrapper.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+			wrapper.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+
+			stack.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: 8),
+			stack.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -8),
+			stack.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: 24),
+			stack.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -24),
+
+			itunesStoreButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
 			itunesStoreButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
 			itunesStoreButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
 		])
