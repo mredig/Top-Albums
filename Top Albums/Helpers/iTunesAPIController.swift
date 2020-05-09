@@ -61,19 +61,13 @@ class iTunesAPIController {
 }
 
 extension iTunesAPIController: ImageLoader {
-	func fetchImage(for musicResult: MusicResult, attemptHighRes: Bool = false, completion: @escaping (Result<Data, NetworkError>) -> Void) -> ImageLoadOperation? {
+	func fetchImage(for musicResultVM: MusicResultViewModel, attemptHighRes: Bool = false, completion: @escaping (Result<Data, NetworkError>) -> Void) -> ImageLoadOperation? {
+		let request: NetworkRequest
 		if attemptHighRes {
-			// This is accessing undocumented aspects of the API
-			var url = musicResult.artworkUrl100
-			url.deleteLastPathComponent()
-			url.appendPathComponent("1024x1024bb")
-			url.appendPathExtension("png")
-			let highRequest = url.request
-
-			return networkHandler.transferMahDatas(with: highRequest, usingCache: true, completion: completion)
+			request = musicResultVM.highResArtworkURL.request
 		} else {
-			let request = musicResult.artworkUrl100.request
-			return networkHandler.transferMahDatas(with: request, usingCache: true, completion: completion)
+			request = musicResultVM.normalArtworkURL.request
 		}
+		return networkHandler.transferMahDatas(with: request, usingCache: true, completion: completion)
 	}
 }

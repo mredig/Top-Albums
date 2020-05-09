@@ -15,7 +15,7 @@ protocol ResultDetailViewControllerCoordinator {
 class ResultDetailViewController: UIViewController {
 
 	// MARK: - Properties
-	let musicResult: MusicResult
+	let musicResultVM: MusicResultViewModel
 	let coordinator: ResultDetailViewControllerCoordinator
 
 	private static let dateFormatter: DateFormatter = {
@@ -33,8 +33,8 @@ class ResultDetailViewController: UIViewController {
 	private let itunesStoreButton = UIButton()
 
 	// MARK: - Lifecycle
-	init(musicResult: MusicResult, coordinator: ResultDetailViewControllerCoordinator) {
-		self.musicResult = musicResult
+	init(musicResultVM: MusicResultViewModel, coordinator: ResultDetailViewControllerCoordinator) {
+		self.musicResultVM = musicResultVM
 		self.coordinator = coordinator
 		super.init(nibName: nil, bundle: nil)
 		configureLayout()
@@ -123,7 +123,7 @@ class ResultDetailViewController: UIViewController {
 			itunesStoreButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
 		])
 
-		navigationItem.title = musicResult.name
+		navigationItem.title = musicResultVM.name
 		navigationItem.titleView = artistLabel
 	}
 
@@ -149,18 +149,14 @@ class ResultDetailViewController: UIViewController {
 	private func updateViews() {
 		albumImageView.image = UIImage(systemName: "music.note")
 
-		navigationItem.title = musicResult.name
-		artistLabel.text = musicResult.artistName ?? "Unknown artist"
-		genreLabel.text = musicResult.genres.map { $0.name }.filter { $0 != "Music" }.joined(separator: ", ")
-		if let releaseDate = musicResult.releaseDate {
-			releaseDateLabel.text = Self.dateFormatter.string(from: releaseDate)
-		} else {
-			releaseDateLabel.text = "Unknown release date"
-		}
-		copyrightLabel.text = musicResult.copyright ?? "Unknown copyright"
+		navigationItem.title = musicResultVM.name
+		artistLabel.text = musicResultVM.artistName ?? "Unknown artist"
+		genreLabel.text = musicResultVM.genres.map { $0.name }.filter { $0 != "Music" }.joined(separator: ", ")
+		releaseDateLabel.text = musicResultVM.formattedReleaseDate ?? "Unknown Release Date"
+		copyrightLabel.text = musicResultVM.copyright ?? "Unknown copyright"
 
 		let imageLoader = coordinator.getImageLoader()
-		_ = imageLoader.fetchImage(for: musicResult, attemptHighRes: true) { [weak self] result in
+		_ = imageLoader.fetchImage(for: musicResultVM, attemptHighRes: true) { [weak self] result in
 			DispatchQueue.main.async {
 				do {
 					let imageData = try result.get()
@@ -174,8 +170,8 @@ class ResultDetailViewController: UIViewController {
 
 	// MARK: - User Interaction
 	@objc func itunesButtonPressed(_ sender: UITapGestureRecognizer) {
-		if UIApplication.shared.canOpenURL(musicResult.url) {
-			UIApplication.shared.open(musicResult.url, options: [:])
+		if UIApplication.shared.canOpenURL(musicResultVM.url) {
+			UIApplication.shared.open(musicResultVM.url, options: [:])
 		}
 	}
 }

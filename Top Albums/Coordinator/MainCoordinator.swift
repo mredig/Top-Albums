@@ -70,7 +70,8 @@ extension MainCoordinator: ResultsViewControllerCoordinator {
 
 	func showDetail(for musicResult: MusicResult) {
 		guard resultDetailViewController == nil else { return }
-		let resultVC = ResultDetailViewController(musicResult: musicResult, coordinator: self)
+		let musicResultVM = MusicResultViewModel(musicResult: musicResult)
+		let resultVC = ResultDetailViewController(musicResultVM: musicResultVM, coordinator: self)
 		resultDetailViewController = resultVC
 		navigationController.pushViewController(resultVC, animated: true)
 		navigationController.hidesBarsOnTap = true

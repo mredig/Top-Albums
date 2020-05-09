@@ -27,6 +27,7 @@
 		33B2157C246381D400CA64ED /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2157B246381D400CA64ED /* MainCoordinator.swift */; };
 		33B2158224638A2E00CA64ED /* MusicResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2158124638A2E00CA64ED /* MusicResult.swift */; };
 		33B2158424638C9800CA64ED /* Optional+Throw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2158324638C9800CA64ED /* Optional+Throw.swift */; };
+		33EDBD4D24665F060022F8EB /* MusicResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EDBD4C24665F060022F8EB /* MusicResultViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		33B2157B246381D400CA64ED /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		33B2158124638A2E00CA64ED /* MusicResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicResult.swift; sourceTree = "<group>"; };
 		33B2158324638C9800CA64ED /* Optional+Throw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Throw.swift"; sourceTree = "<group>"; };
+		33EDBD4C24665F060022F8EB /* MusicResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicResultViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				333B8F1E246621B400AE2126 /* MediaTypeViewModel.swift */,
+				33EDBD4C24665F060022F8EB /* MusicResultViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				333B8F1F246621B400AE2126 /* MediaTypeViewModel.swift in Sources */,
 				333B8F1A2466068900AE2126 /* LargeTitleNavigationController.swift in Sources */,
 				33B2157A2463818900CA64ED /* Coordinator.swift in Sources */,
+				33EDBD4D24665F060022F8EB /* MusicResultViewModel.swift in Sources */,
 				33B2158424638C9800CA64ED /* Optional+Throw.swift in Sources */,
 				33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */,
 				33AC1A112464E7CF007F2CEC /* ResultDetailViewController.swift in Sources */,

@@ -84,7 +84,8 @@ extension ResultsViewController {
 		}
 		guard let prototypeCell = prototypeResultCell else { return 44 }
 		prototypeCell.prepareForReuse()
-		configureResultCell(prototypeCell, withMusicResult: musicResults[indexPath.row])
+		let musicResultVM = MusicResultViewModel(musicResult: musicResults[indexPath.row])
+		configureResultCell(prototypeCell, withMusicResult: musicResultVM)
 		let size = prototypeCell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
 		heightCache[indexPath] = size.height;
 		return size.height
@@ -101,35 +102,37 @@ extension ResultsViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: .resultCellIdentifier, for: indexPath)
 		guard let resultCell = cell as? ResultTableViewCell else { return cell }
-		configureResultCell(resultCell, withMusicResult: musicResults[indexPath.row])
+		let musicResultVM = MusicResultViewModel(musicResult: musicResults[indexPath.row])
+		configureResultCell(resultCell, withMusicResult: musicResultVM)
 
 		return resultCell
 	}
 
 	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let musicResult = musicResults[indexPath.row]
-		imageLoadingOperations[musicResult.artworkUrl100]?.cancel()
+		let musicResultVM = MusicResultViewModel(musicResult: musicResults[indexPath.row])
+
+		imageLoadingOperations[musicResultVM.normalArtworkURL]?.cancel()
 	}
 
-	private func configureResultCell(_ cell: ResultTableViewCell, withMusicResult musicResult: MusicResult) {
-		cell.artistName = musicResult.artistName
-		cell.albumName = musicResult.name
+	private func configureResultCell(_ cell: ResultTableViewCell, withMusicResult musicResultVM: MusicResultViewModel) {
+		cell.artistName = musicResultVM.artistName
+		cell.albumName = musicResultVM.name
 
 		guard cell !== prototypeResultCell else { return }
-		let imageLoadOp = coordinator?.getImageLoader().fetchImage(for: musicResult, attemptHighRes: false, completion: { [weak self] result in
+		let imageLoadOp = coordinator?.getImageLoader().fetchImage(for: musicResultVM, attemptHighRes: false, completion: { [weak self] result in
 			DispatchQueue.main.async {
-				self?.imageLoadingOperations[musicResult.artworkUrl100] = nil
+				self?.imageLoadingOperations[musicResultVM.normalArtworkURL] = nil
 				do {
 					let imageData = try result.get()
 					let image = UIImage(data: imageData)
 					cell.albumArt = image
 				} catch {
-					print("Error fetching image for \(musicResult.name)-\(musicResult.artistName ?? ""): \(error)")
+					print("Error fetching image for \(musicResultVM.name)-\(musicResultVM.artistName ?? ""): \(error)")
 				}
 			}
 		})
-		imageLoadingOperations[musicResult.artworkUrl100]?.cancel()
-		imageLoadingOperations[musicResult.artworkUrl100] = imageLoadOp
+		imageLoadingOperations[musicResultVM.normalArtworkURL]?.cancel()
+		imageLoadingOperations[musicResultVM.normalArtworkURL] = imageLoadOp
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
