@@ -117,20 +117,26 @@ extension FiltersViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 		if component == 0 {
 			switch row {
 			case 0:
-				return "Apple Music"
+				return "Music"
 			default:
-				return "iTunes Music"
+				return "iTunes"
 			}
-
 		}
+
+		let mediaTypeVM: MediaTypeViewModel
+		
 		switch pickerView.selectedRow(inComponent: 0) {
 		case 0: // MediaType.appleMusic
-			return MediaType.AppleMusicType.allCases[row].rawValue.cleanedFromAPI
+			let search = MediaType.appleMusic(type: MediaType.AppleMusicType.allCases[row])
+			mediaTypeVM = MediaTypeViewModel(mediaType: search)
 		case 1: // MediaType.iTunesMusic
-			return MediaType.iTunesMusicFeedType.allCases[row].rawValue.cleanedFromAPI
+			let search = MediaType.iTunesMusic(type: MediaType.iTunesMusicFeedType.allCases[row])
+			mediaTypeVM = MediaTypeViewModel(mediaType: search)
 		default:
-			return MediaType.AppleMusicType.allCases[row].rawValue.cleanedFromAPI
+			let search = MediaType.appleMusic(type: MediaType.AppleMusicType.allCases[row])
+			mediaTypeVM = MediaTypeViewModel(mediaType: search)
 		}
+		return mediaTypeVM.feedTypeString
 	}
 
 	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -150,12 +156,5 @@ extension FiltersViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		guard component == 0 else { return }
 		pickerView.reloadComponent(1)
-	}
-}
-
-
-fileprivate extension String {
-	var cleanedFromAPI: String {
-		replacingOccurrences(of: "-", with: " ").capitalized
 	}
 }
