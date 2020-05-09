@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ResultDetailViewControllerDelegate {
+protocol ResultDetailViewControllerCoordinator {
 	func getImageLoader() -> ImageLoader
 }
 
@@ -16,7 +16,7 @@ class ResultDetailViewController: UIViewController {
 
 	// MARK: - Properties
 	let musicResult: MusicResult
-	let coordinator: ResultDetailViewControllerDelegate
+	let coordinator: ResultDetailViewControllerCoordinator
 
 	private static let dateFormatter: DateFormatter = {
 		let dateFormatter = DateFormatter()
@@ -33,7 +33,7 @@ class ResultDetailViewController: UIViewController {
 	private let itunesStoreButton = UIButton()
 
 	// MARK: - Lifecycle
-	init(musicResult: MusicResult, coordinator: ResultDetailViewControllerDelegate) {
+	init(musicResult: MusicResult, coordinator: ResultDetailViewControllerCoordinator) {
 		self.musicResult = musicResult
 		self.coordinator = coordinator
 		super.init(nibName: nil, bundle: nil)

@@ -81,7 +81,7 @@ extension MainCoordinator: ResultsViewControllerCoordinator {
 	}
 }
 
-extension MainCoordinator: FiltersViewControllerDelegate {
+extension MainCoordinator: FiltersViewControllerCoordinator {
 	var searchOptions: MediaType {
 		get { iTunesApi.mediaSearch }
 		set { iTunesApi.mediaSearch = newValue }
@@ -99,7 +99,7 @@ extension MainCoordinator: FiltersViewControllerDelegate {
 	}
 }
 
-extension MainCoordinator: ResultDetailViewControllerDelegate {}
+extension MainCoordinator: ResultDetailViewControllerCoordinator {}
 
 extension MainCoordinator: UINavigationControllerDelegate {
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
