@@ -26,7 +26,6 @@ class ResultDetailViewController: UIViewController {
 
 	// MARK: - Subviews
 	private let albumImageView = UIImageView()
-	private let titleLabel = UILabel()
 	private let artistLabel = UILabel()
 	private let genreLabel = UILabel()
 	private let releaseDateLabel = UILabel()
@@ -63,9 +62,7 @@ class ResultDetailViewController: UIViewController {
 		view.addSubview(albumImageView)
 		albumImageView.translatesAutoresizingMaskIntoConstraints = false
 
-		let stack = UIStackView(arrangedSubviews: [titleLabel,
-												   artistLabel,
-												   genreLabel,
+		let stack = UIStackView(arrangedSubviews: [genreLabel,
 												   releaseDateLabel,
 												   UIView(),
 												   copyrightLabel
@@ -95,12 +92,12 @@ class ResultDetailViewController: UIViewController {
 			itunesStoreButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
 			itunesStoreButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
 		])
+
+		navigationItem.title = musicResult.name
+		navigationItem.titleView = artistLabel
 	}
 
 	private func configureLabels() {
-		titleLabel.font = UIFont.systemFont(ofSize: 28, weight: .medium)
-		titleLabel.adjustsFontSizeToFitWidth = true
-		titleLabel.minimumScaleFactor = 0.65
 		artistLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
 		artistLabel.textColor = .secondaryLabel
 		genreLabel.font = UIFont.systemFont(ofSize: 17, weight: .light)
@@ -122,7 +119,7 @@ class ResultDetailViewController: UIViewController {
 	private func updateViews() {
 		albumImageView.image = UIImage(systemName: "music.note")
 
-		titleLabel.text = musicResult.name
+		navigationItem.title = musicResult.name
 		artistLabel.text = musicResult.artistName ?? "Unknown artist"
 		genreLabel.text = musicResult.genres.map { $0.name }.filter { $0 != "Music" }.joined(separator: ", ")
 		if let releaseDate = musicResult.releaseDate {
