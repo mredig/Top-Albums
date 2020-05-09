@@ -110,7 +110,6 @@ extension MainCoordinator: UINavigationControllerDelegate {
 	}
 }
 
-
 extension MainCoordinator: UIPopoverPresentationControllerDelegate {
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
 		.none
