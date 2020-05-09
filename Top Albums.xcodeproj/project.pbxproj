@@ -26,6 +26,7 @@
 		33B2157A2463818900CA64ED /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B215792463818900CA64ED /* Coordinator.swift */; };
 		33B2157C246381D400CA64ED /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2157B246381D400CA64ED /* MainCoordinator.swift */; };
 		33B2158224638A2E00CA64ED /* MusicResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2158124638A2E00CA64ED /* MusicResult.swift */; };
+		33EB459524676BEF00608ED2 /* TestJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EB459424676BEF00608ED2 /* TestJSON.swift */; };
 		33EDBD4D24665F060022F8EB /* MusicResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EDBD4C24665F060022F8EB /* MusicResultViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		33B215792463818900CA64ED /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		33B2157B246381D400CA64ED /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		33B2158124638A2E00CA64ED /* MusicResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicResult.swift; sourceTree = "<group>"; };
+		33EB459424676BEF00608ED2 /* TestJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestJSON.swift; sourceTree = "<group>"; };
 		33EDBD4C24665F060022F8EB /* MusicResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicResultViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				33B2156F24637D7700CA64ED /* Top_AlbumsTests.swift */,
+				33EB459324676BA600608ED2 /* ServerSimAssets */,
 				33B2157124637D7700CA64ED /* Info.plist */,
 			);
 			path = "Top AlbumsTests";
@@ -191,6 +194,14 @@
 				333B8F1B2466214300AE2126 /* MediaType.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		33EB459324676BA600608ED2 /* ServerSimAssets */ = {
+			isa = PBXGroup;
+			children = (
+				33EB459424676BEF00608ED2 /* TestJSON.swift */,
+			);
+			path = ServerSimAssets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33EB459524676BEF00608ED2 /* TestJSON.swift in Sources */,
 				33B2157024637D7700CA64ED /* Top_AlbumsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
