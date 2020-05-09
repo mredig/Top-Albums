@@ -26,7 +26,6 @@
 		33B2157A2463818900CA64ED /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B215792463818900CA64ED /* Coordinator.swift */; };
 		33B2157C246381D400CA64ED /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2157B246381D400CA64ED /* MainCoordinator.swift */; };
 		33B2158224638A2E00CA64ED /* MusicResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2158124638A2E00CA64ED /* MusicResult.swift */; };
-		33B2158424638C9800CA64ED /* Optional+Throw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B2158324638C9800CA64ED /* Optional+Throw.swift */; };
 		33EDBD4D24665F060022F8EB /* MusicResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EDBD4C24665F060022F8EB /* MusicResultViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,7 +62,6 @@
 		33B215792463818900CA64ED /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		33B2157B246381D400CA64ED /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		33B2158124638A2E00CA64ED /* MusicResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicResult.swift; sourceTree = "<group>"; };
-		33B2158324638C9800CA64ED /* Optional+Throw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Throw.swift"; sourceTree = "<group>"; };
 		33EDBD4C24665F060022F8EB /* MusicResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicResultViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,7 +168,6 @@
 			children = (
 				3339DA7C246375C2001CC492 /* iTunesAPIController.swift */,
 				33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */,
-				33B2158324638C9800CA64ED /* Optional+Throw.swift */,
 				333B8F15246530E000AE2126 /* LoadingIndicator.swift */,
 			);
 			path = Helpers;
@@ -307,7 +304,6 @@
 				333B8F1A2466068900AE2126 /* LargeTitleNavigationController.swift in Sources */,
 				33B2157A2463818900CA64ED /* Coordinator.swift in Sources */,
 				33EDBD4D24665F060022F8EB /* MusicResultViewModel.swift in Sources */,
-				33B2158424638C9800CA64ED /* Optional+Throw.swift in Sources */,
 				33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */,
 				33AC1A112464E7CF007F2CEC /* ResultDetailViewController.swift in Sources */,
 				3339DA6824636D1E001CC492 /* ResultsViewController.swift in Sources */,
