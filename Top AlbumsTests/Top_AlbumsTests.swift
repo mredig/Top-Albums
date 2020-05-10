@@ -60,37 +60,37 @@ class Top_AlbumsTests: XCTestCase {
 		return lilTjayResultVM
 	}
 
-//	func testURLGeneration() {
-//		let itunesController = iTunesAPIController()
-//		itunesController.allowExplicitResults = false
-//
-//		itunesController.mediaSearch = .appleMusic(type: .topAlbums)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//		itunesController.mediaSearch = .appleMusic(type: .comingSoon)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//		itunesController.mediaSearch = .appleMusic(type: .hotTracks)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/hot-tracks/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//		itunesController.mediaSearch = .appleMusic(type: .newReleases)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/new-releases/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//		itunesController.mediaSearch = .appleMusic(type: .topSongs)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/top-songs/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//
-//		itunesController.allowExplicitResults = true
-//		itunesController.mediaSearch = .appleMusic(type: .topAlbums)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json", itunesController.generateUrl().absoluteString)
-//
-//		itunesController.allowExplicitResults = false
-//		itunesController.mediaSearch = .iTunesMusic(type: .hotTracks)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/hot-tracks/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//		itunesController.mediaSearch = .iTunesMusic(type: .newMusic)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/new-music/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//		itunesController.mediaSearch = .iTunesMusic(type: .recentReleases)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/recent-releases/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//		itunesController.mediaSearch = .iTunesMusic(type: .topAlbums)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/top-albums/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//		itunesController.mediaSearch = .iTunesMusic(type: .topSongs)
-//		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/top-songs/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
-//	}
+	func testURLGeneration() {
+		let itunesController = iTunesAPIController(baseURLString: "https://rss.itunes.apple.com/api/v1/us/")
+		itunesController.allowExplicitResults = false
+
+		itunesController.mediaSearch = .appleMusic(type: .topAlbums)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+		itunesController.mediaSearch = .appleMusic(type: .comingSoon)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+		itunesController.mediaSearch = .appleMusic(type: .hotTracks)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/hot-tracks/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+		itunesController.mediaSearch = .appleMusic(type: .newReleases)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/new-releases/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+		itunesController.mediaSearch = .appleMusic(type: .topSongs)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/top-songs/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+
+		itunesController.allowExplicitResults = true
+		itunesController.mediaSearch = .appleMusic(type: .topAlbums)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json", itunesController.generateUrl().absoluteString)
+
+		itunesController.allowExplicitResults = false
+		itunesController.mediaSearch = .iTunesMusic(type: .hotTracks)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/hot-tracks/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+		itunesController.mediaSearch = .iTunesMusic(type: .newMusic)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/new-music/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+		itunesController.mediaSearch = .iTunesMusic(type: .recentReleases)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/recent-releases/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+		itunesController.mediaSearch = .iTunesMusic(type: .topAlbums)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/top-albums/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+		itunesController.mediaSearch = .iTunesMusic(type: .topSongs)
+		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/top-songs/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
+	}
 
 	func testFetchTopAlbumResults() {
 		let myExpectation = expectation(description: "netload")
@@ -178,5 +178,46 @@ class Top_AlbumsTests: XCTestCase {
 
 		XCTAssertEqual(thumbnailData, expectedThumbData)
 		XCTAssertEqual(fullSizeData, expectedFullData)
+	}
+
+	func testBadURL() {
+		let myExpectation = expectation(description: "netload")
+
+		let apiController = iTunesAPIController(baseURLString: "https://badurl.com/api/v1/", session: serverSessionSimulator)
+
+		var theResult: Result<[MusicResult], NetworkError>?
+
+		apiController.fetchResults { result in
+			theResult = result
+			myExpectation.fulfill()
+		}
+		wait(for: [myExpectation], timeout: 2)
+
+		XCTAssertThrowsError(try theResult?.get(), "Error not thrown when one was expected") { error in
+			XCTAssertEqual(error as? NetworkError, NetworkError.httpNon200StatusCode(code: 404, data: nil))
+		}
+	}
+
+	func testBadData() {
+		let myExpectation = expectation(description: "netload")
+
+		let mockSession = NetworkMockingSession(mockData: badData, mockError: nil)
+
+		let apiController = iTunesAPIController(baseURLString: "https://rss.itunes.apple.com/api/v1/us/", session: mockSession)
+
+		var theResult: Result<[MusicResult], NetworkError>?
+
+		apiController.mediaSearch = .appleMusic(type: .topAlbums)
+		apiController.maxResults = 10
+		apiController.fetchResults { result in
+			theResult = result
+
+			myExpectation.fulfill()
+		}
+		wait(for: [myExpectation], timeout: 2)
+
+		XCTAssertThrowsError(try theResult?.get(), "Error not thrown when one was expected") { error in
+			XCTAssertEqual(error as? NetworkError, NetworkError.dataWasNull)
+		}
 	}
 }
