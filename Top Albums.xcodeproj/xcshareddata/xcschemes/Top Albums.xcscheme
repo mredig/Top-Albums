@@ -49,6 +49,16 @@
                ReferencedContainer = "container:Top Albums.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "33429F6024679C4100BE08D5"
+               BuildableName = "Top AlbumsUITests.xctest"
+               BlueprintName = "Top AlbumsUITests"
+               ReferencedContainer = "container:Top Albums.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -20,6 +20,11 @@
 		333B8F1F246621B400AE2126 /* MediaTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333B8F1E246621B400AE2126 /* MediaTypeViewModel.swift */; };
 		33429F5A246797C300BE08D5 /* ResultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33429F59246797C300BE08D5 /* ResultViewModelTests.swift */; };
 		33429F5C24679A6D00BE08D5 /* MediaTypeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33429F5B24679A6D00BE08D5 /* MediaTypeViewModelTests.swift */; };
+		33429F6424679C4100BE08D5 /* Top_AlbumsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33429F6324679C4100BE08D5 /* Top_AlbumsUITests.swift */; };
+		33429F6C24679C6D00BE08D5 /* sampleImageLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 33B0CF7824677E5F00FC395E /* sampleImageLarge.png */; };
+		33429F6D24679C6D00BE08D5 /* sampleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 33B0CF7624677D8C00FC395E /* sampleImage.png */; };
+		33429F6E24679C6D00BE08D5 /* TestJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EB459424676BEF00608ED2 /* TestJSON.swift */; };
+		33429F7224679CA400BE08D5 /* ServerSideSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33429F7124679CA400BE08D5 /* ServerSideSimulator.swift */; };
 		33AC19FE24649CD8007F2CEC /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC19FD24649CD8007F2CEC /* TitleView.swift */; };
 		33AC1A062464B8FA007F2CEC /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */; };
 		33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */; };
@@ -35,6 +40,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		33429F6624679C4100BE08D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3339DA5824636D1E001CC492 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3339DA5F24636D1E001CC492;
+			remoteInfo = "Top Albums";
+		};
 		33B2157224637D7700CA64ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3339DA5824636D1E001CC492 /* Project object */;
@@ -59,11 +71,14 @@
 		333B8F1E246621B400AE2126 /* MediaTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypeViewModel.swift; sourceTree = "<group>"; };
 		33429F59246797C300BE08D5 /* ResultViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewModelTests.swift; sourceTree = "<group>"; };
 		33429F5B24679A6D00BE08D5 /* MediaTypeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypeViewModelTests.swift; sourceTree = "<group>"; };
+		33429F6124679C4100BE08D5 /* Top AlbumsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Top AlbumsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33429F6324679C4100BE08D5 /* Top_AlbumsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top_AlbumsUITests.swift; sourceTree = "<group>"; };
+		33429F6524679C4100BE08D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33429F7124679CA400BE08D5 /* ServerSideSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerSideSimulator.swift; sourceTree = "<group>"; };
 		33AC19FD24649CD8007F2CEC /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		33AC1A102464E7CF007F2CEC /* ResultDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewController.swift; sourceTree = "<group>"; };
-		33B0CF742467782200FC395E /* ServerSideSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerSideSimulator.swift; sourceTree = "<group>"; };
 		33B0CF7624677D8C00FC395E /* sampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleImage.png; sourceTree = "<group>"; };
 		33B0CF7824677E5F00FC395E /* sampleImageLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleImageLarge.png; sourceTree = "<group>"; };
 		33B2156D24637D7700CA64ED /* Top AlbumsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Top AlbumsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +100,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		33429F5E24679C4100BE08D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		33B2156A24637D7700CA64ED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -99,7 +121,9 @@
 			isa = PBXGroup;
 			children = (
 				3339DA6224636D1E001CC492 /* Top Albums */,
+				33429F6B24679C5700BE08D5 /* Tests Shared */,
 				33B2156E24637D7700CA64ED /* Top AlbumsTests */,
+				33429F6224679C4100BE08D5 /* Top AlbumsUITests */,
 				3339DA6124636D1E001CC492 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -109,6 +133,7 @@
 			children = (
 				3339DA6024636D1E001CC492 /* Top Albums.app */,
 				33B2156D24637D7700CA64ED /* Top AlbumsTests.xctest */,
+				33429F6124679C4100BE08D5 /* Top AlbumsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,6 +161,24 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		33429F6224679C4100BE08D5 /* Top AlbumsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				33429F6324679C4100BE08D5 /* Top_AlbumsUITests.swift */,
+				33429F6524679C4100BE08D5 /* Info.plist */,
+			);
+			path = "Top AlbumsUITests";
+			sourceTree = "<group>";
+		};
+		33429F6B24679C5700BE08D5 /* Tests Shared */ = {
+			isa = PBXGroup;
+			children = (
+				33429F7124679CA400BE08D5 /* ServerSideSimulator.swift */,
+				33EB459324676BA600608ED2 /* ServerSimAssets */,
+			);
+			path = "Tests Shared";
+			sourceTree = "<group>";
+		};
 		33AC1A0F2464E7B4007F2CEC /* Result Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,8 +193,6 @@
 				33B2156F24637D7700CA64ED /* iTunesAPITests.swift */,
 				33429F59246797C300BE08D5 /* ResultViewModelTests.swift */,
 				33429F5B24679A6D00BE08D5 /* MediaTypeViewModelTests.swift */,
-				33B0CF742467782200FC395E /* ServerSideSimulator.swift */,
-				33EB459324676BA600608ED2 /* ServerSimAssets */,
 				33B2157124637D7700CA64ED /* Info.plist */,
 			);
 			path = "Top AlbumsTests";
@@ -241,6 +282,24 @@
 			productReference = 3339DA6024636D1E001CC492 /* Top Albums.app */;
 			productType = "com.apple.product-type.application";
 		};
+		33429F6024679C4100BE08D5 /* Top AlbumsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33429F6824679C4100BE08D5 /* Build configuration list for PBXNativeTarget "Top AlbumsUITests" */;
+			buildPhases = (
+				33429F5D24679C4100BE08D5 /* Sources */,
+				33429F5E24679C4100BE08D5 /* Frameworks */,
+				33429F5F24679C4100BE08D5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				33429F6724679C4100BE08D5 /* PBXTargetDependency */,
+			);
+			name = "Top AlbumsUITests";
+			productName = "Top AlbumsUITests";
+			productReference = 33429F6124679C4100BE08D5 /* Top AlbumsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		33B2156C24637D7700CA64ED /* Top AlbumsTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33B2157624637D7700CA64ED /* Build configuration list for PBXNativeTarget "Top AlbumsTests" */;
@@ -272,6 +331,10 @@
 					3339DA5F24636D1E001CC492 = {
 						CreatedOnToolsVersion = 11.4.1;
 					};
+					33429F6024679C4100BE08D5 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 3339DA5F24636D1E001CC492;
+					};
 					33B2156C24637D7700CA64ED = {
 						CreatedOnToolsVersion = 11.4.1;
 						TestTargetID = 3339DA5F24636D1E001CC492;
@@ -296,6 +359,7 @@
 			targets = (
 				3339DA5F24636D1E001CC492 /* Top Albums */,
 				33B2156C24637D7700CA64ED /* Top AlbumsTests */,
+				33429F6024679C4100BE08D5 /* Top AlbumsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -307,6 +371,15 @@
 			files = (
 				3339DA7024636D20001CC492 /* LaunchScreen.storyboard in Resources */,
 				3339DA6D24636D20001CC492 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33429F5F24679C4100BE08D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33429F6C24679C6D00BE08D5 /* sampleImageLarge.png in Resources */,
+				33429F6D24679C6D00BE08D5 /* sampleImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,11 +418,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		33429F5D24679C4100BE08D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33429F6424679C4100BE08D5 /* Top_AlbumsUITests.swift in Sources */,
+				33429F6E24679C6D00BE08D5 /* TestJSON.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		33B2156924637D7700CA64ED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				33EB459524676BEF00608ED2 /* TestJSON.swift in Sources */,
+				33429F7224679CA400BE08D5 /* ServerSideSimulator.swift in Sources */,
 				33429F5C24679A6D00BE08D5 /* MediaTypeViewModelTests.swift in Sources */,
 				33429F5A246797C300BE08D5 /* ResultViewModelTests.swift in Sources */,
 				33B2157024637D7700CA64ED /* iTunesAPITests.swift in Sources */,
@@ -359,6 +442,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		33429F6724679C4100BE08D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3339DA5F24636D1E001CC492 /* Top Albums */;
+			targetProxy = 33429F6624679C4100BE08D5 /* PBXContainerItemProxy */;
+		};
 		33B2157324637D7700CA64ED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3339DA5F24636D1E001CC492 /* Top Albums */;
@@ -530,6 +618,44 @@
 			};
 			name = Release;
 		};
+		33429F6924679C4100BE08D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L5UZAT7KA9;
+				INFOPLIST_FILE = "Top AlbumsUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.redeggproductions.Top-AlbumsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Top Albums";
+			};
+			name = Debug;
+		};
+		33429F6A24679C4100BE08D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L5UZAT7KA9;
+				INFOPLIST_FILE = "Top AlbumsUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.redeggproductions.Top-AlbumsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Top Albums";
+			};
+			name = Release;
+		};
 		33B2157424637D7700CA64ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -587,6 +713,15 @@
 			buildConfigurations = (
 				3339DA7524636D20001CC492 /* Debug */,
 				3339DA7624636D20001CC492 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		33429F6824679C4100BE08D5 /* Build configuration list for PBXNativeTarget "Top AlbumsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33429F6924679C4100BE08D5 /* Debug */,
+				33429F6A24679C4100BE08D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
