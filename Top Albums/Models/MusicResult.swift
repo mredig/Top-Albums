@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Genre: Decodable {
+struct Genre: Decodable, Equatable {
 	let name: String
 }
 

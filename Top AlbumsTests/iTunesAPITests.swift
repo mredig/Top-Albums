@@ -1,5 +1,5 @@
 //
-//  Top_AlbumsTests.swift
+//  iTunesAPITests.swift
 //  Top AlbumsTests
 //
 //  Created by Michael Redig on 5/6/20.
@@ -10,7 +10,7 @@ import XCTest
 @testable import Top_Albums
 import NetworkHandler
 
-class Top_AlbumsTests: XCTestCase {
+class iTunesAPITests: XCTestCase {
 
 	lazy var serverSessionSimulator: NetworkMockingSession = {
 		let session = NetworkMockingSession { request -> (Data?, Int, Error?) in
@@ -118,6 +118,7 @@ class Top_AlbumsTests: XCTestCase {
 
 		let firstResultVM = MusicResultViewModel(musicResult: firstResultUnwrapped)
 		XCTAssertEqual("Lil Tjay", firstResultVM.artistName)
+		XCTAssertEqual("State of Emergency", firstResultVM.name)
 		XCTAssertEqual(1511995770, firstResultVM.id)
 		XCTAssertEqual("May 8, 2020", firstResultVM.formattedReleaseDate)
 		XCTAssertEqual("album", firstResultVM.kind)
