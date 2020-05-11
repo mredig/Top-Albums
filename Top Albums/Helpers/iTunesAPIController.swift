@@ -17,7 +17,7 @@ class iTunesAPIController {
 	var allowExplicitResults = false
 	var maxResults = 100
 
-	private var currentResultOperation: URLSessionDataTask?
+	private var currentResultOperation: NetworkLoadingTask?
 
 	private let baseURL: URL
 	init(baseURLString: String, session: NetworkLoader = URLSession.shared) {
@@ -67,7 +67,7 @@ class iTunesAPIController {
 }
 
 extension iTunesAPIController: ImageLoader {
-	func fetchImage(for musicResultVM: MusicResultViewModel, attemptHighRes: Bool = false, completion: @escaping (Result<Data, NetworkError>) -> Void) -> ImageLoadOperation? {
+	func fetchImage(for musicResultVM: MusicResultViewModel, attemptHighRes: Bool = false, completion: @escaping (Result<Data, NetworkError>) -> Void) -> NetworkLoadingTask? {
 		let request: NetworkRequest
 		if attemptHighRes {
 			request = musicResultVM.highResArtworkURL.request

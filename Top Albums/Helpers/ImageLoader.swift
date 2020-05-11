@@ -10,11 +10,5 @@ import Foundation
 import NetworkHandler
 
 protocol ImageLoader {
-	func fetchImage(for musicResultVM: MusicResultViewModel, attemptHighRes: Bool, completion: @escaping (Result<Data, NetworkError>) -> Void) -> ImageLoadOperation?
+	func fetchImage(for musicResultVM: MusicResultViewModel, attemptHighRes: Bool, completion: @escaping (Result<Data, NetworkError>) -> Void) -> NetworkLoadingTask?
 }
-
-protocol ImageLoadOperation {
-	func cancel()
-}
-
-extension URLSessionDataTask: ImageLoadOperation {}

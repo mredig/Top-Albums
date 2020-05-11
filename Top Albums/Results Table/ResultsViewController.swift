@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NetworkHandler
 
 protocol ResultsViewControllerCoordinator: AnyObject {
 	func getTitle() -> String
@@ -25,7 +26,7 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 			updateResults()
 		}
 	}
-	private var imageLoadingOperations: [URL: ImageLoadOperation] = [:]
+	private var imageLoadingOperations: [URL: NetworkLoadingTask] = [:]
 
 	// MARK: - Subviews
 	var loadingIndicatorContainerView: UIView?
