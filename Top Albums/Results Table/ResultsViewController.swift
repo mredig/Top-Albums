@@ -72,10 +72,6 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 	@objc func showFilterTapped(_ sender: UIBarButtonItem) {
 		coordinator?.showFilters(via: sender)
 	}
-
-	@objc func pullToRefresh(_ sender: UIRefreshControl) {
-		coordinator?.fetchResults()
-	}
 }
 
 // MARK: - TableView Data stuff
