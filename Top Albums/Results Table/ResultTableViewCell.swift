@@ -43,6 +43,7 @@ class ResultTableViewCell: UITableViewCell {
 	private func commonInit() {
 		configureLayout()
 		configureLabels()
+		accessibilityIdentifier = "Result Cell"
 	}
 
 	private func configureLayout() {

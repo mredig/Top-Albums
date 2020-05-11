@@ -61,6 +61,7 @@ class ResultDetailViewController: UIViewController {
 	private func configureLayout() {
 		view.addSubview(albumImageView)
 		albumImageView.translatesAutoresizingMaskIntoConstraints = false
+		albumImageView.setupAccessibilityIdentifier(on: self, id: "AlbumImageView")
 
 		let scrollView = UIScrollView()
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -130,16 +131,21 @@ class ResultDetailViewController: UIViewController {
 	private func configureLabels() {
 		artistLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
 		artistLabel.textColor = .secondaryLabel
+		artistLabel.setupAccessibilityIdentifier(on: self, id: "ArtistLabel")
 		genreLabel.font = UIFont.systemFont(ofSize: 17, weight: .light)
 		genreLabel.adjustsFontSizeToFitWidth = true
 		genreLabel.minimumScaleFactor = 0.65
+		genreLabel.setupAccessibilityIdentifier(on: self, id: "GenreLabel")
 		releaseDateLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+		releaseDateLabel.setupAccessibilityIdentifier(on: self, id: "ReleaseDateLabel")
 		copyrightLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
 		copyrightLabel.textColor = .secondaryLabel
+		copyrightLabel.setupAccessibilityIdentifier(on: self, id: "CopyrightLabel")
 
 		itunesStoreButton.setTitle("iTunes Store", for: .normal)
 		itunesStoreButton.setImage(UIImage(systemName: "cart"), for: .normal)
 		itunesStoreButton.setTitleColor(.systemBlue, for: .normal)
+		itunesStoreButton.setupAccessibilityIdentifier(on: self, id: "iTunesStoreButton")
 	}
 
 	private func configureInteraction() {

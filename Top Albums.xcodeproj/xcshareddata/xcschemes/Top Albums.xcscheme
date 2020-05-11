@@ -26,9 +26,22 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldUseLaunchSchemeArgsEnv = "NO"
       codeCoverageEnabled = "YES"
       onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-TESTING true"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "MockBlockPointer"
+            value = "{\&quot;location\&quot;:\&quot;file:\\/\\/\\/Users\\/mredig\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/C1BF4BDC-F803-4CA7-BA5B-5EEFCBAABDC1\\/data\\/Containers\\/Data\\/Application\\/A490EE76-6387-412D-9DBE-DBA7C201E13F\\/tmp\\/mockblock.json\&quot;}"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -81,6 +94,13 @@
             ReferencedContainer = "container:Top Albums.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "MockBlockPointer"
+            value = "{&quot;location&quot;:&quot;file:\/\/\/Users\/mredig\/Library\/Developer\/CoreSimulator\/Devices\/C1BF4BDC-F803-4CA7-BA5B-5EEFCBAABDC1\/data\/Containers\/Data\/Application\/78AD1341-AB4C-415F-BE10-6E20F60D89A8\/tmp\/mockblock.json&quot;}&#10;"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
