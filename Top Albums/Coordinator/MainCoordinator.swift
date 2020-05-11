@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NetworkHandler
 
 class MainCoordinator: NSObject, Coordinator {
 	// MARK: - Properties
@@ -16,7 +17,29 @@ class MainCoordinator: NSObject, Coordinator {
 	let resultsViewController: ResultsViewController
 	weak var resultDetailViewController: ResultDetailViewController?
 
-	private let iTunesApi = iTunesAPIController(baseURLString: "https://rss.itunes.apple.com/api/v1/us/")
+	private let iTunesApi: iTunesAPIController = {
+		let baseURLString = "https://rss.itunes.apple.com/api/v1/us/"
+		let session: NetworkLoader
+		if let mockBlockPointer = ProcessInfo.processInfo.decode(MockBlockPointer.self) {
+			// Avoid arbitrary loads in production app
+			#if DEBUG
+			try? mockBlockPointer.load(cleanup: false)
+
+			let mockingSession = NetworkMockingSession { request -> (Data?, Int, Error?) in
+				guard let resource = mockBlockPointer.mockBlock?.resource(for: request) else { return (nil, 404, nil) }
+				return (resource.data, resource.responseCode, nil)
+			}
+
+			session = mockingSession
+			#else
+			session = URLSession.shared
+			#endif
+		} else {
+			session = URLSession.shared
+		}
+		return iTunesAPIController(baseURLString: baseURLString, session: session)
+	}()
+
 
 	// MARK: - Lifecycle
 	init(navigationController: UINavigationController) {
@@ -74,7 +97,6 @@ extension MainCoordinator: ResultsViewControllerCoordinator {
 		let resultVC = ResultDetailViewController(musicResultVM: musicResultVM, coordinator: self)
 		resultDetailViewController = resultVC
 		navigationController.pushViewController(resultVC, animated: true)
-		navigationController.hidesBarsOnTap = true
 	}
 
 	func getImageLoader() -> ImageLoader {
@@ -102,14 +124,7 @@ extension MainCoordinator: FiltersViewControllerCoordinator {
 
 extension MainCoordinator: ResultDetailViewControllerCoordinator {}
 
-extension MainCoordinator: UINavigationControllerDelegate {
-	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-		guard let fromController = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
-		if fromController == resultDetailViewController {
-			navigationController.hidesBarsOnTap = false
-		}
-	}
-}
+extension MainCoordinator: UINavigationControllerDelegate {}
 
 extension MainCoordinator: UIPopoverPresentationControllerDelegate {
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
