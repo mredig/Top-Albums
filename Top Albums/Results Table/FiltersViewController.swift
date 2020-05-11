@@ -57,8 +57,8 @@ class FiltersViewController: UIViewController {
 		picker.dataSource = self
 
 		NSLayoutConstraint.activate([
-			stack.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-			stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+			stack.topAnchor.constraint(equalTo: view.topAnchor, constant: 24),
+			stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24),
 			stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 			stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 		])
@@ -71,7 +71,7 @@ class FiltersViewController: UIViewController {
 		stack.addArrangedSubview(substack)
 
 		let label = UILabel()
-		label.text = "Show Explicit Results"
+		label.text = "Include Explicit Results"
 		substack.addArrangedSubview(label)
 
 		substack.addArrangedSubview(explicitToggle)
