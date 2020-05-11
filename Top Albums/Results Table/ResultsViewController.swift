@@ -54,8 +54,10 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 		tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: .resultCellIdentifier)
 	}
 
-	private func resetHeightCache() {
+	private func resetCaches() {
 		heightCache.removeAll()
+		imageLoadingOperations.forEach { $0.value.cancel() }
+		imageLoadingOperations.removeAll()
 	}
 
 	private func updateTitle() {
@@ -63,7 +65,7 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 	}
 
 	private func updateResults() {
-		resetHeightCache()
+		resetCaches()
 		tableView.reloadData()
 		updateTitle()
 	}
@@ -108,6 +110,7 @@ extension ResultsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		guard indexPath.row < musicResults.count else { return }
 		let musicResultVM = MusicResultViewModel(musicResult: musicResults[indexPath.row])
 
 		imageLoadingOperations[musicResultVM.normalArtworkURL]?.cancel()
