@@ -106,12 +106,10 @@ extension MainCoordinator: ResultsViewControllerCoordinator {
 
 extension MainCoordinator: FiltersViewControllerCoordinator {
 	var searchOptions: MediaType {
-		get { iTunesApi.mediaSearch }
-		set { iTunesApi.mediaSearch = newValue }
+		iTunesApi.mediaSearch
 	}
 	var allowExplicitResults: Bool {
-		get { iTunesApi.allowExplicitResults }
-		set { iTunesApi.allowExplicitResults = newValue }
+		iTunesApi.allowExplicitResults
 	}
 
 	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool) {

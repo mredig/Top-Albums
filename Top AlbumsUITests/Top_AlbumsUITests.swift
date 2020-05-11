@@ -106,4 +106,58 @@ class Top_AlbumsUITests: XCTestCase {
 		waitForHittable(element: itunesButton)
 		itunesButton.tap()
 	}
+
+	/// Test using the filter selection to choose a different feed
+	func testAlternateSearch() throws {
+		let app = try launchApp()
+
+		let optionsButton = app.navigationBars/*@START_MENU_TOKEN@*/.buttons["ResultsViewController.MoreOptionsButton"]/*[[".buttons[\"ellipsis\"]",".buttons[\"ResultsViewController.MoreOptionsButton\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+		waitForHittable(element: optionsButton)
+		XCTAssertTrue(optionsButton.exists)
+		optionsButton.tap()
+
+		let picker = app.pickers["FiltersViewController.OptionPicker"]
+		waitForHittable(element: picker)
+		XCTAssertTrue(picker.exists)
+
+		let service = picker.pickerWheels.element(boundBy: 0)
+		let list = picker.pickerWheels.element(boundBy: 1)
+
+		// set to non default option and confirm choices
+		service.adjust(toPickerWheelValue: "iTunes")
+		list.adjust(toPickerWheelValue: "Hot Tracks")
+
+		XCTAssertTrue(service.value as? String == "iTunes")
+		XCTAssertTrue(list.value as? String == "Hot Tracks")
+
+		let explicitButton = app.switches["FiltersViewController.ExplicitnessToggle"]
+		waitForHittable(element: explicitButton)
+		explicitButton.tap()
+
+		// dismiss popover
+		let dismiss = app.otherElements["dismiss popup"]
+		waitForHittable(element: dismiss)
+		dismiss.tap()
+
+		// confirm everything reflects intended feed
+		let titleBar = app.navigationBars["iTunes: Hot Tracks"]
+		waitForExists(element: titleBar)
+		XCTAssertTrue(titleBar.exists)
+
+		let cell = app.cells["Result Cell"].staticTexts["Stuck with U"]
+		waitForExists(element: cell)
+		XCTAssertTrue(cell.exists)
+
+		// confirm the settings stick the next time it's used
+		waitForHittable(element: optionsButton)
+		optionsButton.tap()
+
+		let itunesPicker = app.pickerWheels["iTunes"]
+		waitForExists(element: itunesPicker)
+		XCTAssertTrue(itunesPicker.exists)
+
+		let hotTracksPicker = app.pickerWheels["Hot Tracks"]
+		waitForExists(element: hotTracksPicker)
+		XCTAssertTrue(hotTracksPicker.exists)
+	}
 }

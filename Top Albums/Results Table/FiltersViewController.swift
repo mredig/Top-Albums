@@ -9,8 +9,8 @@
 import UIKit
 
 protocol FiltersViewControllerCoordinator: AnyObject {
-	var searchOptions: MediaType { get set }
-	var allowExplicitResults: Bool { get set }
+	var searchOptions: MediaType { get }
+	var allowExplicitResults: Bool { get }
 
 	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool)
 }
@@ -90,8 +90,10 @@ class FiltersViewController: UIViewController {
 		}
 		picker.selectRow(comp0, inComponent: 0, animated: false)
 		picker.selectRow(comp1, inComponent: 1, animated: false)
+		picker.setupAccessibilityIdentifier(on: self, id: "OptionPicker")
 
 		explicitToggle.isOn = coordinator.allowExplicitResults
+		explicitToggle.setupAccessibilityIdentifier(on: self, id: "ExplicitnessToggle")
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -109,7 +111,7 @@ class FiltersViewController: UIViewController {
 	}
 }
 
-extension FiltersViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+extension FiltersViewController: UIPickerViewDataSource, UIPickerViewDelegate, UIPickerViewAccessibilityDelegate {
 	// component 0 determines service
 	// component 1 determines which feed from said service
 

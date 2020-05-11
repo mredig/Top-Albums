@@ -40,7 +40,9 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 		super.viewDidLoad()
 		registerCell()
 
-		navigationItem.rightBarButtonItem = .init(image: UIImage(systemName: "ellipsis"), style: .done, target: self, action: #selector(showFilterTapped(_:)))
+		let barItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .done, target: self, action: #selector(showFilterTapped(_:)))
+		barItem.accessibilityIdentifier = "ResultsViewController.MoreOptionsButton"
+		navigationItem.rightBarButtonItem = barItem
 
 		let titleView = TitleView()
 		titleView.text = "Top Results"
