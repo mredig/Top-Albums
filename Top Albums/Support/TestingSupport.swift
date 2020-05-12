@@ -111,7 +111,7 @@ class MockBlockPointer: TypeIdentifiable, Codable {
 
 		let thisJson = try JSONEncoder().encode(self)
 		guard let thisJsonStr = String(data: thisJson, encoding: .utf8) else { return }
-		print("\nFor env setup:\n\nenv key:\n\(Self.identifier)\nenv value:\n\(thisJsonStr)\n\n")
+		print("\nSet the following env variables in your run scheme to manually run with this mock:\n\nKey:\n\(Self.identifier)\nValue:\n\(thisJsonStr)\n\n")
 	}
 
 	func load(cleanup: Bool = true) throws {
