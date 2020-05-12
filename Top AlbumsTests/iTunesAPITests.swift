@@ -37,7 +37,7 @@ class iTunesAPITests: XCTestCase {
 		let songResults = try? JSONDecoder().decode(SongResults.self, from: sourceData)
 		guard let first = songResults?.results.first else { return nil }
 
-		return SongResultViewModel(songResult: first, loader: nil, previewData: nil)
+		return SongResultViewModel(songResult: first)
 	}
 
 	func testURLGeneration() {
@@ -186,7 +186,7 @@ class iTunesAPITests: XCTestCase {
 			return
 		}
 
-		let songVM = SongResultViewModel(songResult: firstSong, loader: nil, previewData: nil)
+		let songVM = SongResultViewModel(songResult: firstSong)
 		XCTAssertEqual("Lil Tjay", songVM.artistName)
 		XCTAssertEqual("State of Emergency", songVM.collectionName)
 		XCTAssertEqual("Ice Cold", songVM.trackName)

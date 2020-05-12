@@ -97,7 +97,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "MockBlockPointer"
-            value = "{&quot;location&quot;:&quot;file:\/\/\/Users\/mredig\/Library\/Developer\/CoreSimulator\/Devices\/C1BF4BDC-F803-4CA7-BA5B-5EEFCBAABDC1\/data\/Containers\/Data\/Application\/78AD1341-AB4C-415F-BE10-6E20F60D89A8\/tmp\/mockblock.json&quot;}&#10;"
+            value = "{&quot;location&quot;:&quot;file:\/\/\/Users\/mredig\/Library\/Developer\/CoreSimulator\/Devices\/C1BF4BDC-F803-4CA7-BA5B-5EEFCBAABDC1\/data\/Containers\/Data\/Application\/54586EA2-F764-4C88-8C4E-3CEA97170F0C\/tmp\/mockblock.json&quot;}&#10;"
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>

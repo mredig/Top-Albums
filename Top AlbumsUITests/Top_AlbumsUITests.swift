@@ -32,6 +32,12 @@ class Top_AlbumsUITests: XCTestCase {
 		waitForExpectations(timeout: 5, handler: nil)
 	}
 
+	func getProgress(on progressView: XCUIElement) -> Double? {
+		guard var str = progressView.value as? String else { return nil }
+		str.removeLast()
+		return Double(str)
+	}
+
 	/// Configure mocking for UI testing
 	func loadMockBlock() -> MockBlock {
 		var mockBlock = MockBlock()
@@ -39,13 +45,22 @@ class Top_AlbumsUITests: XCTestCase {
 		let urls = [
 			URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/non-explicit.json"),
 			URL(string: "https://rss.itunes.apple.com/api/v1/us/itunes-music/hot-tracks/all/100/explicit.json"),
+			URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/100/explicit.json"),
+			URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/100/non-explicit.json"),
 			URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/200x200bb.png"),
-			URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/1024x1024bb.png")
+			URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/1024x1024bb.png"),
+			URL(string: "https://itunes.apple.com/lookup?id=1511995770&entity=song"),
+			URL(string: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/2b/b0/3e/2bb03ea0-ac15-f265-633c-9acf88f71928/mzaf_746631026398828737.plus.aac.p.m4a")
 			].compactMap { $0 }
-		let datas = [top10AppleMusicAlbumsNE,
-					 top10iTunesHotTracksE,
-					Self.fileData(for: "sampleImage", withExtension: "png"),
-					Self.fileData(for: "sampleImageLarge", withExtension: "png")
+		let datas = [
+			top10AppleMusicAlbumsNE,
+			top10iTunesHotTracksE,
+			top10AppleMusicAlbumsE,
+			top10AppleMusicComingSoonNE,
+			Self.fileData(for: "sampleImage", withExtension: "png"),
+			Self.fileData(for: "sampleImageLarge", withExtension: "png"),
+			sampleSongPreviewsJSON,
+			Self.fileData(for: "samplePreview", withExtension: "m4a")
 		]
 
 		zip(urls, datas).forEach {
@@ -108,6 +123,27 @@ class Top_AlbumsUITests: XCTestCase {
 
 		let albumImage = app.images["ResultDetailViewController.AlbumImageView"]
 		XCTAssertTrue(albumImage.exists)
+
+		let previewButton = app.cells["SongCell.Ice Cold"]
+		waitForExists(element: previewButton)
+		XCTAssertTrue(previewButton.exists)
+		previewButton.tap()
+
+		let progressView = previewButton.progressIndicators["SongProgressView"]
+		waitForExists(element: progressView)
+
+		// confirm there's forward progress on playback
+		var progress = 0.0
+
+		if let checkProgress = getProgress(on: progressView) {
+			XCTAssertGreaterThan(checkProgress, progress)
+			progress = checkProgress
+		}
+
+		if let checkProgress = getProgress(on: progressView) {
+			XCTAssertGreaterThan(checkProgress, progress)
+			progress = checkProgress
+		}
 
 		let itunesButton = app.buttons["ResultDetailViewController.iTunesStoreButton"]
 		waitForHittable(element: itunesButton)

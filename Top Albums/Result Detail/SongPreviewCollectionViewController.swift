@@ -60,54 +60,7 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 		collectionView.reloadData()
 	}
 
-}
-
-// MARK: UICollectionViewDataSource
-extension SongPreviewCollectionViewController {
-
-	override func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
-
-	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		songPreviews.count
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .songCellReuseIdentifier, for: indexPath)
-		guard let songCell = cell as? SongCell else { return cell }
-
-		let song = songPreviews[indexPath.item]
-		let songVM = SongResultViewModel(songResult: song)
-
-		songCell.artist = songVM.artistName
-		songCell.title = songVM.trackName
-		songCell.progress = 0
-
-		return songCell
-	}
-
-	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let song = songPreviews[indexPath.item]
-		let songVM = SongResultViewModel(songResult: song)
-
-		// if any song is playing, stop it
-		defer { stopAudio() }
-		// if selected song is different than the last, start download
-		guard songVM != playingSong else { return }
-
-		let loader = coordinator.getSongPreviewLoader()
-		currentPreviewLoad?.cancel()
-		currentPreviewLoad = loader.fetchPreview(for: songVM, completion: { [weak self] result in
-			do {
-				// play song once downloaded
-				let songData = try result.get()
-				let player = try AVAudioPlayer(data: songData)
-				self?.playAudio(with: player, song: songVM)
-			} catch {
-				print("Error loading song preview: \(error)")
-			}
-		})
-	}
-
+	// MARK: - Audio Controls
 	private func playAudio(with player: AVAudioPlayer, song: SongResultViewModel) {
 		playingSong = song
 		audioPlayer = player
@@ -136,6 +89,55 @@ extension SongPreviewCollectionViewController {
 
 		audioTimer?.invalidate()
 		audioTimer = nil
+	}
+}
+
+// MARK: UICollectionViewDataSource
+extension SongPreviewCollectionViewController {
+
+	override func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
+
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		songPreviews.count
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .songCellReuseIdentifier, for: indexPath)
+		guard let songCell = cell as? SongCell else { return cell }
+
+		let song = songPreviews[indexPath.item]
+		let songVM = SongResultViewModel(songResult: song)
+
+		songCell.artist = songVM.artistName
+		songCell.title = songVM.trackName
+		songCell.progress = 0
+		songCell.setupAccessibilityIdentifier(on: self, id: "SongCell")
+		songCell.accessibilityIdentifier = "SongCell.\(songVM.trackName)"
+
+		return songCell
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let song = songPreviews[indexPath.item]
+		let songVM = SongResultViewModel(songResult: song)
+
+		// if any song is playing, stop it
+		defer { stopAudio() }
+		// if selected song is different than the last, start download
+		guard songVM != playingSong else { return }
+
+		let loader = coordinator.getSongPreviewLoader()
+		currentPreviewLoad?.cancel()
+		currentPreviewLoad = loader.fetchPreview(for: songVM, completion: { [weak self] result in
+			do {
+				// play song once downloaded
+				let songData = try result.get()
+				let player = try AVAudioPlayer(data: songData)
+				self?.playAudio(with: player, song: songVM)
+			} catch {
+				print("Error loading song preview: \(error)")
+			}
+		})
 	}
 }
 
