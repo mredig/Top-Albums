@@ -22,11 +22,11 @@ extension LoadingIndicatorDisplaying {
 		let containerView = UIView(frame: view.bounds)
 		view.addSubview(containerView)
 		loadingIndicatorContainerView = containerView
-		containerView.backgroundColor = .systemBackground
+		containerView.backgroundColor = UIColor.label.withAlphaComponent(0.2)
 		containerView.alpha = 0
 
 		UIView.animate(withDuration: 0.125) {
-			containerView.alpha = 0.8
+			containerView.alpha = 1
 		}
 
 		let activityIndicator = UIActivityIndicatorView(style: .large)

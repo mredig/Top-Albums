@@ -76,6 +76,10 @@ class ResultTableViewCell: UITableViewCell {
 		nestedStackView.spacing = UIStackView.spacingUseDefault
 		rootStack.addArrangedSubview(nestedStackView)
 
+		albumArtView.layer.cornerCurve = .continuous
+		albumArtView.layer.cornerRadius = 8
+		albumArtView.clipsToBounds = true
+
 		// set to 251 to tie break between labels
 		artistNameLabel.setContentHuggingPriority(.init(rawValue: 251), for: .vertical)
 		nestedStackView.addArrangedSubview(albumNameLabel)

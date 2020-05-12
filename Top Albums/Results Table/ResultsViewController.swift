@@ -48,6 +48,10 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 		titleView.text = "Top Results"
 		navigationItem.titleView = titleView
 		updateTitle()
+
+		view.backgroundColor = .secondarySystemBackground
+		// Hides table view rows when empty
+		tableView.tableFooterView = UIView()
 	}
 
 	private func registerCell() {
