@@ -11,14 +11,7 @@ import XCTest
 
 class MediaTypeViewModelTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
+	/// Tests various MediaType output
 	func testMediaType() {
 		let appleMusicTopAlbums = MediaType.appleMusic(type: .topAlbums)
 		let appleMusicVM = MediaTypeViewModel(mediaType: appleMusicTopAlbums)

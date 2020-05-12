@@ -79,7 +79,31 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 // MARK: - TableView Data stuff
 extension ResultsViewController {
 
+	/// Used for both row height and actually assigning cell content
+	private func configureResultCell(_ cell: ResultTableViewCell, withMusicResult musicResultVM: MusicResultViewModel) {
+		cell.artistName = musicResultVM.artistName
+		cell.albumName = musicResultVM.name
+
+		// don't start a network operation for the prototype cell
+		guard cell !== prototypeResultCell else { return }
+		let imageLoadOp = coordinator?.getImageLoader().fetchImage(for: musicResultVM, attemptHighRes: false, completion: { [weak self] result in
+			DispatchQueue.main.async {
+				self?.imageLoadingOperations[musicResultVM.normalArtworkURL] = nil
+				do {
+					let imageData = try result.get()
+					let image = UIImage(data: imageData)
+					cell.albumArt = image
+				} catch {
+					print("Error fetching image for \(musicResultVM.name)-\(musicResultVM.artistName ?? ""): \(error)")
+				}
+			}
+		})
+		imageLoadingOperations[musicResultVM.normalArtworkURL]?.cancel()
+		imageLoadingOperations[musicResultVM.normalArtworkURL] = imageLoadOp
+	}
+
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		// use a cached prototype cell to determine the exact height of a given cell. Cache that value for future lookups.
 		if let height = heightCache[indexPath] {
 			return height
 		}
@@ -110,32 +134,13 @@ extension ResultsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		// cancel in progress network operations if the cell scrolls offscreen before finishing
 		guard indexPath.row < musicResults.count else { return }
 		let musicResultVM = MusicResultViewModel(musicResult: musicResults[indexPath.row])
 
 		imageLoadingOperations[musicResultVM.normalArtworkURL]?.cancel()
 	}
 
-	private func configureResultCell(_ cell: ResultTableViewCell, withMusicResult musicResultVM: MusicResultViewModel) {
-		cell.artistName = musicResultVM.artistName
-		cell.albumName = musicResultVM.name
-
-		guard cell !== prototypeResultCell else { return }
-		let imageLoadOp = coordinator?.getImageLoader().fetchImage(for: musicResultVM, attemptHighRes: false, completion: { [weak self] result in
-			DispatchQueue.main.async {
-				self?.imageLoadingOperations[musicResultVM.normalArtworkURL] = nil
-				do {
-					let imageData = try result.get()
-					let image = UIImage(data: imageData)
-					cell.albumArt = image
-				} catch {
-					print("Error fetching image for \(musicResultVM.name)-\(musicResultVM.artistName ?? ""): \(error)")
-				}
-			}
-		})
-		imageLoadingOperations[musicResultVM.normalArtworkURL]?.cancel()
-		imageLoadingOperations[musicResultVM.normalArtworkURL] = imageLoadOp
-	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let musicResult = musicResults[indexPath.row]

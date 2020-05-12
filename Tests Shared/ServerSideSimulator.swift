@@ -11,6 +11,7 @@ import NetworkHandler
 
 class ServerSideSimulator {
 
+	/// A closure by which a dictionary lookup is used to confirm a resource exists at a given url.
 	let serverSessionSimulator: NetworkMockingSession = {
 		let session = NetworkMockingSession { request -> (Data?, Int, Error?) in
 			guard let data = ServerSideSimulator.serverTable[request.url] else {
@@ -23,7 +24,7 @@ class ServerSideSimulator {
 		return session
 	}()
 
-	private static let serverTable: [URL?: Data?] = [
+	private static let serverTable = [
 		URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/10/non-explicit.json"): top10AppleMusicAlbumsNE,
 		URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/10/explicit.json"): top10AppleMusicAlbumsE,
 		URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.json"): top10AppleMusicComingSoonNE,

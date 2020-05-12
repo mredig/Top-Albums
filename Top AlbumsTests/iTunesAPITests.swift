@@ -69,6 +69,9 @@ class iTunesAPITests: XCTestCase {
 		XCTAssertEqual("https://rss.itunes.apple.com/api/v1/us/itunes-music/top-songs/all/100/non-explicit.json", itunesController.generateUrl().absoluteString)
 	}
 
+	/// Tests that a properly formed url will provide a correctly decoded payload using mocking.
+	///
+	/// See ServerSideSimulator for URL verification (nothing will be returned if a URL is incorrect)
 	func testFetchTopAlbumResults() {
 		let myExpectation = expectation(description: "netload")
 
@@ -108,6 +111,7 @@ class iTunesAPITests: XCTestCase {
 		XCTAssertEqual(URL(string: "https://music.apple.com/us/album/state-of-emergency/1511995770?app=music"), firstResultVM.url)
 	}
 
+	/// Tests that image fetching works, again using ServerSideSimualtor
 	func testImageFetching() {
 		guard let lilTjayResultVM = lilTjayVM() else {
 			XCTFail("Problem getting json object")
@@ -158,6 +162,7 @@ class iTunesAPITests: XCTestCase {
 		XCTAssertEqual(fullSizeData, expectedFullData)
 	}
 
+	/// Tests that a bad URL is handled correctly.
 	func testBadURL() {
 		let myExpectation = expectation(description: "netload")
 
@@ -176,6 +181,7 @@ class iTunesAPITests: XCTestCase {
 		}
 	}
 
+	/// Tests that bad data is handled correctly.
 	func testBadData() {
 		let myExpectation = expectation(description: "netload")
 

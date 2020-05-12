@@ -21,7 +21,7 @@ class MainCoordinator: NSObject, Coordinator {
 		let baseURLString = "https://rss.itunes.apple.com/api/v1/us/"
 		let session: NetworkLoader
 		if let mockBlockPointer = ProcessInfo.processInfo.decode(MockBlockPointer.self) {
-			// Avoid arbitrary loads in production app
+			// Avoid arbitrary load vulnerability in production app
 			#if DEBUG
 			try? mockBlockPointer.load(cleanup: false)
 

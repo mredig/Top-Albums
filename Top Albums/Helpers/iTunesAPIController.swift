@@ -17,6 +17,7 @@ class iTunesAPIController {
 	var allowExplicitResults = false
 	var maxResults = 100
 
+	/// There should only ever be one operation fetching the feed at a time. Allows cancelling previous prior to starting a new one.
 	private var currentResultOperation: NetworkLoadingTask?
 
 	private let baseURL: URL

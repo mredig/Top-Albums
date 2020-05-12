@@ -32,6 +32,7 @@ class Top_AlbumsUITests: XCTestCase {
 		waitForExpectations(timeout: 5, handler: nil)
 	}
 
+	/// Configure mocking for UI testing
 	func loadMockBlock() -> MockBlock {
 		var mockBlock = MockBlock()
 
@@ -68,6 +69,7 @@ class Top_AlbumsUITests: XCTestCase {
 		return app
 	}
 
+	/// Test that the initial state of the app is as expected
     func testInitialState() throws {
         // UI tests must launch the application that they test.
 		let app = try launchApp()
@@ -81,6 +83,7 @@ class Top_AlbumsUITests: XCTestCase {
 		XCTAssertTrue(cell.exists)
     }
 
+	/// Test that the detail VC shows expected data
 	func testDetailVC() throws {
 		let app = try launchApp()
 

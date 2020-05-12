@@ -31,6 +31,7 @@ enum MediaType: Equatable {
 	}
 }
 
+// reference to feeds available for potential future expansion
 //https://rss.itunes.apple.com/api/v1/us/apple-music	/hot-tracks/all/100/explicit.json
 //https://rss.itunes.apple.com/api/v1/us/itunes-music	/hot-tracks/all/100/explicit.json
 //https://rss.itunes.apple.com/api/v1/us/ios-apps		/new-apps-we-love/all/100/explicit.json

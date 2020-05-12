@@ -12,14 +12,6 @@ import NetworkHandler
 
 class ResultViewModelTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
 	func lilTjayVM() -> MusicResultViewModel? {
 		guard let sourceData = top10AppleMusicAlbumsNE else {
 			return nil
@@ -33,6 +25,7 @@ class ResultViewModelTests: XCTestCase {
 		return lilTjayResultVM
 	}
 
+	/// Tests that the MusicResultViewModel properly reflects the underlying model.
 	func testMusicResultViewModel() {
 		guard let fullModel = lilTjayVM()?.musicResult else {
 			XCTFail("Error loading model")
