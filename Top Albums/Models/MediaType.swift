@@ -19,7 +19,6 @@ enum MediaType: Equatable {
 		case newReleases = "new-releases"
 		case topAlbums = "top-albums"
 		case topSongs = "top-songs"
-		case topSongsss = "top-songsss"
 	}
 
 	enum iTunesMusicFeedType: String, CaseIterable {
