@@ -26,7 +26,6 @@
 		33429F7224679CA400BE08D5 /* ServerSideSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33429F7124679CA400BE08D5 /* ServerSideSimulator.swift */; };
 		338913F324691C8700C8FC2F /* TestingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338913F224691C8700C8FC2F /* TestingSupport.swift */; };
 		338913F824691F5F00C8FC2F /* TestingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338913F224691C8700C8FC2F /* TestingSupport.swift */; };
-		338913F9246920C700C8FC2F /* ServerSideSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33429F7124679CA400BE08D5 /* ServerSideSimulator.swift */; };
 		33AC19FE24649CD8007F2CEC /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC19FD24649CD8007F2CEC /* TitleView.swift */; };
 		33AC1A062464B8FA007F2CEC /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */; };
 		33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */; };
@@ -446,7 +445,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				338913F9246920C700C8FC2F /* ServerSideSimulator.swift in Sources */,
 				338913F824691F5F00C8FC2F /* TestingSupport.swift in Sources */,
 				33429F6424679C4100BE08D5 /* Top_AlbumsUITests.swift in Sources */,
 				33429F6E24679C6D00BE08D5 /* TestJSON.swift in Sources */,
