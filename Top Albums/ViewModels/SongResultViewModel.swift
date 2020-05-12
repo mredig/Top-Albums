@@ -26,8 +26,16 @@ struct SongResultViewModel: Equatable {
 		songResult.collectionName
 	}
 
+	var trackNumber: Int {
+		songResult.trackNumber
+	}
+
 	var trackName: String {
 		songResult.trackName
+	}
+
+	var trackNameWithNumber: String {
+		"\(trackNumber). \(trackName)"
 	}
 
 	var previewURL: URL {

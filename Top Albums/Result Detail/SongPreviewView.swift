@@ -61,6 +61,7 @@ class SongPreviewView: UIView {
 		titleStack.distribution = .fill
 		titleStack.spacing = 0
 		titleStack.translatesAutoresizingMaskIntoConstraints = false
+		titleStack.clipsToBounds = false
 
 		coloredBackground.backgroundColor = .secondarySystemBackground
 		coloredBackground.addSubview(titleStack)
@@ -98,8 +99,10 @@ class SongPreviewView: UIView {
 
 		titleLabel.font = UIFont.systemFont(ofSize: 17)
 		titleLabel.textColor = .label
-		artistLabel.font = UIFont.systemFont(ofSize: 14)
+		artistLabel.font = UIFont.systemFont(ofSize: 12)
 		artistLabel.textColor = .secondaryLabel
+		artistLabel.clipsToBounds = false
+
 	}
 
 }

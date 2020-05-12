@@ -190,7 +190,9 @@ class iTunesAPITests: XCTestCase {
 		XCTAssertEqual("Lil Tjay", songVM.artistName)
 		XCTAssertEqual("State of Emergency", songVM.collectionName)
 		XCTAssertEqual("Ice Cold", songVM.trackName)
+		XCTAssertEqual("1. Ice Cold", songVM.trackNameWithNumber)
 		XCTAssertEqual("$1.29", songVM.price)
+		XCTAssertEqual(1, songVM.trackNumber)
 	}
 
 	func testSongPreviewFetch() throws {

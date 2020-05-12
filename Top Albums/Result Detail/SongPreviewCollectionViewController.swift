@@ -24,9 +24,6 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 		}
 	}
 
-	private let prototypeSongView = SongPreviewView()
-	private var sizeCache = [IndexPath: CGSize]()
-
 	private var playingSong: SongResultViewModel?
 	private var currentPreviewLoad: NetworkLoadingTask?
 	private var audioPlayer: AVAudioPlayer?
@@ -109,7 +106,7 @@ extension SongPreviewCollectionViewController {
 		let songVM = SongResultViewModel(songResult: song)
 
 		songCell.artist = songVM.artistName
-		songCell.title = songVM.trackName
+		songCell.title = songVM.trackNameWithNumber
 		songCell.progress = 0
 		songCell.setupAccessibilityIdentifier(on: self, id: "SongCell")
 		songCell.accessibilityIdentifier = "SongCell.\(songVM.trackName)"
@@ -143,19 +140,9 @@ extension SongPreviewCollectionViewController {
 
 extension SongPreviewCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		if let cached = sizeCache[indexPath] {
-			return cached
-		}
-
-		let song = songPreviews[indexPath.item]
-		let songVM = SongResultViewModel(songResult: song)
-
-		prototypeSongView.artist = songVM.artistName
-		prototypeSongView.title = songVM.trackName
-		prototypeSongView.progress = 0
-		let size = prototypeSongView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-		sizeCache[indexPath] = size
-		return size
+		let size = collectionView.frame.size
+		let newSize = CGSize(width: size.width * 0.9, height: size.height * 0.3)
+		return newSize
 	}
 }
 
