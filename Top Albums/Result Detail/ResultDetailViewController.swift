@@ -98,7 +98,7 @@ class ResultDetailViewController: UIViewController {
 
 		let wrapper = UIView()
 		wrapper.translatesAutoresizingMaskIntoConstraints = false
-		wrapper.backgroundColor = .systemBackground
+		wrapper.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.85)
 		wrapper.addSubview(stack)
 		scrollView.addSubview(wrapper)
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -167,9 +167,19 @@ class ResultDetailViewController: UIViewController {
 	}
 
 	private func configureSongPreviews() {
+		let loader = coordinator.getSongPreviewLoader()
 		switch musicResultVM.kind {
 		case "album":
-			print("load album preview")
+			loader.fetchPreviewList(for: musicResultVM) { [weak self] result in
+				switch result {
+				case .success(let results):
+					DispatchQueue.main.async {
+						self?.previewCollectionVC.songPreviews = results
+					}
+				case .failure(let error):
+					print("Error loading song preview info: \(error)")
+				}
+			}
 		case "song":
 			print("load song preview")
 		default:

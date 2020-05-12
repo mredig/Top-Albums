@@ -10,7 +10,11 @@ import UIKit
 
 class SongPreviewCollectionViewController: UICollectionViewController {
 
-	var songPreviews = [SongResult]()
+	var songPreviews = [SongResult]() {
+		didSet {
+			updateCollection()
+		}
+	}
 
 	private let prototypeSongView = SongPreviewView()
 	private var sizeCache = [IndexPath: CGSize]()
@@ -33,11 +37,15 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 	private func commonInit() {
 		configureCollectionView()
 
-		collectionView.backgroundColor = .systemBackground
+		collectionView.backgroundColor = .clear
 	}
 
 	private func configureCollectionView() {
 		self.collectionView.register(SongCell.self, forCellWithReuseIdentifier: .songCellReuseIdentifier)
+	}
+
+	private func updateCollection() {
+		collectionView.reloadData()
 	}
 
 }
@@ -48,15 +56,14 @@ extension SongPreviewCollectionViewController {
 	override func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		songPreviews.count + 15
+		songPreviews.count
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .songCellReuseIdentifier, for: indexPath)
 		guard let songCell = cell as? SongCell else { return cell }
 
-//		let song = songPreviews[indexPath.item]
-		let song = SongResult(wrapperType: "", kind: "", artistId: 0, collectionId: 0, trackId: 0, artistName: "Taylor Swift", collectionName: "", trackName: "Shake it Off", previewUrl: URL(fileURLWithPath: "/"), trackPrice: 0, discCount: 0, discNumber: 0, trackNumber: 0, trackCount: 0, isStreamable: false)
+		let song = songPreviews[indexPath.item]
 		let songVM = SongResultViewModel(songResult: song, loader: nil, previewData: nil)
 
 		songCell.artist = songVM.artistName
@@ -73,9 +80,7 @@ extension SongPreviewCollectionViewController: UICollectionViewDelegateFlowLayou
 			return cached
 		}
 
-//		let song = songPreviews[indexPath.item]
-		let song = SongResult(wrapperType: "", kind: "", artistId: 0, collectionId: 0, trackId: 0, artistName: "Taylor Swift", collectionName: "", trackName: "Shake it Off", previewUrl: URL(fileURLWithPath: "/"), trackPrice: 0, discCount: 0, discNumber: 0, trackNumber: 0, trackCount: 0, isStreamable: false)
-
+		let song = songPreviews[indexPath.item]
 		let songVM = SongResultViewModel(songResult: song, loader: nil, previewData: nil)
 
 		prototypeSongView.artist = songVM.artistName

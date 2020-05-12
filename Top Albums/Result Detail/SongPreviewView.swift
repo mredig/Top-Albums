@@ -85,6 +85,7 @@ class SongPreviewView: UIView {
 
 	private func configureViews() {
 		progressView.progress = 0
+		progressView.progressViewStyle = .bar
 		coloredBackground.layer.cornerRadius = 10
 		coloredBackground.layer.cornerCurve = .continuous
 		coloredBackground.clipsToBounds = true
