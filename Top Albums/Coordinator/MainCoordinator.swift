@@ -121,10 +121,22 @@ extension MainCoordinator: FiltersViewControllerCoordinator {
 }
 
 extension MainCoordinator: ResultDetailViewControllerCoordinator {
+	func createSongPreviewCollectionVC() -> SongPreviewCollectionViewController {
+		let layout = UICollectionViewFlowLayout()
+		layout.scrollDirection = .horizontal
+		layout.sectionInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+		layout.minimumLineSpacing = 0
+		layout.minimumInteritemSpacing = 0
+
+		return SongPreviewCollectionViewController(collectionViewLayout: layout, coordinator: self)
+	}
+
 	func getSongPreviewLoader() -> SongPreviewLoader {
 		iTunesApi
 	}
 }
+
+extension MainCoordinator: SongPreviewCollectionViewControllerCoordinator {}
 
 extension MainCoordinator: UINavigationControllerDelegate {}
 

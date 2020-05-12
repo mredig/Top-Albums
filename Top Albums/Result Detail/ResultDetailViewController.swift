@@ -11,6 +11,7 @@ import UIKit
 protocol ResultDetailViewControllerCoordinator {
 	func getImageLoader() -> ImageLoader
 	func getSongPreviewLoader() -> SongPreviewLoader
+	func createSongPreviewCollectionVC() -> SongPreviewCollectionViewController
 }
 
 class ResultDetailViewController: UIViewController {
@@ -32,15 +33,7 @@ class ResultDetailViewController: UIViewController {
 	private let releaseDateLabel = UILabel()
 	private let copyrightLabel = UILabel()
 	private let itunesStoreButton = UIButton()
-	private let previewCollectionVC: SongPreviewCollectionViewController = {
-		let layout = UICollectionViewFlowLayout()
-		layout.scrollDirection = .horizontal
-		layout.sectionInset = .init(top: 0, left: 0, bottom: 0, right: 0)
-		layout.minimumLineSpacing = 0
-		layout.minimumInteritemSpacing = 0
-
-		return SongPreviewCollectionViewController(collectionViewLayout: layout)
-	}()
+	private lazy var previewCollectionVC = coordinator.createSongPreviewCollectionVC()
 
 	// MARK: - Lifecycle
 	init(musicResultVM: MusicResultViewModel, coordinator: ResultDetailViewControllerCoordinator) {

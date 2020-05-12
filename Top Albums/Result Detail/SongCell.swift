@@ -58,6 +58,11 @@ class SongCell: UICollectionViewCell {
 		set {
 			_isSelected = newValue
 			progress = 0
+			selectedUpdated()
 		}
+	}
+
+	private func selectedUpdated() {
+		songPreviewView.backingColor = isSelected ? .tertiarySystemBackground : .secondarySystemBackground
 	}
 }

@@ -8,9 +8,8 @@
 
 import Foundation
 
-struct SongResultViewModel {
+struct SongResultViewModel: Equatable {
 	let songResult: SongResult
-	var loader: ImageLoader?
 
 	private static let currencyFormatter: NumberFormatter = {
 		let formatter = NumberFormatter()
@@ -37,15 +36,5 @@ struct SongResultViewModel {
 
 	var price: String? {
 		Self.currencyFormatter.string(from: songResult.trackPrice as NSNumber)
-	}
-
-	var previewData: Data?
-
-	func loadPreview() {
-		guard loader != nil else {
-			print("Can't get preview data for song without a loader")
-			return
-		}
-		// do the loading here
 	}
 }

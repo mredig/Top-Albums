@@ -25,6 +25,11 @@ class SongPreviewView: UIView {
 		set { progressView.progress = newValue }
 	}
 
+	var backingColor: UIColor? {
+		get { coloredBackground.backgroundColor }
+		set { coloredBackground.backgroundColor = newValue } 
+	}
+
 	private let titleLabel = UILabel()
 	private let artistLabel = UILabel()
 	private let progressView = UIProgressView()

@@ -12,6 +12,6 @@ import NetworkHandler
 protocol SongPreviewLoader {
 
 	func fetchPreviewList(for album: MusicResultViewModel, completion: @escaping (Result<[SongResult], NetworkError>) -> Void)
-	func fetchPreview(for song: SongResultViewModel, completion: @escaping (Result<Data, NetworkError>) -> Void)
+	func fetchPreview(for song: SongResultViewModel, completion: @escaping (Result<Data, NetworkError>) -> Void) -> NetworkLoadingTask
 
 }

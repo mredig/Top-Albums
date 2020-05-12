@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import NetworkHandler
+import AVFoundation
+
+protocol SongPreviewCollectionViewControllerCoordinator: AnyObject {
+	func getSongPreviewLoader() -> SongPreviewLoader
+}
 
 class SongPreviewCollectionViewController: UICollectionViewController {
+
+	let coordinator: SongPreviewCollectionViewControllerCoordinator
 
 	var songPreviews = [SongResult]() {
 		didSet {
@@ -19,19 +27,22 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 	private let prototypeSongView = SongPreviewView()
 	private var sizeCache = [IndexPath: CGSize]()
 
-	override init(collectionViewLayout layout: UICollectionViewLayout) {
+	private var playingSong: SongResultViewModel?
+	private var currentPreviewLoad: NetworkLoadingTask?
+	private var audioPlayer: AVAudioPlayer?
+
+	init(collectionViewLayout layout: UICollectionViewLayout, coordinator: SongPreviewCollectionViewControllerCoordinator) {
+		self.coordinator = coordinator
 		super.init(collectionViewLayout: layout)
 		commonInit()
 	}
 
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		commonInit()
+	override init(collectionViewLayout layout: UICollectionViewLayout) {
+		fatalError("Not implemented")
 	}
 
 	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		commonInit()
+		fatalError("Not implemented")
 	}
 
 	private func commonInit() {
@@ -64,13 +75,50 @@ extension SongPreviewCollectionViewController {
 		guard let songCell = cell as? SongCell else { return cell }
 
 		let song = songPreviews[indexPath.item]
-		let songVM = SongResultViewModel(songResult: song, loader: nil, previewData: nil)
+		let songVM = SongResultViewModel(songResult: song)
 
 		songCell.artist = songVM.artistName
 		songCell.title = songVM.trackName
 		songCell.progress = 0
 
 		return songCell
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let song = songPreviews[indexPath.item]
+		let songVM = SongResultViewModel(songResult: song)
+
+
+		// if any song is playing, stop it
+		defer { stopAudio() }
+		// if selected song is different than the last, start download
+		guard songVM != playingSong else { return }
+
+		let loader = coordinator.getSongPreviewLoader()
+		currentPreviewLoad?.cancel()
+		currentPreviewLoad = loader.fetchPreview(for: songVM, completion: { [weak self] result in
+			do {
+				// play song once downloaded
+				let songData = try result.get()
+				let player = try AVAudioPlayer(data: songData)
+				self?.playAudio(with: player, song: songVM)
+			} catch {
+				print("Error loading song preview: \(error)")
+			}
+		})
+	}
+
+	private func playAudio(with player: AVAudioPlayer, song: SongResultViewModel) {
+		playingSong = song
+		audioPlayer = player
+		audioPlayer?.play()
+	}
+
+	private func stopAudio() {
+		guard let song = playingSong, let index = songPreviews.firstIndex(of: song.songResult) else { return }
+		audioPlayer?.stop()
+		collectionView.deselectItem(at: IndexPath(item: index, section: 0), animated: true)
+		playingSong = nil
 	}
 }
 
@@ -81,7 +129,7 @@ extension SongPreviewCollectionViewController: UICollectionViewDelegateFlowLayou
 		}
 
 		let song = songPreviews[indexPath.item]
-		let songVM = SongResultViewModel(songResult: song, loader: nil, previewData: nil)
+		let songVM = SongResultViewModel(songResult: song)
 
 		prototypeSongView.artist = songVM.artistName
 		prototypeSongView.title = songVM.trackName
@@ -89,6 +137,12 @@ extension SongPreviewCollectionViewController: UICollectionViewDelegateFlowLayou
 		let size = prototypeSongView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
 		sizeCache[indexPath] = size
 		return size
+	}
+}
+
+extension SongPreviewCollectionViewController: AVAudioPlayerDelegate {
+	func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+		stopAudio()
 	}
 }
 
