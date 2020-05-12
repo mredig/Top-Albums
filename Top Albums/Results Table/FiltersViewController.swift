@@ -85,6 +85,7 @@ class FiltersViewController: UIViewController {
 		serviceSegmentedControl.insertSegment(withTitle: "Music", at: 0, animated: false)
 		serviceSegmentedControl.insertSegment(withTitle: "iTunes", at: 1, animated: false)
 		serviceSegmentedControl.addTarget(self, action: #selector(serviceSegmentedControlChanged(_:)), for: .valueChanged)
+		serviceSegmentedControl.setupAccessibilityIdentifier(on: self, id: "ServiceSelector")
 
 		currentOptions = coordinator.searchOptions
 

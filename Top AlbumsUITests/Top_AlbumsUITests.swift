@@ -10,6 +10,10 @@ import XCTest
 
 class Top_AlbumsUITests: XCTestCase {
 
+	override func setUp() {
+		continueAfterFailure = false
+	}
+
 	private static func fileData(for resourceNamed: String, withExtension fileExtension: String) -> Data? {
 		let bundle = Bundle(for: Self.self)
 		guard let url = bundle.url(forResource: resourceNamed, withExtension: fileExtension) else { return nil }
@@ -120,14 +124,19 @@ class Top_AlbumsUITests: XCTestCase {
 		waitForHittable(element: picker)
 		XCTAssertTrue(picker.exists)
 
-		let service = picker.pickerWheels.element(boundBy: 0)
-		let list = picker.pickerWheels.element(boundBy: 1)
+		let iTunesServiceButton = app
+			.segmentedControls["FiltersViewController.ServiceSelector"]
+			.buttons["iTunes"]
 
-		// set to non default option and confirm choices
-		service.adjust(toPickerWheelValue: "iTunes")
+		waitForHittable(element: iTunesServiceButton)
+		XCTAssertTrue(iTunesServiceButton.exists)
+		iTunesServiceButton.tap()
+
+
+		let list = picker.pickerWheels.element(boundBy: 0)
+
 		list.adjust(toPickerWheelValue: "Hot Tracks")
 
-		XCTAssertTrue(service.value as? String == "iTunes")
 		XCTAssertTrue(list.value as? String == "Hot Tracks")
 
 		let explicitButton = app.switches["FiltersViewController.ExplicitnessToggle"]
@@ -152,9 +161,9 @@ class Top_AlbumsUITests: XCTestCase {
 		waitForHittable(element: optionsButton)
 		optionsButton.tap()
 
-		let itunesPicker = app.pickerWheels["iTunes"]
-		waitForExists(element: itunesPicker)
-		XCTAssertTrue(itunesPicker.exists)
+		waitForHittable(element: iTunesServiceButton)
+		XCTAssertTrue(iTunesServiceButton.exists)
+		XCTAssertTrue(iTunesServiceButton.isSelected)
 
 		let hotTracksPicker = app.pickerWheels["Hot Tracks"]
 		waitForExists(element: hotTracksPicker)
