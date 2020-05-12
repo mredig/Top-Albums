@@ -28,6 +28,10 @@
 		33603473246A4219004BFCD1 /* SongResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33603472246A4219004BFCD1 /* SongResultViewModel.swift */; };
 		33603475246A4C19004BFCD1 /* samplePreview.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 33603474246A4C14004BFCD1 /* samplePreview.m4a */; };
 		33603476246A4C19004BFCD1 /* samplePreview.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 33603474246A4C14004BFCD1 /* samplePreview.m4a */; };
+		33603478246A5174004BFCD1 /* SongPreviewLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33603477246A5174004BFCD1 /* SongPreviewLoader.swift */; };
+		3360347A246A5360004BFCD1 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33603479246A5360004BFCD1 /* SongCell.swift */; };
+		3360347C246A549C004BFCD1 /* SongPreviewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360347B246A549C004BFCD1 /* SongPreviewCollectionViewController.swift */; };
+		3360347E246A6E53004BFCD1 /* SongPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360347D246A6E53004BFCD1 /* SongPreviewView.swift */; };
 		338913F324691C8700C8FC2F /* TestingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338913F224691C8700C8FC2F /* TestingSupport.swift */; };
 		338913F824691F5F00C8FC2F /* TestingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338913F224691C8700C8FC2F /* TestingSupport.swift */; };
 		33AC19FE24649CD8007F2CEC /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC19FD24649CD8007F2CEC /* TitleView.swift */; };
@@ -98,6 +102,10 @@
 		33603470246A36F1004BFCD1 /* SongResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongResult.swift; sourceTree = "<group>"; };
 		33603472246A4219004BFCD1 /* SongResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongResultViewModel.swift; sourceTree = "<group>"; };
 		33603474246A4C14004BFCD1 /* samplePreview.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = samplePreview.m4a; sourceTree = "<group>"; };
+		33603477246A5174004BFCD1 /* SongPreviewLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPreviewLoader.swift; sourceTree = "<group>"; };
+		33603479246A5360004BFCD1 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
+		3360347B246A549C004BFCD1 /* SongPreviewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPreviewCollectionViewController.swift; sourceTree = "<group>"; };
+		3360347D246A6E53004BFCD1 /* SongPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPreviewView.swift; sourceTree = "<group>"; };
 		338913F224691C8700C8FC2F /* TestingSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSupport.swift; sourceTree = "<group>"; };
 		33AC19FD24649CD8007F2CEC /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		33AC1A052464B8FA007F2CEC /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
@@ -209,6 +217,9 @@
 			isa = PBXGroup;
 			children = (
 				33AC1A102464E7CF007F2CEC /* ResultDetailViewController.swift */,
+				3360347B246A549C004BFCD1 /* SongPreviewCollectionViewController.swift */,
+				33603479246A5360004BFCD1 /* SongCell.swift */,
+				3360347D246A6E53004BFCD1 /* SongPreviewView.swift */,
 			);
 			path = "Result Detail";
 			sourceTree = "<group>";
@@ -251,6 +262,7 @@
 			children = (
 				3339DA7C246375C2001CC492 /* iTunesAPIController.swift */,
 				33AC1A0D2464D32D007F2CEC /* ImageLoader.swift */,
+				33603477246A5174004BFCD1 /* SongPreviewLoader.swift */,
 				333B8F15246530E000AE2126 /* LoadingIndicator.swift */,
 				33F14E81246A1B4A00D7B412 /* Array+Optional.swift */,
 			);
@@ -438,11 +450,15 @@
 				333B8F1A2466068900AE2126 /* LargeTitleNavigationController.swift in Sources */,
 				33B2157A2463818900CA64ED /* Coordinator.swift in Sources */,
 				33F14E82246A1B4A00D7B412 /* Array+Optional.swift in Sources */,
+				3360347C246A549C004BFCD1 /* SongPreviewCollectionViewController.swift in Sources */,
 				33EDBD4D24665F060022F8EB /* MusicResultViewModel.swift in Sources */,
 				33AC1A0E2464D32D007F2CEC /* ImageLoader.swift in Sources */,
 				33AC1A112464E7CF007F2CEC /* ResultDetailViewController.swift in Sources */,
+				33603478246A5174004BFCD1 /* SongPreviewLoader.swift in Sources */,
 				3339DA6824636D1E001CC492 /* ResultsViewController.swift in Sources */,
+				3360347E246A6E53004BFCD1 /* SongPreviewView.swift in Sources */,
 				33603473246A4219004BFCD1 /* SongResultViewModel.swift in Sources */,
+				3360347A246A5360004BFCD1 /* SongCell.swift in Sources */,
 				333B8F16246530E000AE2126 /* LoadingIndicator.swift in Sources */,
 				33B2158224638A2E00CA64ED /* MusicResult.swift in Sources */,
 				3339DA7D246375C2001CC492 /* iTunesAPIController.swift in Sources */,

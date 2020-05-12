@@ -79,7 +79,7 @@ extension iTunesAPIController: ImageLoader {
 	}
 }
 
-extension iTunesAPIController {
+extension iTunesAPIController: SongPreviewLoader {
 	func fetchPreviewList(for album: MusicResultViewModel, completion: @escaping (Result<[SongResult], NetworkError>) -> Void) {
 		guard album.kind == "album", let id = album.id else { return }
 

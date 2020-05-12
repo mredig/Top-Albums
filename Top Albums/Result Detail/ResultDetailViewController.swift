@@ -10,6 +10,7 @@ import UIKit
 
 protocol ResultDetailViewControllerCoordinator {
 	func getImageLoader() -> ImageLoader
+	func getSongPreviewLoader() -> SongPreviewLoader
 }
 
 class ResultDetailViewController: UIViewController {
@@ -31,6 +32,15 @@ class ResultDetailViewController: UIViewController {
 	private let releaseDateLabel = UILabel()
 	private let copyrightLabel = UILabel()
 	private let itunesStoreButton = UIButton()
+	private let previewCollectionVC: SongPreviewCollectionViewController = {
+		let layout = UICollectionViewFlowLayout()
+		layout.scrollDirection = .horizontal
+		layout.sectionInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+		layout.minimumLineSpacing = 0
+		layout.minimumInteritemSpacing = 0
+
+		return SongPreviewCollectionViewController(collectionViewLayout: layout)
+	}()
 
 	// MARK: - Lifecycle
 	init(musicResultVM: MusicResultViewModel, coordinator: ResultDetailViewControllerCoordinator) {
@@ -40,6 +50,7 @@ class ResultDetailViewController: UIViewController {
 		configureLayout()
 		configureLabels()
 		configureInteraction()
+		configureSongPreviews()
 
 		updateViews()
 	}
@@ -55,7 +66,7 @@ class ResultDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		view.backgroundColor = .secondarySystemBackground
+		view.backgroundColor = .systemBackground
     }
 
 	private func configureLayout() {
@@ -72,10 +83,10 @@ class ResultDetailViewController: UIViewController {
 		clearView.translatesAutoresizingMaskIntoConstraints = false
 		scrollView.addSubview(clearView)
 
-
+		addChild(previewCollectionVC)
 		let stack = UIStackView(arrangedSubviews: [genreLabel,
 												   releaseDateLabel,
-												   UIView(),
+												   previewCollectionVC.view,
 												   copyrightLabel
 		])
 		stack.axis = .vertical
@@ -83,10 +94,11 @@ class ResultDetailViewController: UIViewController {
 		stack.distribution = .fill
 		stack.spacing = UIStackView.spacingUseSystem
 		stack.translatesAutoresizingMaskIntoConstraints = false
+		previewCollectionVC.didMove(toParent: self)
 
 		let wrapper = UIView()
 		wrapper.translatesAutoresizingMaskIntoConstraints = false
-		wrapper.backgroundColor = .secondarySystemBackground
+		wrapper.backgroundColor = .systemBackground
 		wrapper.addSubview(stack)
 		scrollView.addSubview(wrapper)
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,10 +115,12 @@ class ResultDetailViewController: UIViewController {
 			clearView.topAnchor.constraint(equalTo: scrollView.topAnchor),
 			clearView.heightAnchor.constraint(equalTo: albumImageView.heightAnchor, constant: -8),
 
+			previewCollectionVC.view.heightAnchor.constraint(equalToConstant: 250),
+
 			scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			scrollView.bottomAnchor.constraint(equalTo: itunesStoreButton.topAnchor, constant: -16),
 
 			wrapper.topAnchor.constraint(equalTo: clearView.bottomAnchor),
 			wrapper.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
@@ -150,6 +164,17 @@ class ResultDetailViewController: UIViewController {
 
 	private func configureInteraction() {
 		itunesStoreButton.addTarget(self, action: #selector(itunesButtonPressed(_:)), for: .touchUpInside)
+	}
+
+	private func configureSongPreviews() {
+		switch musicResultVM.kind {
+		case "album":
+			print("load album preview")
+		case "song":
+			print("load song preview")
+		default:
+			break
+		}
 	}
 
 	private func updateViews() {

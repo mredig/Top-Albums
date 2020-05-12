@@ -120,7 +120,11 @@ extension MainCoordinator: FiltersViewControllerCoordinator {
 	}
 }
 
-extension MainCoordinator: ResultDetailViewControllerCoordinator {}
+extension MainCoordinator: ResultDetailViewControllerCoordinator {
+	func getSongPreviewLoader() -> SongPreviewLoader {
+		iTunesApi
+	}
+}
 
 extension MainCoordinator: UINavigationControllerDelegate {}
 
