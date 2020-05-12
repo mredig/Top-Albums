@@ -65,4 +65,9 @@ class SongCell: UICollectionViewCell {
 	private func selectedUpdated() {
 		songPreviewView.backingColor = isSelected ? .tertiarySystemBackground : .secondarySystemBackground
 	}
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		progress = 0
+	}
 }

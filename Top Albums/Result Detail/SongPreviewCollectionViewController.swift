@@ -30,6 +30,7 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 	private var playingSong: SongResultViewModel?
 	private var currentPreviewLoad: NetworkLoadingTask?
 	private var audioPlayer: AVAudioPlayer?
+	private var audioTimer: Timer?
 
 	init(collectionViewLayout layout: UICollectionViewLayout, coordinator: SongPreviewCollectionViewControllerCoordinator) {
 		self.coordinator = coordinator
@@ -88,7 +89,6 @@ extension SongPreviewCollectionViewController {
 		let song = songPreviews[indexPath.item]
 		let songVM = SongResultViewModel(songResult: song)
 
-
 		// if any song is playing, stop it
 		defer { stopAudio() }
 		// if selected song is different than the last, start download
@@ -111,7 +111,21 @@ extension SongPreviewCollectionViewController {
 	private func playAudio(with player: AVAudioPlayer, song: SongResultViewModel) {
 		playingSong = song
 		audioPlayer = player
+		audioPlayer?.delegate = self
 		audioPlayer?.play()
+
+		DispatchQueue.main.async {
+			self.audioTimer = Timer.scheduledTimer(withTimeInterval: 1/30, repeats: true, block: { [weak self] _ in
+				guard let self = self else { return }
+				guard let song = self.playingSong,
+					let player = self.audioPlayer,
+					let index = self.songPreviews.firstIndex(of: song.songResult),
+					let cell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)),
+					let songCell = cell as? SongCell else { return }
+
+				songCell.progress = Float(player.currentTime / player.duration)
+			})
+		}
 	}
 
 	private func stopAudio() {
@@ -119,6 +133,9 @@ extension SongPreviewCollectionViewController {
 		audioPlayer?.stop()
 		collectionView.deselectItem(at: IndexPath(item: index, section: 0), animated: true)
 		playingSong = nil
+
+		audioTimer?.invalidate()
+		audioTimer = nil
 	}
 }
 
