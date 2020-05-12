@@ -162,6 +162,34 @@ class iTunesAPITests: XCTestCase {
 		XCTAssertEqual(fullSizeData, expectedFullData)
 	}
 
+	func testSongPreviewsFetch() throws {
+		let myExpectation = expectation(description: "netload")
+		guard let lilTjayVM = lilTjayVM() else { return }
+
+		let apiController = iTunesAPIController(baseURLString: "https://rss.itunes.apple.com/api/v1/us/", session: serverSessionSimulator)
+
+		var theResult: Result<[SongResult], NetworkError>?
+		apiController.fetchPreviewList(for: lilTjayVM) { result in
+			theResult = result
+			myExpectation.fulfill()
+		}
+		wait(for: [myExpectation], timeout: 10)
+
+		XCTAssertNoThrow(try theResult?.get())
+
+		let allResults = try theResult?.get()
+		guard let firstSong = allResults?.first else {
+			XCTFail("No song")
+			return
+		}
+
+		let songVM = SongResultViewModel(songResult: firstSong, loader: nil, previewData: nil)
+		XCTAssertEqual("Lil Tjay", songVM.artistName)
+		XCTAssertEqual("State of Emergency", songVM.collectionName)
+		XCTAssertEqual("Ice Cold", songVM.trackName)
+		XCTAssertEqual("$1.29", songVM.price)
+	}
+
 	/// Tests that a bad URL is handled correctly.
 	func testBadURL() {
 		let myExpectation = expectation(description: "netload")

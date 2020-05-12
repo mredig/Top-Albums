@@ -78,3 +78,25 @@ extension iTunesAPIController: ImageLoader {
 		return networkHandler.transferMahDatas(with: request, usingCache: true, session: session, completion: completion)
 	}
 }
+
+extension iTunesAPIController {
+	func fetchPreviewList(for album: MusicResultViewModel, completion: @escaping (Result<[SongResult], NetworkError>) -> Void) {
+		guard album.kind == "album", let id = album.id else { return }
+
+		var components = URLComponents(string: "https://itunes.apple.com/lookup")
+		let idQuery = URLQueryItem(name: "id", value: "\(id)")
+		let entityQuery = URLQueryItem(name: "entity", value: "song")
+		components?.queryItems = [idQuery, entityQuery]
+
+		guard let url = components?.url else { return }
+
+		networkHandler.transferMahCodableDatas(with: url.request, session: session) { (result: Result<SongResults, NetworkError>) in
+			switch result {
+			case .success(let allResults):
+				completion(.success(allResults.results))
+			case .failure(let error):
+				completion(.failure(error))
+			}
+		}
+	}
+}

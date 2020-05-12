@@ -30,6 +30,7 @@ class ServerSideSimulator {
 		URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.json"): top10AppleMusicComingSoonNE,
 		URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/200x200bb.png"): try? Data(contentsOf: sampleImageURL(for: "sampleImage")),
 		URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/1024x1024bb.png"): try? Data(contentsOf: sampleImageURL(for: "sampleImageLarge")),
+		URL(string: "https://itunes.apple.com/lookup?id=1511995770&entity=song"): sampleSongPreviewsJSON
 	]
 
 	private static func sampleImageURL(for resourceNamed: String) -> URL {
