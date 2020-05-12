@@ -24,17 +24,20 @@ class iTunesAPITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-	func lilTjayVM() -> MusicResultViewModel? {
-		guard let sourceData = top10AppleMusicAlbumsNE else {
-			return nil
-		}
+	func lilTjayMusicResultVM() -> MusicResultViewModel? {
+		guard let sourceData = top10AppleMusicAlbumsNE else { return nil }
 		let musicResultsDict = try? JSONDecoder().decode([String: MusicResults].self, from: sourceData)
-		guard let musicResults = musicResultsDict?["feed"] else {
-			return nil
-		}
+		guard let musicResults = musicResultsDict?["feed"] else { return nil }
 
-		let lilTjayResultVM = MusicResultViewModel(musicResult: musicResults.results[0])
-		return lilTjayResultVM
+		return MusicResultViewModel(musicResult: musicResults.results[0])
+	}
+
+	func lilTjaySongResultVM() -> SongResultViewModel? {
+		guard let sourceData = sampleSongPreviewsJSON else { return nil }
+		let songResults = try? JSONDecoder().decode(SongResults.self, from: sourceData)
+		guard let first = songResults?.results.first else { return nil }
+
+		return SongResultViewModel(songResult: first, loader: nil, previewData: nil)
 	}
 
 	func testURLGeneration() {
@@ -113,7 +116,7 @@ class iTunesAPITests: XCTestCase {
 
 	/// Tests that image fetching works, again using ServerSideSimualtor
 	func testImageFetching() {
-		guard let lilTjayResultVM = lilTjayVM() else {
+		guard let lilTjayResultVM = lilTjayMusicResultVM() else {
 			XCTFail("Problem getting json object")
 			return
 		}
@@ -164,7 +167,7 @@ class iTunesAPITests: XCTestCase {
 
 	func testSongPreviewsFetch() throws {
 		let myExpectation = expectation(description: "netload")
-		guard let lilTjayVM = lilTjayVM() else { return }
+		guard let lilTjayVM = lilTjayMusicResultVM() else { return }
 
 		let apiController = iTunesAPIController(baseURLString: "https://rss.itunes.apple.com/api/v1/us/", session: serverSessionSimulator)
 
@@ -188,6 +191,32 @@ class iTunesAPITests: XCTestCase {
 		XCTAssertEqual("State of Emergency", songVM.collectionName)
 		XCTAssertEqual("Ice Cold", songVM.trackName)
 		XCTAssertEqual("$1.29", songVM.price)
+	}
+
+	func testSongPreviewFetch() throws {
+		let myExpectation = expectation(description: "netload")
+		guard let lilTjayVM = lilTjaySongResultVM() else { return }
+
+		let apiController = iTunesAPIController(baseURLString: "https://rss.itunes.apple.com/api/v1/us/", session: serverSessionSimulator)
+
+		var theResult: Result<Data, NetworkError>?
+		apiController.fetchPreview(for: lilTjayVM) { result in
+			theResult = result
+			myExpectation.fulfill()
+		}
+		wait(for: [myExpectation], timeout: 10)
+
+		XCTAssertNoThrow(try theResult?.get())
+
+		let bundle = Bundle(for: Self.self)
+		guard let expectedSamplePreviewURL = bundle.url(forResource: "samplePreview", withExtension: "m4a") else {
+			XCTFail("Preview resources not found in bundle")
+			return
+		}
+
+		let expectedSamplePreview = try Data(contentsOf: expectedSamplePreviewURL)
+
+		XCTAssertEqual(expectedSamplePreview, try theResult?.get())
 	}
 
 	/// Tests that a bad URL is handled correctly.

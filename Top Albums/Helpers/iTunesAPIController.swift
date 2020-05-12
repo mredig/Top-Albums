@@ -99,4 +99,9 @@ extension iTunesAPIController {
 			}
 		}
 	}
+
+	func fetchPreview(for song: SongResultViewModel, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+		let request = song.previewURL.request
+		networkHandler.transferMahDatas(with: request, session: session, completion: completion)
+	}
 }

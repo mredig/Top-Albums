@@ -24,18 +24,35 @@ class ServerSideSimulator {
 		return session
 	}()
 
-	private static let serverTable = [
-		URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/10/non-explicit.json"): top10AppleMusicAlbumsNE,
-		URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/10/explicit.json"): top10AppleMusicAlbumsE,
-		URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.json"): top10AppleMusicComingSoonNE,
-		URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/200x200bb.png"): try? Data(contentsOf: sampleImageURL(for: "sampleImage")),
-		URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/1024x1024bb.png"): try? Data(contentsOf: sampleImageURL(for: "sampleImageLarge")),
-		URL(string: "https://itunes.apple.com/lookup?id=1511995770&entity=song"): sampleSongPreviewsJSON
-	]
+	private static let serverTable: [URL?: Data?] = {
+		let urls = [
+			URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/10/non-explicit.json"),
+			URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/top-albums/all/10/explicit.json"),
+			URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.json"),
+			URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/200x200bb.png"),
+			URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/e8/cb/4a/e8cb4a95-7b2b-d490-0ff6-519e77129381/886448462880.jpg/1024x1024bb.png"),
+			URL(string: "https://itunes.apple.com/lookup?id=1511995770&entity=song"),
+			URL(string: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/2b/b0/3e/2bb03ea0-ac15-f265-633c-9acf88f71928/mzaf_746631026398828737.plus.aac.p.m4a")
+			].compactMap { $0 }
 
-	private static func sampleImageURL(for resourceNamed: String) -> URL {
+		let data = [
+			top10AppleMusicAlbumsNE,
+			top10AppleMusicAlbumsE,
+			top10AppleMusicComingSoonNE,
+			try? Data(contentsOf: sampleFileURL(for: "sampleImage", fileExtension: "png")),
+			try? Data(contentsOf: sampleFileURL(for: "sampleImageLarge", fileExtension: "png")),
+			sampleSongPreviewsJSON,
+			try? Data(contentsOf: sampleFileURL(for: "samplePreview", fileExtension: "m4a")),
+		]
+
+		var dict: [URL?: Data?] = [:]
+		zip(urls, data).forEach { dict[$0.0] = $0.1 }
+		return dict
+	}()
+
+	private static func sampleFileURL(for resourceNamed: String, fileExtension: String) -> URL {
 		let bundle = Bundle(for: Self.self)
-		guard let url = bundle.url(forResource: resourceNamed, withExtension: "png") else { fatalError("Missing image named: \(resourceNamed)") }
+		guard let url = bundle.url(forResource: resourceNamed, withExtension: fileExtension) else { fatalError("Missing file named: \(resourceNamed)") }
 		return url
 	}
 
