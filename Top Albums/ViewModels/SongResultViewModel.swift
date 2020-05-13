@@ -14,7 +14,6 @@ struct SongResultViewModel: Equatable {
 	private static let currencyFormatter: NumberFormatter = {
 		let formatter = NumberFormatter()
 		formatter.numberStyle = .currency
-		formatter.locale = NSLocale.current
 		return formatter
 	}()
 
