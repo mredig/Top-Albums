@@ -128,28 +128,26 @@ class iTunesAPITests: XCTestCase {
 		let thumbnailExpectation = expectation(description: "image1Exp")
 		let fullSizeExpectation = expectation(description: "image2Exp")
 
-		var thumbnailData: Data?
-		var fullSizeData: Data?
+		var thumbnailResult: Result<Data, NetworkError>?
+		var fullSizeResult: Result<Data, NetworkError>?
 
 		_ = imageLoader.fetchImage(for: lilTjayResultVM, attemptHighRes: false) { result in
-			do {
-				thumbnailData = try result.get()
-			} catch {
-				XCTFail("Thumbnail image fetch broken")
-			}
+			thumbnailResult = result
 			thumbnailExpectation.fulfill()
 		}
 
 		_ = imageLoader.fetchImage(for: lilTjayResultVM, attemptHighRes: true) { result in
-			do {
-				fullSizeData = try result.get()
-			} catch {
-				XCTFail("Thumbnail image fetch broken")
-			}
+			fullSizeResult = result
 			fullSizeExpectation.fulfill()
 		}
 
 		wait(for: [thumbnailExpectation, fullSizeExpectation], timeout: 2)
+
+		var thumbnailData: Data?
+		var fullSizeData: Data?
+
+		XCTAssertNoThrow(thumbnailData = try thumbnailResult?.get())
+		XCTAssertNoThrow(fullSizeData = try fullSizeResult?.get())
 
 		let bundle = Bundle(for: Self.self)
 		guard let thumbURL = bundle.url(forResource: "sampleImage", withExtension: "png"),
