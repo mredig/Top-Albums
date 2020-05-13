@@ -52,17 +52,14 @@ class SongCell: UICollectionViewCell {
 		])
 	}
 
-	private var _isSelected: Bool = false
 	override var isSelected: Bool {
-		get { _isSelected }
-		set {
-			_isSelected = newValue
-			progress = 0
+		didSet {
 			selectedUpdated()
 		}
 	}
 
 	private func selectedUpdated() {
+		progress = 0
 		songPreviewView.backingColor = isSelected ? .tertiarySystemBackground : .secondarySystemBackground
 	}
 
