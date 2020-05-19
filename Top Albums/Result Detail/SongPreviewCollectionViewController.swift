@@ -66,8 +66,8 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 
 		DispatchQueue.main.async {
 			self.audioTimer = Timer.scheduledTimer(withTimeInterval: 1/30, repeats: true, block: { [weak self] _ in
-				guard let self = self else { return }
-				guard let song = self.playingSong,
+				guard let self = self,
+					let song = self.playingSong,
 					let player = self.audioPlayer,
 					let index = self.songPreviews.firstIndex(of: song.songResult),
 					let cell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)),
