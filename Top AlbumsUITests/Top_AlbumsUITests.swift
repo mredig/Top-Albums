@@ -8,6 +8,8 @@
 
 import XCTest
 
+/// In the current iteration, mocking isn't working on these UI tests if tested on a real device due to sandboxing
+/// constraints. (the source mocked data resides in the UITest sandbox and the app doesn't get access to that.
 class Top_AlbumsUITests: XCTestCase {
 
 	override func setUp() {
