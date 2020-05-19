@@ -200,7 +200,7 @@ class iTunesAPITests: XCTestCase {
 		let apiController = iTunesAPIController(baseURLString: "https://rss.itunes.apple.com/api/v1/us/", session: serverSessionSimulator)
 
 		var theResult: Result<Data, NetworkError>?
-		apiController.fetchPreview(for: lilTjayVM) { result in
+		_ = apiController.fetchPreview(for: lilTjayVM) { result in
 			theResult = result
 			myExpectation.fulfill()
 		}
