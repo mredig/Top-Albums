@@ -23,7 +23,11 @@ class MainCoordinator: NSObject, Coordinator {
 		if let mockBlockPointer = ProcessInfo.processInfo.decode(MockBlockPointer.self) {
 			// Avoid arbitrary load vulnerability in production app
 			#if DEBUG
-			try? mockBlockPointer.load(cleanup: false)
+			do {
+				try mockBlockPointer.load(cleanup: false)
+			} catch {
+				print("Error loading mockblock: \(error)")
+			}
 
 			let mockingSession = NetworkMockingSession { request -> (Data?, Int, Error?) in
 				guard let resource = mockBlockPointer.mockBlock?.resource(for: request) else { return (nil, 404, nil) }
