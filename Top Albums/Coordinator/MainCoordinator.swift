@@ -20,21 +20,21 @@ class MainCoordinator: NSObject, Coordinator {
 	private let iTunesApi: iTunesAPIController = {
 		let baseURLString = "https://rss.itunes.apple.com/api/v1/us/"
 		let session: NetworkLoader
-		if let mockBlockPointer = ProcessInfo.processInfo.decode(MockBlockPointer.self) {
+		if let mockBlockPlist = UIPasteboard.general.data(forPasteboardType: "mockBlock/plist") {
 			// Avoid arbitrary load vulnerability in production app
 			#if DEBUG
 			do {
-				try mockBlockPointer.load(cleanup: false)
+				let mockBlock = try PropertyListDecoder().decode(MockBlock.self, from: mockBlockPlist)
+				let mockingSession = NetworkMockingSession { request -> (Data?, Int, Error?) in
+					guard let resource = mockBlock.resource(for: request) else { return (nil, 404, nil) }
+					return (resource.data, resource.responseCode, nil)
+				}
+
+				session = mockingSession
 			} catch {
 				print("Error loading mockblock: \(error)")
+				session = URLSession.shared
 			}
-
-			let mockingSession = NetworkMockingSession { request -> (Data?, Int, Error?) in
-				guard let resource = mockBlockPointer.mockBlock?.resource(for: request) else { return (nil, 404, nil) }
-				return (resource.data, resource.responseCode, nil)
-			}
-
-			session = mockingSession
 			#else
 			session = URLSession.shared
 			#endif

@@ -74,14 +74,11 @@ class Top_AlbumsUITests: XCTestCase {
 
 	func launchApp() throws -> XCUIApplication {
 		let app = XCUIApplication()
-		let mockPointer = MockBlockPointer(mockBlock: loadMockBlock())
-		try mockPointer.save()
-		guard let mockPointerString = mockPointer.jsonString else {
-			XCTFail("Error setting up mock data")
-			app.launch()
-			return app
-		}
-		app.launchEnvironment = [MockBlockPointer.identifier: mockPointerString]
+
+		let mockBlock = loadMockBlock()
+		let plist = try PropertyListEncoder().encode(mockBlock)
+		UIPasteboard.general.setData(plist, forPasteboardType: "mockBlock/plist")
+
 		app.launch()
 		return app
 	}

@@ -9,40 +9,7 @@
 import Foundation
 import UIKit
 
-protocol TypeIdentifiable {
-	static var identifier: String { get }
-}
-
-extension TypeIdentifiable {
-	static var identifier: String {
-		String(describing: self)
-	}
-}
-
-fileprivate extension JSONDecoder {
-	func decode<T: Decodable>(_ type: T.Type, from json: String) throws -> T {
-		guard let data = json.data(using: .utf8) else {
-			throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Could not convert String to utf8 Data"))
-		}
-		return try decode(T.self, from: data)
-	}
-}
-
-extension Encodable {
-	var jsonString: String? {
-		guard let jsonData = try? JSONEncoder().encode(self) else { return nil }
-		return String(data: jsonData, encoding: .utf8)
-	}
-}
-
-extension ProcessInfo {
-	func decode<T: TypeIdentifiable & Decodable>(_: T.Type) -> T? {
-		guard let envInfo = environment[T.identifier] else { return nil }
-		return try? JSONDecoder().decode(T.self, from: envInfo)
-	}
-}
-
-struct MockBlock: TypeIdentifiable, Codable {
+struct MockBlock: Codable {
 	private var resources: [MockKey: MockValue] = [:]
 	var verifyHeaders: Bool = false
 
@@ -77,54 +44,6 @@ struct MockBlock: TypeIdentifiable, Codable {
 			return nil
 		}
 		return (resource.data, resource.responseCode)
-	}
-}
-
-
-class MockBlockPointer: TypeIdentifiable, Codable {
-
-	var location: URL?
-
-	enum CodingKeys: String, CodingKey {
-		case location
-	}
-
-	var mockBlock: MockBlock?
-
-	init(mockBlock: MockBlock) {
-		self.mockBlock = mockBlock
-	}
-
-	func save() throws {
-		guard let mockBlock = mockBlock else { return }
-		guard location == nil else {
-			NSLog("There's already a mock block saved")
-			return
-		}
-		let newLocation = URL(fileURLWithPath: NSTemporaryDirectory())
-			.appendingPathComponent("mockblock")
-			.appendingPathExtension("json")
-		location = newLocation
-
-		let json = try JSONEncoder().encode(mockBlock)
-		try json.write(to: newLocation)
-
-		let thisJson = try JSONEncoder().encode(self)
-		guard let thisJsonStr = String(data: thisJson, encoding: .utf8) else { return }
-		print("\nSet the following env variables in your run scheme to manually run with this mock:\n\nKey:\n\(Self.identifier)\nValue:\n\(thisJsonStr)\n\n")
-	}
-
-	func load(cleanup: Bool = true) throws {
-		guard let fileLocation = location else { return }
-		let json = try Data(contentsOf: fileLocation)
-
-		self.mockBlock = try JSONDecoder().decode(MockBlock.self, from: json)
-
-		//cleanup
-		if cleanup {
-			try FileManager.default.removeItem(at: fileLocation)
-			location = nil
-		}
 	}
 }
 
