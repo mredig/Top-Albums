@@ -100,7 +100,7 @@ extension iTunesAPIController: SongPreviewLoader {
 		}
 	}
 
-	func fetchPreview(for song: SongResultViewModel, completion: @escaping (Result<Data, NetworkError>) -> Void) -> NetworkLoadingTask {
+	@discardableResult func fetchPreview(for song: SongResultViewModel, completion: @escaping (Result<Data, NetworkError>) -> Void) -> NetworkLoadingTask {
 		let request = song.previewURL.request
 		return networkHandler.transferMahDatas(with: request, usingCache: true, session: session, completion: completion)
 	}
