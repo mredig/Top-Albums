@@ -50,7 +50,9 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 	}
 
 	private func configureCollectionView() {
-		self.collectionView.register(SongCell.self, forCellWithReuseIdentifier: .songCellReuseIdentifier)
+		collectionView.register(SongCell.self, forCellWithReuseIdentifier: .songCellReuseIdentifier)
+		collectionView.showsVerticalScrollIndicator = false
+		collectionView.showsHorizontalScrollIndicator = false
 	}
 
 	private func updateCollection() {

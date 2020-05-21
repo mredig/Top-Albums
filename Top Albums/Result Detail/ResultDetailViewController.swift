@@ -69,6 +69,8 @@ class ResultDetailViewController: UIViewController {
 
 		let scrollView = UIScrollView()
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.showsVerticalScrollIndicator = false
+		scrollView.showsHorizontalScrollIndicator = false
 		view.addSubview(scrollView)
 
 		let clearView = UIView()
