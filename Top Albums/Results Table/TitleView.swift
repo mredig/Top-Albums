@@ -37,13 +37,6 @@ class TitleView: UIView {
 		stackView.axis = .horizontal
 
 		addSubview(stackView)
-		stackView.translatesAutoresizingMaskIntoConstraints = false
-
-		NSLayoutConstraint.activate([
-			stackView.topAnchor.constraint(equalTo: topAnchor),
-			stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-			stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-		])
+		constrain(subview: stackView)
 	}
 }

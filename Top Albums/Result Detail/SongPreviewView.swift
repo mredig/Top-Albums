@@ -51,6 +51,9 @@ class SongPreviewView: UIView {
 	}
 
 	private func configureLayout() {
+		addSubview(coloredBackground)
+		constrain(subview: coloredBackground)
+
 		// tie break hugging and compression
 		artistLabel.setContentHuggingPriority(.init(252), for: .vertical)
 		artistLabel.setContentCompressionResistancePriority(.init(751), for: .vertical)
@@ -60,29 +63,17 @@ class SongPreviewView: UIView {
 		titleStack.alignment = .fill
 		titleStack.distribution = .fill
 		titleStack.spacing = 0
-		titleStack.translatesAutoresizingMaskIntoConstraints = false
 		titleStack.clipsToBounds = false
 
 		coloredBackground.backgroundColor = .secondarySystemBackground
 		coloredBackground.addSubview(titleStack)
-		coloredBackground.translatesAutoresizingMaskIntoConstraints = false
+		coloredBackground.constrain(subview: titleStack, inset: 8)
 
 		progressView.translatesAutoresizingMaskIntoConstraints = false
 		coloredBackground.addSubview(progressView)
 		translatesAutoresizingMaskIntoConstraints = false
 
-		addSubview(coloredBackground)
 		NSLayoutConstraint.activate([
-			titleStack.topAnchor.constraint(equalTo: coloredBackground.topAnchor, constant: 8),
-			titleStack.bottomAnchor.constraint(equalTo: coloredBackground.bottomAnchor, constant: -8),
-			titleStack.leadingAnchor.constraint(equalTo: coloredBackground.leadingAnchor, constant: 8),
-			titleStack.trailingAnchor.constraint(equalTo: coloredBackground.trailingAnchor, constant: -8),
-
-			coloredBackground.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-			coloredBackground.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-			coloredBackground.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-			coloredBackground.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-
 			progressView.leadingAnchor.constraint(equalTo: coloredBackground.leadingAnchor),
 			progressView.trailingAnchor.constraint(equalTo: coloredBackground.trailingAnchor),
 			progressView.bottomAnchor.constraint(equalTo: coloredBackground.bottomAnchor),

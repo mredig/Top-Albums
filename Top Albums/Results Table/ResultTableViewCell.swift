@@ -55,14 +55,9 @@ class ResultTableViewCell: UITableViewCell {
 		rootStack.distribution = .fill
 		rootStack.spacing = 16
 		contentView.addSubview(rootStack)
-		rootStack.translatesAutoresizingMaskIntoConstraints = false
+		contentView.constrain(subview: rootStack, inset: 8)
 
 		NSLayoutConstraint.activate([
-			rootStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-			rootStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-			rootStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-			rootStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-
 			albumArtView.heightAnchor.constraint(equalToConstant: 76),
 			albumArtView.widthAnchor.constraint(equalTo: albumArtView.heightAnchor),
 		])

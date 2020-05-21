@@ -51,7 +51,6 @@ class FiltersViewController: UIViewController {
 		rootStack.alignment = .fill
 		rootStack.distribution = .fill
 		rootStack.spacing = UIStackView.spacingUseSystem
-		rootStack.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(rootStack)
 
 		rootStack.addArrangedSubview(serviceSegmentedControl)
@@ -60,12 +59,7 @@ class FiltersViewController: UIViewController {
 		feedPicker.delegate = self
 		feedPicker.dataSource = self
 
-		NSLayoutConstraint.activate([
-			rootStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 24),
-			rootStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24),
-			rootStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-			rootStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-		])
+		view.constrain(subview: rootStack, inset: UIEdgeInsets(horizontal: 16, vertical: 24))
 
 		let explicitToggleStack = UIStackView()
 		explicitToggleStack.axis = .horizontal
