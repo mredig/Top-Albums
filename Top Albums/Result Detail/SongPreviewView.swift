@@ -57,7 +57,7 @@ class SongPreviewView: UIView {
 		// tie break hugging and compression
 		artistLabel.setContentHuggingPriority(.init(252), for: .vertical)
 		artistLabel.setContentCompressionResistancePriority(.init(751), for: .vertical)
-		titleLabel.setContentCompressionResistancePriority(.init(751), for: .vertical)
+		titleLabel.setContentCompressionResistancePriority(.init(752), for: .vertical)
 		let titleStack = UIStackView(arrangedSubviews: [titleLabel, artistLabel])
 		titleStack.axis = .vertical
 		titleStack.alignment = .fill
