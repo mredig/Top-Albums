@@ -10,6 +10,9 @@ import Foundation
 import NetworkHandler
 
 class iTunesAPIController {
+
+	static private let iTunesPreviewAPIBaseURL = "https://itunes.apple.com/lookup"
+
 	private let networkHandler = NetworkHandler.default
 	private let session: NetworkLoader
 
@@ -83,7 +86,7 @@ extension iTunesAPIController: SongPreviewLoader {
 	func fetchPreviewList(for album: MusicResultViewModel, completion: @escaping (Result<[SongResult], NetworkError>) -> Void) {
 		guard album.kind == "album", let id = album.id else { return }
 
-		var components = URLComponents(string: "https://itunes.apple.com/lookup")
+		var components = URLComponents(string: Self.iTunesPreviewAPIBaseURL)
 		let idQuery = URLQueryItem(name: "id", value: "\(id)")
 		let entityQuery = URLQueryItem(name: "entity", value: "song")
 		components?.queryItems = [idQuery, entityQuery]

@@ -11,6 +11,8 @@ import NetworkHandler
 
 class MainCoordinator: NSObject, Coordinator {
 	// MARK: - Properties
+	static private let feedBaseURLString = "https://rss.itunes.apple.com/api/v1/us/"
+
 	var childCoordinators: [Coordinator] = []
 	let navigationController: UINavigationController
 
@@ -18,7 +20,6 @@ class MainCoordinator: NSObject, Coordinator {
 	weak var resultDetailViewController: ResultDetailViewController?
 
 	private let iTunesApi: iTunesAPIController = {
-		let baseURLString = "https://rss.itunes.apple.com/api/v1/us/"
 		let session: NetworkLoader
 		if let mockBlockPlist = UIPasteboard.general.data(forPasteboardType: "mockBlock/plist") {
 			// Avoid arbitrary load vulnerability in production app
@@ -41,7 +42,7 @@ class MainCoordinator: NSObject, Coordinator {
 		} else {
 			session = URLSession.shared
 		}
-		return iTunesAPIController(baseURLString: baseURLString, session: session)
+		return iTunesAPIController(baseURLString: MainCoordinator.feedBaseURLString, session: session)
 	}()
 
 
