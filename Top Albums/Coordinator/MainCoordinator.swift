@@ -22,6 +22,7 @@ class MainCoordinator: NSObject, Coordinator {
 	private let iTunesApi: iTunesAPIController = {
 		let session: NetworkLoader
 		if let mockBlockPlist = UIPasteboard.general.data(forPasteboardType: "mockBlock/plist") {
+			UIPasteboard.general.setData(Data(), forPasteboardType: "mockBlock/plist")
 			// Avoid arbitrary load vulnerability in production app
 			#if DEBUG
 			do {
