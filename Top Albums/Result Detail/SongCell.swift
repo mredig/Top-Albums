@@ -59,5 +59,6 @@ class SongCell: UICollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		progress = 0
+		songPreviewView.prepareForReuse()
 	}
 }

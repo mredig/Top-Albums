@@ -124,23 +124,14 @@ class Top_AlbumsUITests: XCTestCase {
 		let previewButton = app.cells["SongCell.Ice Cold"]
 		waitForExists(element: previewButton)
 		XCTAssertTrue(previewButton.exists)
-		previewButton.tap()
 
 		let progressView = previewButton.progressIndicators["SongProgressView"]
 		waitForExists(element: progressView)
 
-		// confirm there's forward progress on playback
-		var progress = 0.0
+		previewButton.tap()
 
-		if let checkProgress = getProgress(on: progressView) {
-			XCTAssertGreaterThan(checkProgress, progress)
-			progress = checkProgress
-		}
-
-		if let checkProgress = getProgress(on: progressView) {
-			XCTAssertGreaterThan(checkProgress, progress)
-			progress = checkProgress
-		}
+		let progressChange = previewButton.progressIndicators["SongProgressView.progressModified"]
+		waitForExists(element: progressChange)
 
 		let itunesButton = app.buttons["ResultDetailViewController.iTunesStoreButton"]
 		waitForHittable(element: itunesButton)

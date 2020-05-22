@@ -10,6 +10,8 @@ import UIKit
 
 class SongPreviewView: UIView {
 
+	private static let progressAccessibilityID = "SongProgressView"
+
 	var title: String? {
 		get { titleLabel.text }
 		set { titleLabel.text = newValue }
@@ -22,7 +24,10 @@ class SongPreviewView: UIView {
 
 	var progress: Float {
 		get { progressView.progress }
-		set { progressView.progress = newValue }
+		set {
+			progressView.progress = newValue
+			progressChanged()
+		}
 	}
 
 	var backingColor: UIColor? {
@@ -83,7 +88,7 @@ class SongPreviewView: UIView {
 	private func configureViews() {
 		progressView.progress = 0
 		progressView.progressViewStyle = .bar
-		progressView.accessibilityIdentifier = "SongProgressView"
+		progressView.accessibilityIdentifier = Self.progressAccessibilityID
 		coloredBackground.layer.cornerRadius = 10
 		coloredBackground.layer.cornerCurve = .continuous
 		coloredBackground.clipsToBounds = true
@@ -93,7 +98,15 @@ class SongPreviewView: UIView {
 		artistLabel.font = UIFont.systemFont(ofSize: 12)
 		artistLabel.textColor = .secondaryLabel
 		artistLabel.clipsToBounds = false
+	}
 
+	private func progressChanged() {
+		guard progress != 0 else { return }
+		progressView.accessibilityIdentifier = Self.progressAccessibilityID + ".progressModified"
+	}
+
+	func prepareForReuse() {
+		progressView.accessibilityIdentifier = Self.progressAccessibilityID
 	}
 
 }
