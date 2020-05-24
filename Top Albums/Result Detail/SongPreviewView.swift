@@ -102,7 +102,9 @@ class SongPreviewView: UIView {
 
 	private func progressChanged() {
 		guard progress != 0 else { return }
+		#if DEBUG
 		progressView.accessibilityIdentifier = Self.progressAccessibilityID + ".progressModified"
+		#endif
 	}
 
 	func prepareForReuse() {
