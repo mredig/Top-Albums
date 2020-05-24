@@ -187,7 +187,10 @@ class ResultDetailViewController: UIViewController {
 
 		navigationItem.title = musicResultVM.name
 		artistLabel.text = musicResultVM.artistName ?? "Unknown artist"
-		genreLabel.text = musicResultVM.genres.map { $0.name }.filter { $0 != "Music" }.joined(separator: ", ")
+		genreLabel.text = musicResultVM.genres
+			.map { $0.name }
+//			.filter { $0 != "Music" }
+			.joined(separator: ", ")
 		releaseDateLabel.text = musicResultVM.formattedReleaseDate ?? "Unknown Release Date"
 		copyrightLabel.text = musicResultVM.copyright ?? "Unknown copyright"
 
