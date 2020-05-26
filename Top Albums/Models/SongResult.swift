@@ -36,6 +36,9 @@ struct SongResult: Codable, Comparable {
 
 
 struct SongResults: Codable {
+	static private let wrapperTypeTrackString = "track"
+	static private let kindSongString = "song"
+
 	let results: [SongResult]
 
 	enum CodingKeys: String, CodingKey {
@@ -53,7 +56,7 @@ struct SongResults: Codable {
 		while !resultsContainer.isAtEnd {
 			do {
 				let result = try resultsContainer.decode(SongResult.self)
-				guard result.wrapperType == "track" && result.kind == "song" else { continue }
+				guard result.wrapperType == Self.wrapperTypeTrackString && result.kind == Self.kindSongString else { continue }
 				tempResults.append(result)
 			} catch {
 				// Some array elements aren't "songs" but other meta data - the only way to move forward in the

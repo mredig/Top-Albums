@@ -9,6 +9,8 @@
 import UIKit
 
 class SongCell: UICollectionViewCell {
+	static let songCellAccessibilityID = "SongCell"
+
     private let songPreviewView = SongPreviewView()
 
 	var title: String? {

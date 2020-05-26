@@ -9,23 +9,28 @@
 import Foundation
 
 struct MediaTypeViewModel {
+	private let urlComponentAppleMusic = "apple-music"
+	private let urlComponentiTunes = "itunes-music"
+	private let serviceStringAppleMusic = "Music"
+	private let serviceStringiTunes = "iTunes"
+
 	let mediaType: MediaType
 
 	var urlComponent: String {
 		switch mediaType {
 		case .appleMusic:
-			return "apple-music"
+			return urlComponentAppleMusic
 		case .iTunesMusic:
-			return "itunes-music"
+			return urlComponentiTunes
 		}
 	}
 
 	var serviceString: String {
 		switch mediaType {
 		case .appleMusic:
-			return "Music"
+			return serviceStringAppleMusic
 		case .iTunesMusic:
-			return "iTunes"
+			return serviceStringiTunes
 		}
 	}
 

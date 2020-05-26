@@ -11,7 +11,14 @@ import NetworkHandler
 
 class iTunesAPIController {
 
-	static private let iTunesPreviewAPIBaseURL = "https://itunes.apple.com/lookup"
+	private static let iTunesPreviewAPIBaseURL = "https://itunes.apple.com/lookup"
+
+	private static let pathComponentAll = "all"
+	private static let pathComponentExplicit = "explicit"
+	private static let pathComponentNonExplicit = "non-explicit"
+	private static let pathExtensionJson = "json"
+
+	private static let resultsDictionaryKey = "feed"
 
 	private let networkHandler = NetworkHandler.default
 	private let session: NetworkLoader
@@ -44,10 +51,10 @@ class iTunesAPIController {
 		return baseURL
 			.appendingPathComponent(MediaTypeViewModel(mediaType: mediaSearch).urlComponent)
 			.appendingPathComponent(feedType)
-			.appendingPathComponent("all")
+			.appendingPathComponent(Self.pathComponentAll)
 			.appendingPathComponent("\(maxResults)")
-			.appendingPathComponent(allowExplicitResults ? "explicit" : "non-explicit")
-			.appendingPathExtension("json")
+			.appendingPathComponent(allowExplicitResults ? Self.pathComponentExplicit : Self.pathComponentNonExplicit)
+			.appendingPathExtension(Self.pathExtensionJson)
 	}
 
 	func fetchResults(completion: @escaping (Result<[MusicResult], NetworkError>) -> Void) {
@@ -57,7 +64,7 @@ class iTunesAPIController {
 		currentResultOperation = networkHandler.transferMahCodableDatas(with: request, session: session) { (result: Result<[String: MusicResults], NetworkError>) in
 			switch result {
 			case .success(let resultsDict):
-				guard let results = resultsDict["feed"] else {
+				guard let results = resultsDict[Self.resultsDictionaryKey] else {
 					completion(.failure(NetworkError.dataWasNull))
 					print("iTunes has changed their results feed format.")
 					return
@@ -83,12 +90,16 @@ extension iTunesAPIController: ImageLoader {
 }
 
 extension iTunesAPIController: SongPreviewLoader {
+	private static let queryItemID = "id"
+	private static let queryItemEntity = "entity"
+	private static let queryItemValueSong = "song"
+
 	func fetchPreviewList(for album: MusicResultViewModel, completion: @escaping (Result<[SongResult], NetworkError>) -> Void) {
-		guard album.kind == "album", let id = album.id else { return }
+		guard album.kind == MusicResultViewModel.ResultKind.album, let id = album.id else { return }
 
 		var components = URLComponents(string: Self.iTunesPreviewAPIBaseURL)
-		let idQuery = URLQueryItem(name: "id", value: "\(id)")
-		let entityQuery = URLQueryItem(name: "entity", value: "song")
+		let idQuery = URLQueryItem(name: Self.queryItemID, value: "\(id)")
+		let entityQuery = URLQueryItem(name: Self.queryItemEntity, value: Self.queryItemValueSong)
 		components?.queryItems = [idQuery, entityQuery]
 
 		guard let url = components?.url else { return }

@@ -17,6 +17,15 @@ protocol FiltersViewControllerCoordinator: AnyObject {
 
 class FiltersViewController: UIViewController {
 
+	private static let explicitResultLabelString = "Include Explicit Results"
+	// get the service strings directly from the respective ViewModel's constants
+	private static let appleMusicServiceString = MediaTypeViewModel(mediaType: .appleMusic(type: .comingSoon)).serviceString
+	private static let iTunesServiceString = MediaTypeViewModel(mediaType: .iTunesMusic(type: .hotTracks)).serviceString
+
+	private static let accessibilityIDServiceSelector = "ServiceSelector"
+	private static let accessibilityIDServiceOptionPicker = "OptionPicker"
+	private static let accessibilityIDServiceExplicitnessToggle = "ExplicitnessToggle"
+
 	// MARK: - Properties
 	let coordinator: FiltersViewControllerCoordinator
 
@@ -69,17 +78,17 @@ class FiltersViewController: UIViewController {
 		rootStack.addArrangedSubview(explicitToggleStack)
 
 		let label = UILabel()
-		label.text = "Include Explicit Results"
+		label.text = Self.explicitResultLabelString
 		explicitToggleStack.addArrangedSubview(label)
 
 		explicitToggleStack.addArrangedSubview(explicitToggle)
 	}
 
 	private func configureViews() {
-		serviceSegmentedControl.insertSegment(withTitle: "Music", at: 0, animated: false)
-		serviceSegmentedControl.insertSegment(withTitle: "iTunes", at: 1, animated: false)
+		serviceSegmentedControl.insertSegment(withTitle: Self.appleMusicServiceString, at: 0, animated: false)
+		serviceSegmentedControl.insertSegment(withTitle: Self.iTunesServiceString, at: 1, animated: false)
 		serviceSegmentedControl.addTarget(self, action: #selector(serviceSegmentedControlChanged(_:)), for: .valueChanged)
-		serviceSegmentedControl.setupAccessibilityIdentifier(on: self, id: "ServiceSelector")
+		serviceSegmentedControl.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDServiceSelector)
 
 		currentOptions = coordinator.searchOptions
 
@@ -93,10 +102,10 @@ class FiltersViewController: UIViewController {
 			pickerRow = MediaType.iTunesMusicFeedType.allCases.firstIndex(of: type) ?? 0
 		}
 		feedPicker.selectRow(pickerRow, inComponent: 0, animated: false)
-		feedPicker.setupAccessibilityIdentifier(on: self, id: "OptionPicker")
+		feedPicker.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDServiceOptionPicker)
 
 		explicitToggle.isOn = coordinator.allowExplicitResults
-		explicitToggle.setupAccessibilityIdentifier(on: self, id: "ExplicitnessToggle")
+		explicitToggle.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDServiceExplicitnessToggle)
 	}
 
 	private func updateCurrentOptions(selectingFirstRow: Bool = false) {

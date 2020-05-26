@@ -10,6 +10,8 @@ import UIKit
 
 class ResultTableViewCell: UITableViewCell {
 
+	private static let accessibilityIDResultCellString = "Result Cell"
+
 	private static let defaultImage = UIImage(systemName: "smallcircle.circle.fill")
 	private let albumArtView = UIImageView()
 	private let albumNameLabel = UILabel()
@@ -43,7 +45,7 @@ class ResultTableViewCell: UITableViewCell {
 	private func commonInit() {
 		configureLayout()
 		configureLabels()
-		accessibilityIdentifier = "Result Cell"
+		accessibilityIdentifier = Self.accessibilityIDResultCellString
 	}
 
 	private func configureLayout() {

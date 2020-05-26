@@ -19,6 +19,11 @@ protocol ResultsViewControllerCoordinator: AnyObject {
 
 class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 
+	private let barButtonSystemName = "ellipsis"
+	private let topTitleViewString = "Top Results"
+
+	private static let accessibilityIDBarButton = "ResultsViewController.MoreOptionsButton"
+
 	// MARK: - Properties
 	weak var coordinator: ResultsViewControllerCoordinator?
 	var musicResults: [MusicResult] = [] {
@@ -40,12 +45,12 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 		super.viewDidLoad()
 		registerCell()
 
-		let barItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .done, target: self, action: #selector(showFilterTapped(_:)))
-		barItem.accessibilityIdentifier = "ResultsViewController.MoreOptionsButton"
+		let barItem = UIBarButtonItem(image: UIImage(systemName: barButtonSystemName), style: .done, target: self, action: #selector(showFilterTapped(_:)))
+		barItem.accessibilityIdentifier = Self.accessibilityIDBarButton
 		navigationItem.rightBarButtonItem = barItem
 
 		let titleView = TitleView()
-		titleView.text = "Top Results"
+		titleView.text = topTitleViewString
 		navigationItem.titleView = titleView
 		updateTitle()
 

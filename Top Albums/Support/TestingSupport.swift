@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 struct MockBlock: Codable {
+	static let pasteboardTypeString = "mockBlock/plist"
+
 	private var resources: [MockKey: MockValue] = [:]
 	var verifyHeaders: Bool = false
 

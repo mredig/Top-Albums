@@ -110,8 +110,7 @@ extension SongPreviewCollectionViewController {
 		songCell.artist = songVM.artistName
 		songCell.title = songVM.trackNameWithNumber
 		songCell.progress = 0
-		songCell.setupAccessibilityIdentifier(on: self, id: "SongCell")
-		songCell.accessibilityIdentifier = "SongCell.\(songVM.trackName)"
+		songCell.accessibilityIdentifier = "\(SongCell.songCellAccessibilityID).\(songVM.trackName)"
 
 		return songCell
 	}

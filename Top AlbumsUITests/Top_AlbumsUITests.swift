@@ -75,7 +75,7 @@ class Top_AlbumsUITests: XCTestCase {
 
 		let mockBlock = loadMockBlock()
 		let plist = try PropertyListEncoder().encode(mockBlock)
-		UIPasteboard.general.setData(plist, forPasteboardType: "mockBlock/plist")
+		UIPasteboard.general.setData(plist, forPasteboardType: MockBlock.pasteboardTypeString)
 
 		app.launch()
 		return app

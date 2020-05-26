@@ -16,6 +16,22 @@ protocol ResultDetailViewControllerCoordinator {
 
 class ResultDetailViewController: UIViewController {
 
+	private static let accessibilityIDResultCellString = "Result Cell"
+	private static let accessibilityIDResultAlbumImageView = "AlbumImageView"
+	private static let accessibilityIDResultArtistLabel = "ArtistLabel"
+	private static let accessibilityIDResultGenreLabel = "GenreLabel"
+	private static let accessibilityIDResultReleaseDateLabel = "ReleaseDateLabel"
+	private static let accessibilityIDResultCopyrightLabel = "CopyrightLabel"
+	private static let accessibilityIDResultiTunesStoreButton = "iTunesStoreButton"
+
+	private static let iTunesStoreButtonTitle = "iTunes Store"
+	private static let iTunesStoreImage = UIImage(systemName: "cart")
+
+	private static let albumImageViewDefaultImage = UIImage(systemName: "music.note")
+	private static let artistNameDefault = "Unknown artist"
+	private static let releaseDateDefault = "Unknown Release Date"
+	private static let copyrightDefault = "Unknown copyright"
+
 	// MARK: - Properties
 	let musicResultVM: MusicResultViewModel
 	let coordinator: ResultDetailViewControllerCoordinator
@@ -65,7 +81,7 @@ class ResultDetailViewController: UIViewController {
 	private func configureLayout() {
 		view.addSubview(albumImageView)
 		albumImageView.translatesAutoresizingMaskIntoConstraints = false
-		albumImageView.setupAccessibilityIdentifier(on: self, id: "AlbumImageView")
+		albumImageView.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultAlbumImageView)
 
 		let scrollView = UIScrollView()
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -140,21 +156,21 @@ class ResultDetailViewController: UIViewController {
 	private func configureLabels() {
 		artistLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
 		artistLabel.textColor = .secondaryLabel
-		artistLabel.setupAccessibilityIdentifier(on: self, id: "ArtistLabel")
+		artistLabel.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultArtistLabel)
 		genreLabel.font = UIFont.systemFont(ofSize: 17, weight: .light)
 		genreLabel.adjustsFontSizeToFitWidth = true
 		genreLabel.minimumScaleFactor = 0.65
-		genreLabel.setupAccessibilityIdentifier(on: self, id: "GenreLabel")
+		genreLabel.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultGenreLabel)
 		releaseDateLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-		releaseDateLabel.setupAccessibilityIdentifier(on: self, id: "ReleaseDateLabel")
+		releaseDateLabel.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultReleaseDateLabel)
 		copyrightLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
 		copyrightLabel.textColor = .secondaryLabel
-		copyrightLabel.setupAccessibilityIdentifier(on: self, id: "CopyrightLabel")
+		copyrightLabel.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultCopyrightLabel)
 
-		itunesStoreButton.setTitle("iTunes Store", for: .normal)
-		itunesStoreButton.setImage(UIImage(systemName: "cart"), for: .normal)
+		itunesStoreButton.setTitle(Self.iTunesStoreButtonTitle, for: .normal)
+		itunesStoreButton.setImage(Self.iTunesStoreImage, for: .normal)
 		itunesStoreButton.setTitleColor(.systemBlue, for: .normal)
-		itunesStoreButton.setupAccessibilityIdentifier(on: self, id: "iTunesStoreButton")
+		itunesStoreButton.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultiTunesStoreButton)
 	}
 
 	private func configureInteraction() {
@@ -164,7 +180,7 @@ class ResultDetailViewController: UIViewController {
 	private func configureSongPreviews() {
 		let loader = coordinator.getSongPreviewLoader()
 		switch musicResultVM.kind {
-		case "album":
+		case MusicResultViewModel.ResultKind.album:
 			loader.fetchPreviewList(for: musicResultVM) { [weak self] result in
 				switch result {
 				case .success(let results):
@@ -175,7 +191,7 @@ class ResultDetailViewController: UIViewController {
 					print("Error loading song preview info: \(error)")
 				}
 			}
-		case "song":
+		case MusicResultViewModel.ResultKind.song:
 			print("load song preview")
 		default:
 			break
@@ -183,16 +199,16 @@ class ResultDetailViewController: UIViewController {
 	}
 
 	private func updateViews() {
-		albumImageView.image = UIImage(systemName: "music.note")
+		albumImageView.image = Self.albumImageViewDefaultImage
 
 		navigationItem.title = musicResultVM.name
-		artistLabel.text = musicResultVM.artistName ?? "Unknown artist"
+		artistLabel.text = musicResultVM.artistName ?? Self.artistNameDefault
 		genreLabel.text = musicResultVM.genres
 			.map { $0.name }
 //			.filter { $0 != "Music" }
 			.joined(separator: ", ")
-		releaseDateLabel.text = musicResultVM.formattedReleaseDate ?? "Unknown Release Date"
-		copyrightLabel.text = musicResultVM.copyright ?? "Unknown copyright"
+		releaseDateLabel.text = musicResultVM.formattedReleaseDate ?? Self.releaseDateDefault
+		copyrightLabel.text = musicResultVM.copyright ?? Self.copyrightDefault
 
 		let imageLoader = coordinator.getImageLoader()
 		_ = imageLoader.fetchImage(for: musicResultVM, attemptHighRes: true) { [weak self] result in

@@ -9,11 +9,20 @@
 import Foundation
 
 struct MusicResultViewModel {
+	enum ResultKind {
+		static let album = "album"
+		static let song = "song"
+	}
+
+	private static let dateFormatString = "yyyy-MM-dd"
+	private let highResArtworkBasename = "1024x1024bb"
+	private let highResArtworkFileExtension = "png"
+
 	let musicResult: MusicResult
 
 	private static let dateFormatterToDate: DateFormatter = {
 		let formatter = DateFormatter()
-		formatter.dateFormat = "yyyy-MM-dd"
+		formatter.dateFormat = dateFormatString
 		return formatter
 	}()
 
@@ -58,8 +67,8 @@ struct MusicResultViewModel {
 		// This is accessing undocumented aspects of the API
 		var url = normalArtworkURL
 		url.deleteLastPathComponent()
-		url.appendPathComponent("1024x1024bb")
-		url.appendPathExtension("png")
+		url.appendPathComponent(highResArtworkBasename)
+		url.appendPathExtension(highResArtworkFileExtension)
 		return url
 	}
 	var genres: [Genre] {
