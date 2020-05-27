@@ -16,6 +16,7 @@ class PlaceholderViewController: UIViewController {
 		super.viewDidLoad()
 
 		let placeholderLabel = UILabel()
+		placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
 		placeholderLabel.text = Self.placeholderText
 		placeholderLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
 		placeholderLabel.textColor = .secondaryLabel

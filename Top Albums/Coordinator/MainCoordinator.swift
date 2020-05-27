@@ -82,7 +82,7 @@ class MainCoordinator: NSObject, CoordinatorBase {
 	}
 
 	private func setupDetailVC(with musicResult: MusicResult?) {
-		let detailNavController = detailNavControllerGenerator()
+		detailNavController = detailNavControllerGenerator()
 		let newDetailVC: UIViewController
 		if let result = musicResult {
 			// show result
