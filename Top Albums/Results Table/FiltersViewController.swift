@@ -62,6 +62,7 @@ class FiltersViewController: UIViewController {
 		rootStack.spacing = UIStackView.spacingUseSystem
 		view.addSubview(rootStack)
 
+		serviceSegmentedControl.setContentCompressionResistancePriority(.init(751), for: .vertical)
 		rootStack.addArrangedSubview(serviceSegmentedControl)
 		rootStack.addArrangedSubview(feedPicker)
 
@@ -106,6 +107,8 @@ class FiltersViewController: UIViewController {
 
 		explicitToggle.isOn = coordinator.allowExplicitResults
 		explicitToggle.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDServiceExplicitnessToggle)
+
+		view.backgroundColor = .secondarySystemBackground
 	}
 
 	private func updateCurrentOptions(selectingFirstRow: Bool = false) {

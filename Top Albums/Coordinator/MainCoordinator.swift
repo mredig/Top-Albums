@@ -176,7 +176,7 @@ extension MainCoordinator: UINavigationControllerDelegate {}
 
 extension MainCoordinator: UIPopoverPresentationControllerDelegate {
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-		.none
+		UIDevice.current.orientation == UIDeviceOrientation.portrait ? .none : .popover
 	}
 
 	func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
