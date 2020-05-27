@@ -13,6 +13,7 @@ protocol FiltersViewControllerCoordinator: AnyObject {
 	var allowExplicitResults: Bool { get }
 
 	func didFinishSelectingSearchFilters(on filtersViewController: FiltersViewController, searchFilter: MediaType, showExplicit: Bool)
+	func filtersViewControllerHasCompleted(_ filtersViewController: FiltersViewController)
 }
 
 class FiltersViewController: UIViewController {
@@ -33,6 +34,7 @@ class FiltersViewController: UIViewController {
 	let serviceSegmentedControl = UISegmentedControl()
 	let feedPicker = UIPickerView()
 	let explicitToggle = UISwitch()
+	let applyButton = UIButton()
 
 	var currentOptions = MediaType.appleMusic(type: .topAlbums)
 
@@ -83,6 +85,8 @@ class FiltersViewController: UIViewController {
 		explicitToggleStack.addArrangedSubview(label)
 
 		explicitToggleStack.addArrangedSubview(explicitToggle)
+
+		rootStack.addArrangedSubview(applyButton)
 	}
 
 	private func configureViews() {
@@ -108,6 +112,10 @@ class FiltersViewController: UIViewController {
 		explicitToggle.isOn = coordinator.allowExplicitResults
 		explicitToggle.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDServiceExplicitnessToggle)
 
+		applyButton.setTitle("Apply", for: .normal)
+		applyButton.setTitleColor(.systemBlue, for: .normal)
+		applyButton.addTarget(self, action: #selector(applyButtonPressed(_:)), for: .touchUpInside)
+
 		view.backgroundColor = .secondarySystemBackground
 	}
 
@@ -132,8 +140,21 @@ class FiltersViewController: UIViewController {
 		coordinator.didFinishSelectingSearchFilters(on: self, searchFilter: currentOptions, showExplicit: explicitToggle.isOn)
 	}
 
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		if UIDevice.current.orientation == .portrait {
+			applyButton.isHidden = true
+		} else {
+			applyButton.isHidden = false
+		}
+	}
+
 	@objc func serviceSegmentedControlChanged(_ sender: UISegmentedControl) {
 		updateCurrentOptions(selectingFirstRow: true)
+	}
+
+	@objc func applyButtonPressed(_ sender: UIButton) {
+		coordinator.filtersViewControllerHasCompleted(self)
 	}
 }
 

@@ -152,6 +152,10 @@ extension MainCoordinator: FiltersViewControllerCoordinator {
 		iTunesApi.allowExplicitResults = showExplicit
 		fetchResults()
 	}
+
+	func filtersViewControllerHasCompleted(_ filtersViewController: FiltersViewController) {
+		filtersViewController.dismiss(animated: true)
+	}
 }
 
 extension MainCoordinator: ResultDetailViewControllerCoordinator {
