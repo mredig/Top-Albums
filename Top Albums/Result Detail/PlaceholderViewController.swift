@@ -19,13 +19,14 @@ class PlaceholderViewController: UIViewController {
 		placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
 		placeholderLabel.text = Self.placeholderText
 		placeholderLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+		placeholderLabel.textAlignment = .center
 		placeholderLabel.textColor = .secondaryLabel
 		view.addSubview(placeholderLabel)
 
 		NSLayoutConstraint.activate([
 			placeholderLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-			placeholderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-			view.trailingAnchor.constraint(equalTo: placeholderLabel.trailingAnchor, constant: 20),
+			placeholderLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+			view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: placeholderLabel.trailingAnchor, constant: 20),
 		])
 	}
 }
