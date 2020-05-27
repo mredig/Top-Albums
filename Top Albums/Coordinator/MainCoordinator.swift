@@ -9,15 +9,20 @@
 import UIKit
 import NetworkHandler
 
-class MainCoordinator: NSObject, Coordinator {
+class MainCoordinator: NSObject, CoordinatorBase {
 	// MARK: - Properties
 	private static let feedBaseURLString = "https://rss.itunes.apple.com/api/v1/us/"
 
-	var childCoordinators: [Coordinator] = []
-	let navigationController: UINavigationController
+	var childCoordinators: [CoordinatorBase] = []
+
+	let masterNavController: UINavigationController
+	let detailNavControllerGenerator: () -> UINavigationController
+	var detailNavController: UINavigationController
+	let splitViewController: UISplitViewController
+
+	var splitShouldCollapse = true
 
 	let resultsViewController: ResultsViewController
-	weak var resultDetailViewController: ResultDetailViewController?
 
 	private let iTunesApi: iTunesAPIController = {
 		let session: NetworkLoader
@@ -48,21 +53,48 @@ class MainCoordinator: NSObject, Coordinator {
 
 
 	// MARK: - Lifecycle
-	init(navigationController: UINavigationController) {
-		self.navigationController = navigationController
+	init(masterNavController: UINavigationController = LargeTitleNavigationController(),
+		 detailNavControllerGenerator: @escaping () -> UINavigationController = { LargeTitleNavigationController() },
+		 splitViewController: UISplitViewController = UISplitViewController()) {
+		self.masterNavController = masterNavController
+		self.detailNavControllerGenerator = detailNavControllerGenerator
+		self.detailNavController = detailNavControllerGenerator()
+		self.splitViewController = splitViewController
+
 		resultsViewController = ResultsViewController()
 		super.init()
 		resultsViewController.coordinator = self
-		navigationController.delegate = self
-	}
 
-	convenience override init() {
-		self.init(navigationController: UINavigationController())
+		splitViewController.delegate = self
 	}
 
 	func start() {
-		navigationController.pushViewController(resultsViewController, animated: false)
+		setupMasterVC()
+		setupDetailVC(with: nil)
+
+		splitViewController.viewControllers = [masterNavController, detailNavController]
+
 		fetchResults()
+	}
+
+	private func setupMasterVC() {
+		masterNavController.pushViewController(resultsViewController, animated: false)
+	}
+
+	private func setupDetailVC(with musicResult: MusicResult?) {
+		let detailNavController = detailNavControllerGenerator()
+		let newDetailVC: UIViewController
+		if let result = musicResult {
+			// show result
+			let musicResultVM = MusicResultViewModel(musicResult: result)
+			let resultVC = ResultDetailViewController(musicResultVM: musicResultVM, coordinator: self)
+			newDetailVC = resultVC
+		} else {
+			//show dummy placeholder
+			newDetailVC = PlaceholderViewController()
+		}
+		detailNavController.pushViewController(newDetailVC, animated: false)
+		splitViewController.showDetailViewController(detailNavController, sender: nil)
 	}
 }
 
@@ -79,7 +111,7 @@ extension MainCoordinator: ResultsViewControllerCoordinator {
 		filterVC.popoverPresentationController?.barButtonItem = barButtonItem
 		filterVC.popoverPresentationController?.delegate = self
 
-		navigationController.present(filterVC, animated: true)
+		masterNavController.present(filterVC, animated: true)
 	}
 
 	func fetchResults() {
@@ -98,11 +130,7 @@ extension MainCoordinator: ResultsViewControllerCoordinator {
 	}
 
 	func showDetail(for musicResult: MusicResult) {
-		guard resultDetailViewController == nil else { return }
-		let musicResultVM = MusicResultViewModel(musicResult: musicResult)
-		let resultVC = ResultDetailViewController(musicResultVM: musicResultVM, coordinator: self)
-		resultDetailViewController = resultVC
-		navigationController.pushViewController(resultVC, animated: true)
+		setupDetailVC(with: musicResult)
 	}
 
 	func getImageLoader() -> ImageLoader {
@@ -153,5 +181,17 @@ extension MainCoordinator: UIPopoverPresentationControllerDelegate {
 
 	func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
 		true
+	}
+}
+
+extension MainCoordinator: UISplitViewControllerDelegate {
+	func splitViewController(_ splitViewController: UISplitViewController,
+							 collapseSecondary secondaryViewController: UIViewController,
+							 onto primaryViewController: UIViewController) -> Bool {
+		splitShouldCollapse
+	}
+
+	func targetDisplayModeForAction(in svc: UISplitViewController) -> UISplitViewController.DisplayMode {
+		svc.displayMode == .allVisible ? .primaryHidden : .allVisible
 	}
 }
