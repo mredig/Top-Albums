@@ -114,11 +114,13 @@ class ResultDetailViewController: UIViewController {
 
 		addChild(previewCollectionVC)
 		let bottomSpacer = UIView()
-		let stack = UIStackView(arrangedSubviews: [genreLabel,
-												   releaseDateLabel,
-												   previewCollectionVC.view,
-												   copyrightLabel,
-												   bottomSpacer
+		let stack = UIStackView(arrangedSubviews: [
+			artistLabel,
+			genreLabel,
+			releaseDateLabel,
+			previewCollectionVC.view,
+			copyrightLabel,
+			bottomSpacer
 		])
 		stack.axis = .vertical
 		stack.alignment = .fill
@@ -190,7 +192,6 @@ class ResultDetailViewController: UIViewController {
 		])
 
 		navigationItem.title = musicResultVM.name
-		navigationItem.titleView = artistLabel
 
 		scrollView.contentInset = UIEdgeInsets(bottom: scrollViewBottomInsetOverflowConstant)
 	}
