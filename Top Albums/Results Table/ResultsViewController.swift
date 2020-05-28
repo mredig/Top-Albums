@@ -22,6 +22,9 @@ class ResultsViewController: UITableViewController, LoadingIndicatorDisplaying {
 	private let barButtonSystemName = "ellipsis"
 	private let topTitleViewString = "Top Results"
 
+	private let cellHeightFallbackValue: CGFloat = 44
+	private let cellEstimatedHeight: CGFloat = 100
+
 	private static let accessibilityIDBarButton = "ResultsViewController.MoreOptionsButton"
 
 	// MARK: - Properties
@@ -116,7 +119,7 @@ extension ResultsViewController {
 		if let height = heightCache[indexPath] {
 			return height
 		}
-		guard let prototypeCell = prototypeResultCell else { return 44 }
+		guard let prototypeCell = prototypeResultCell else { return cellHeightFallbackValue }
 		prototypeCell.prepareForReuse()
 		let musicResultVM = MusicResultViewModel(musicResult: musicResults[indexPath.row])
 		configureResultCell(prototypeCell, withMusicResult: musicResultVM)
@@ -126,7 +129,7 @@ extension ResultsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-		100
+		cellEstimatedHeight
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

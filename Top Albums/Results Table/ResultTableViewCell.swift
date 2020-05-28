@@ -17,6 +17,14 @@ class ResultTableViewCell: UITableViewCell {
 	private let albumNameLabel = UILabel()
 	private let artistNameLabel = UILabel()
 
+	private let stackSpacing: CGFloat = 16
+	private let albumArtHeight: CGFloat = 76
+	private let albumArtCornerRadius: CGFloat = 8
+	private let albumNameLabelFontSize: CGFloat = 19
+	private let albumNameLabelFontMinimumScale: CGFloat = 0.85
+	private let artistNameLabelFontSize: CGFloat = 15
+	private let artistNameLabelHuggingPriority: UILayoutPriority = 251
+
 	var artistName: String? {
 		get { artistNameLabel.text }
 		set { artistNameLabel.text = newValue }
@@ -55,12 +63,12 @@ class ResultTableViewCell: UITableViewCell {
 		rootStack.axis = .horizontal
 		rootStack.alignment = .fill
 		rootStack.distribution = .fill
-		rootStack.spacing = 16
+		rootStack.spacing = stackSpacing
 		contentView.addSubview(rootStack)
 		contentView.constrain(subview: rootStack, inset: 8)
 
 		NSLayoutConstraint.activate([
-			albumArtView.heightAnchor.constraint(equalToConstant: 76),
+			albumArtView.heightAnchor.constraint(equalToConstant: albumArtHeight),
 			albumArtView.widthAnchor.constraint(equalTo: albumArtView.heightAnchor),
 		])
 
@@ -74,21 +82,21 @@ class ResultTableViewCell: UITableViewCell {
 		rootStack.addArrangedSubview(nestedStackView)
 
 		albumArtView.layer.cornerCurve = .continuous
-		albumArtView.layer.cornerRadius = 8
+		albumArtView.layer.cornerRadius = albumArtCornerRadius
 		albumArtView.clipsToBounds = true
 
 		// set to 251 to tie break between labels
-		artistNameLabel.setContentHuggingPriority(.init(rawValue: 251), for: .vertical)
+		artistNameLabel.setContentHuggingPriority(artistNameLabelHuggingPriority, for: .vertical)
 		nestedStackView.addArrangedSubview(albumNameLabel)
 		nestedStackView.addArrangedSubview(artistNameLabel)
 	}
 
 	private func configureLabels() {
-		albumNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
+		albumNameLabel.font = UIFont.systemFont(ofSize: albumNameLabelFontSize, weight: .medium)
 		albumNameLabel.lineBreakMode = .byTruncatingMiddle
 		albumNameLabel.adjustsFontSizeToFitWidth = true
-		albumNameLabel.minimumScaleFactor = 0.85
-		artistNameLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+		albumNameLabel.minimumScaleFactor = albumNameLabelFontMinimumScale
+		artistNameLabel.font = UIFont.systemFont(ofSize: artistNameLabelFontSize, weight: .regular)
 		artistNameLabel.textColor = .secondaryLabel
 	}
 

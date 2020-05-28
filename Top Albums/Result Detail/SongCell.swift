@@ -54,13 +54,13 @@ class SongCell: UICollectionViewCell {
 	}
 
 	private func selectedUpdated() {
-		progress = 0
+		progress = SongPreviewView.defaultSongProgress
 		songPreviewView.backingColor = isSelected ? .tertiarySystemBackground : .secondarySystemBackground
 	}
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		progress = 0
+		progress = SongPreviewView.defaultSongProgress
 		songPreviewView.prepareForReuse()
 	}
 }
