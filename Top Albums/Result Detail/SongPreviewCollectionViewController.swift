@@ -53,6 +53,12 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 		configureCollectionView()
 
 		collectionView.backgroundColor = .clear
+
+		NotificationCenter.default.addObserver(forName: .audioPreviewStartedNotification,
+											   object: nil,
+											   queue: .main) { [weak self] _ in
+			self?.stopAudio()
+		}
 	}
 
 	private func configureCollectionView() {
@@ -67,6 +73,7 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 
 	// MARK: - Audio Controls
 	private func playAudio(with player: AVAudioPlayer, song: SongResultViewModel) {
+		NotificationCenter.default.post(name: .audioPreviewStartedNotification, object: nil)
 		playingSong = song
 		audioPlayer = player
 		audioPlayer?.delegate = self
@@ -161,4 +168,8 @@ extension SongPreviewCollectionViewController: AVAudioPlayerDelegate {
 
 fileprivate extension String {
 	static let songCellReuseIdentifier = "SongCell"
+}
+
+fileprivate extension NSNotification.Name {
+	static let audioPreviewStartedNotification = Self("com.redeggproductions.audioPreviewStartedNotification")
 }
