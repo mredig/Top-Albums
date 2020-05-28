@@ -9,8 +9,16 @@
 import UIKit
 
 class SongPreviewView: UIView {
-
+	static let defaultSongProgress: Float = 0.0
 	private static let progressAccessibilityID = "SongProgressView"
+
+	private static let artistLabelHuggingPriority: UILayoutPriority = 252
+	private static let artistLabelCompressionPriority: UILayoutPriority = 751
+	private static let titleLabelCompressionPriority: UILayoutPriority = 752
+
+	private let coloredBackgroundCornerRadius: CGFloat = 10
+	private let titleLabelFontSize: CGFloat = 17
+	private let artistLabelFontSize: CGFloat = 12
 
 	var title: String? {
 		get { titleLabel.text }
@@ -60,9 +68,9 @@ class SongPreviewView: UIView {
 		constrain(subview: coloredBackground)
 
 		// tie break hugging and compression
-		artistLabel.setContentHuggingPriority(.init(252), for: .vertical)
-		artistLabel.setContentCompressionResistancePriority(.init(751), for: .vertical)
-		titleLabel.setContentCompressionResistancePriority(.init(752), for: .vertical)
+		artistLabel.setContentHuggingPriority(Self.artistLabelHuggingPriority, for: .vertical)
+		artistLabel.setContentCompressionResistancePriority(Self.artistLabelCompressionPriority, for: .vertical)
+		titleLabel.setContentCompressionResistancePriority(Self.titleLabelCompressionPriority, for: .vertical)
 		let titleStack = UIStackView(arrangedSubviews: [titleLabel, artistLabel])
 		titleStack.axis = .vertical
 		titleStack.alignment = .fill
@@ -86,22 +94,22 @@ class SongPreviewView: UIView {
 	}
 
 	private func configureViews() {
-		progressView.progress = 0
+		progressView.progress = Self.defaultSongProgress
 		progressView.progressViewStyle = .bar
 		progressView.accessibilityIdentifier = Self.progressAccessibilityID
-		coloredBackground.layer.cornerRadius = 10
+		coloredBackground.layer.cornerRadius = coloredBackgroundCornerRadius
 		coloredBackground.layer.cornerCurve = .continuous
 		coloredBackground.clipsToBounds = true
 
-		titleLabel.font = UIFont.systemFont(ofSize: 17)
+		titleLabel.font = UIFont.systemFont(ofSize: titleLabelFontSize)
 		titleLabel.textColor = .label
-		artistLabel.font = UIFont.systemFont(ofSize: 12)
+		artistLabel.font = UIFont.systemFont(ofSize: artistLabelFontSize)
 		artistLabel.textColor = .secondaryLabel
 		artistLabel.clipsToBounds = false
 	}
 
 	private func progressChanged() {
-		guard progress != 0 else { return }
+		guard progress != SongPreviewView.defaultSongProgress else { return }
 		#if DEBUG
 		progressView.accessibilityIdentifier = Self.progressAccessibilityID + ".progressModified"
 		#endif

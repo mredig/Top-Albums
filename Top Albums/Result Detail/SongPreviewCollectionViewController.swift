@@ -15,6 +15,9 @@ protocol SongPreviewCollectionViewControllerCoordinator: AnyObject {
 }
 
 class SongPreviewCollectionViewController: UICollectionViewController {
+	private static let progressUpdateInterval: TimeInterval = 1/30
+
+	private static let resultSectionCount = 1
 
 	let coordinator: SongPreviewCollectionViewControllerCoordinator
 
@@ -28,6 +31,9 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 	private var currentPreviewLoad: NetworkLoadingTask?
 	private var audioPlayer: AVAudioPlayer?
 	private var audioTimer: Timer?
+
+	private let cellWidthMultiplier: CGFloat = 0.9
+	private let cellHeightMultiplier: CGFloat = 0.3
 
 	init(collectionViewLayout layout: UICollectionViewLayout, coordinator: SongPreviewCollectionViewControllerCoordinator) {
 		self.coordinator = coordinator
@@ -67,7 +73,7 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 		audioPlayer?.play()
 
 		DispatchQueue.main.async {
-			self.audioTimer = Timer.scheduledTimer(withTimeInterval: 1/30, repeats: true, block: { [weak self] _ in
+			self.audioTimer = Timer.scheduledTimer(withTimeInterval: Self.progressUpdateInterval, repeats: true, block: { [weak self] _ in
 				guard let self = self,
 					let song = self.playingSong,
 					let player = self.audioPlayer,
@@ -94,7 +100,7 @@ class SongPreviewCollectionViewController: UICollectionViewController {
 // MARK: UICollectionViewDataSource
 extension SongPreviewCollectionViewController {
 
-	override func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
+	override func numberOfSections(in collectionView: UICollectionView) -> Int { Self.resultSectionCount }
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		songPreviews.count
@@ -109,7 +115,7 @@ extension SongPreviewCollectionViewController {
 
 		songCell.artist = songVM.artistName
 		songCell.title = songVM.trackNameWithNumber
-		songCell.progress = 0
+		songCell.progress = SongPreviewView.defaultSongProgress
 		songCell.accessibilityIdentifier = "\(SongCell.songCellAccessibilityID).\(songVM.trackName)"
 
 		return songCell
@@ -142,7 +148,7 @@ extension SongPreviewCollectionViewController {
 extension SongPreviewCollectionViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		let size = collectionView.frame.size
-		let newSize = CGSize(width: size.width * 0.9, height: size.height * 0.3)
+		let newSize = CGSize(width: size.width * cellWidthMultiplier, height: size.height * cellHeightMultiplier)
 		return newSize
 	}
 }

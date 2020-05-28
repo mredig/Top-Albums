@@ -32,6 +32,18 @@ class ResultDetailViewController: UIViewController {
 	private static let releaseDateDefault = "Unknown Release Date"
 	private static let copyrightDefault = "Unknown copyright"
 
+	private let artistLabelFontSize: CGFloat = 19
+	private let genreLabelFontSize: CGFloat = 17
+	private let genreLabelFontMinimumScale: CGFloat = 0.65
+	private let releaseDateLabelFontSize: CGFloat = 12
+	private let copyrightLabelFontSize: CGFloat = 10
+
+	private let smallInsetConstant: CGFloat = 8
+	private let mediumInsetConstant: CGFloat = 16
+	private let largeInsetConstant: CGFloat = 24
+	private let iTunesButtonInsetConstant: CGFloat = 20
+	private let previewCollectionHeightConstant: CGFloat = 250
+
 	// MARK: - Properties
 	let musicResultVM: MusicResultViewModel
 	let coordinator: ResultDetailViewControllerCoordinator
@@ -124,14 +136,14 @@ class ResultDetailViewController: UIViewController {
 			albumImageView.heightAnchor.constraint(equalTo: albumImageView.widthAnchor),
 
 			clearView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-			clearView.heightAnchor.constraint(equalTo: albumImageView.heightAnchor, constant: -8),
+			clearView.heightAnchor.constraint(equalTo: albumImageView.heightAnchor, constant: -smallInsetConstant),
 
-			previewCollectionVC.view.heightAnchor.constraint(equalToConstant: 250),
+			previewCollectionVC.view.heightAnchor.constraint(equalToConstant: previewCollectionHeightConstant),
 
 			scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			scrollView.bottomAnchor.constraint(equalTo: itunesStoreButton.topAnchor, constant: -16),
+			scrollView.bottomAnchor.constraint(equalTo: itunesStoreButton.topAnchor, constant: -mediumInsetConstant),
 
 			wrapper.topAnchor.constraint(equalTo: clearView.bottomAnchor),
 			wrapper.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
@@ -139,14 +151,14 @@ class ResultDetailViewController: UIViewController {
 			wrapper.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
 			wrapper.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
-			stack.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: 8),
-			stack.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -8),
-			stack.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: 24),
-			stack.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -24),
+			stack.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: smallInsetConstant),
+			stack.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -smallInsetConstant),
+			stack.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: largeInsetConstant),
+			stack.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -largeInsetConstant),
 
-			itunesStoreButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-			itunesStoreButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-			itunesStoreButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+			itunesStoreButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -iTunesButtonInsetConstant),
+			itunesStoreButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: iTunesButtonInsetConstant),
+			itunesStoreButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -iTunesButtonInsetConstant),
 		])
 
 		navigationItem.title = musicResultVM.name
@@ -154,16 +166,16 @@ class ResultDetailViewController: UIViewController {
 	}
 
 	private func configureLabels() {
-		artistLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
+		artistLabel.font = UIFont.systemFont(ofSize: artistLabelFontSize, weight: .medium)
 		artistLabel.textColor = .secondaryLabel
 		artistLabel.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultArtistLabel)
-		genreLabel.font = UIFont.systemFont(ofSize: 17, weight: .light)
+		genreLabel.font = UIFont.systemFont(ofSize: genreLabelFontSize, weight: .light)
 		genreLabel.adjustsFontSizeToFitWidth = true
-		genreLabel.minimumScaleFactor = 0.65
+		genreLabel.minimumScaleFactor = genreLabelFontMinimumScale
 		genreLabel.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultGenreLabel)
-		releaseDateLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+		releaseDateLabel.font = UIFont.systemFont(ofSize: releaseDateLabelFontSize, weight: .regular)
 		releaseDateLabel.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultReleaseDateLabel)
-		copyrightLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+		copyrightLabel.font = UIFont.systemFont(ofSize: copyrightLabelFontSize, weight: .medium)
 		copyrightLabel.textColor = .secondaryLabel
 		copyrightLabel.setupAccessibilityIdentifier(on: self, id: Self.accessibilityIDResultCopyrightLabel)
 

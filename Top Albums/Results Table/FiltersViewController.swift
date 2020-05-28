@@ -19,13 +19,20 @@ protocol FiltersViewControllerCoordinator: AnyObject {
 class FiltersViewController: UIViewController {
 
 	private static let explicitResultLabelString = "Include Explicit Results"
+	private let applyButtonTitle = "Apply"
 	// get the service strings directly from the respective ViewModel's constants
 	private static let appleMusicServiceString = MediaTypeViewModel(mediaType: .appleMusic(type: .comingSoon)).serviceString
 	private static let iTunesServiceString = MediaTypeViewModel(mediaType: .iTunesMusic(type: .hotTracks)).serviceString
+	private static let pickerComponentCount = 1
 
 	private static let accessibilityIDServiceSelector = "ServiceSelector"
 	private static let accessibilityIDServiceOptionPicker = "OptionPicker"
 	private static let accessibilityIDServiceExplicitnessToggle = "ExplicitnessToggle"
+
+	private let preferredContentHeight: CGFloat = 250
+	private let serviceSegmentControllerCompressionPriority: UILayoutPriority = 751
+	private let mediumInsetConstant: CGFloat = 16
+	private let largeInsetConstant: CGFloat = 24
 
 	// MARK: - Properties
 	let coordinator: FiltersViewControllerCoordinator
@@ -55,7 +62,7 @@ class FiltersViewController: UIViewController {
 	}
 
 	private func configureLayout() {
-		preferredContentSize = CGSize(width: preferredContentSize.width, height: 250)
+		preferredContentSize = CGSize(width: preferredContentSize.width, height: preferredContentHeight)
 
 		let rootStack = UIStackView()
 		rootStack.axis = .vertical
@@ -64,14 +71,14 @@ class FiltersViewController: UIViewController {
 		rootStack.spacing = UIStackView.spacingUseSystem
 		view.addSubview(rootStack)
 
-		serviceSegmentedControl.setContentCompressionResistancePriority(.init(751), for: .vertical)
+		serviceSegmentedControl.setContentCompressionResistancePriority(serviceSegmentControllerCompressionPriority, for: .vertical)
 		rootStack.addArrangedSubview(serviceSegmentedControl)
 		rootStack.addArrangedSubview(feedPicker)
 
 		feedPicker.delegate = self
 		feedPicker.dataSource = self
 
-		view.constrain(subview: rootStack, inset: UIEdgeInsets(horizontal: 16, vertical: 24))
+		view.constrain(subview: rootStack, inset: UIEdgeInsets(horizontal: mediumInsetConstant, vertical: largeInsetConstant))
 
 		let explicitToggleStack = UIStackView()
 		explicitToggleStack.axis = .horizontal
@@ -165,10 +172,10 @@ extension FiltersViewController: UIPickerViewDataSource, UIPickerViewDelegate, U
 
 		switch currentOptions {
 		case .appleMusic:
-			let type = MediaType.AppleMusicType.allCases[row]//, default: .topAlbums]
+			let type = MediaType.AppleMusicType.allCases[row]
 			mediaType = .appleMusic(type: type)
 		case .iTunesMusic:
-			let type = MediaType.iTunesMusicFeedType.allCases[row]//, default: .topAlbums]
+			let type = MediaType.iTunesMusicFeedType.allCases[row]
 			mediaType = .iTunesMusic(type: type)
 		}
 
@@ -184,7 +191,7 @@ extension FiltersViewController: UIPickerViewDataSource, UIPickerViewDelegate, U
 		}
 	}
 
-	func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
+	func numberOfComponents(in pickerView: UIPickerView) -> Int { Self.pickerComponentCount }
 
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		updateCurrentOptions()
