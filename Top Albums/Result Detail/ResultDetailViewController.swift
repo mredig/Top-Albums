@@ -131,7 +131,15 @@ class ResultDetailViewController: UIViewController {
 		scrollView.addSubview(wrapper)
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-		view.addSubview(itunesStoreButton)
+		let iTunesButtonBacking = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
+
+		view.addSubview(iTunesButtonBacking)
+		iTunesButtonBacking.contentView.addSubview(itunesStoreButton)
+		iTunesButtonBacking.constrain(subview: itunesStoreButton, inset: UIEdgeInsets(horizontal: 16, vertical: 8))
+		iTunesButtonBacking.translatesAutoresizingMaskIntoConstraints = false
+		iTunesButtonBacking.layer.cornerRadius = 10
+		iTunesButtonBacking.layer.cornerCurve = .continuous
+		iTunesButtonBacking.clipsToBounds = true
 		itunesStoreButton.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
@@ -171,8 +179,9 @@ class ResultDetailViewController: UIViewController {
 			stack.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -largeInsetConstant),
 
 			itunesStoreButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -iTunesButtonInsetConstant),
-			itunesStoreButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: iTunesButtonInsetConstant),
-			itunesStoreButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -iTunesButtonInsetConstant),
+			iTunesButtonBacking.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: iTunesButtonInsetConstant),
+			view.safeAreaLayoutGuide.trailingAnchor.constraint(greaterThanOrEqualTo: iTunesButtonBacking.trailingAnchor, constant: iTunesButtonInsetConstant),
+			iTunesButtonBacking.centerXAnchor.constraint(equalTo: view.centerXAnchor)
 		])
 
 		navigationItem.title = musicResultVM.name
