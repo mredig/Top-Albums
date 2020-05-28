@@ -78,7 +78,7 @@ class FiltersViewController: UIViewController {
 		feedPicker.delegate = self
 		feedPicker.dataSource = self
 
-		view.constrain(subview: rootStack, inset: UIEdgeInsets(horizontal: mediumInsetConstant, vertical: largeInsetConstant))
+		view.constrain(subview: rootStack, inset: UIEdgeInsets(horizontal: mediumInsetConstant, vertical: largeInsetConstant), safeArea: true)
 
 		let explicitToggleStack = UIStackView()
 		explicitToggleStack.axis = .horizontal
