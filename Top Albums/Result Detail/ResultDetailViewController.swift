@@ -42,6 +42,9 @@ class ResultDetailViewController: UIViewController {
 	private let mediumInsetConstant: CGFloat = 16
 	private let largeInsetConstant: CGFloat = 24
 	private let iTunesButtonInsetConstant: CGFloat = 20
+	private let iTunesButtonBackgroundHInsetConstant: CGFloat = 16
+	private let iTunesButtonBackgroundVInsetConstant: CGFloat = 8
+	private let iTunesButtonBackgroundCornerRadius: CGFloat = 10
 	private let previewCollectionHeightConstant: CGFloat = 250
 
 	private let scrollViewBottomInsetOverflowConstant: CGFloat = -150
@@ -135,9 +138,11 @@ class ResultDetailViewController: UIViewController {
 
 		view.addSubview(iTunesButtonBacking)
 		iTunesButtonBacking.contentView.addSubview(itunesStoreButton)
-		iTunesButtonBacking.constrain(subview: itunesStoreButton, inset: UIEdgeInsets(horizontal: 16, vertical: 8))
+		iTunesButtonBacking.constrain(subview: itunesStoreButton,
+									  inset: UIEdgeInsets(horizontal: iTunesButtonBackgroundHInsetConstant,
+														  vertical: iTunesButtonBackgroundVInsetConstant))
 		iTunesButtonBacking.translatesAutoresizingMaskIntoConstraints = false
-		iTunesButtonBacking.layer.cornerRadius = 10
+		iTunesButtonBacking.layer.cornerRadius = iTunesButtonBackgroundCornerRadius
 		iTunesButtonBacking.layer.cornerCurve = .continuous
 		iTunesButtonBacking.clipsToBounds = true
 		itunesStoreButton.translatesAutoresizingMaskIntoConstraints = false
