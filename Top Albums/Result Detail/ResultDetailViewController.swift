@@ -135,9 +135,16 @@ class ResultDetailViewController: UIViewController {
 		itunesStoreButton.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
+			// constrain image view to always stay within parent
 			albumImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-			albumImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			albumImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			albumImageView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
+			view.trailingAnchor.constraint(greaterThanOrEqualTo: albumImageView.trailingAnchor),
+			view.bottomAnchor.constraint(greaterThanOrEqualTo: albumImageView.bottomAnchor),
+			// constrain image view to center horizontally
+			albumImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			// constrain image view to fill in all dimensions possible, without extending outside parent
+			albumImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).withPriority(.defaultHigh),
+			view.trailingAnchor.constraint(equalTo: albumImageView.trailingAnchor).withPriority(.defaultHigh),
 			albumImageView.heightAnchor.constraint(equalTo: albumImageView.widthAnchor),
 
 			clearView.topAnchor.constraint(equalTo: scrollView.topAnchor),

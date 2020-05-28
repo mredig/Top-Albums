@@ -88,13 +88,3 @@ extension UIEdgeInsets: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 		self.init(uniform: CGFloat(value))
 	}
 }
-
-extension UILayoutPriority: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
-	public init(floatLiteral value: FloatLiteralType) {
-		self.init(Float(value))
-	}
-
-	public init(integerLiteral value: IntegerLiteralType) {
-		self.init(Float(value))
-	}
-}
