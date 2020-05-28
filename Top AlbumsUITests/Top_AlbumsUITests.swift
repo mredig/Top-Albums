@@ -72,6 +72,7 @@ class Top_AlbumsUITests: XCTestCase {
 
 	func launchApp() throws -> XCUIApplication {
 		let app = XCUIApplication()
+		XCUIDevice.shared.orientation = .portrait
 
 		let mockBlock = loadMockBlock()
 		let plist = try PropertyListEncoder().encode(mockBlock)
