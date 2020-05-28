@@ -149,11 +149,12 @@ class FiltersViewController: UIViewController {
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		if UIDevice.current.orientation == .portrait {
-			applyButton.isHidden = true
-		} else {
-			applyButton.isHidden = false
-		}
+		applyButton.isHidden = shouldHideApplyButton()
+	}
+
+	private func shouldHideApplyButton() -> Bool {
+		guard UIDevice.current.userInterfaceIdiom != .pad else { return true }
+		return UIDevice.current.orientation == .portrait
 	}
 
 	@objc func serviceSegmentedControlChanged(_ sender: UISegmentedControl) {
