@@ -44,6 +44,9 @@ class ResultDetailViewController: UIViewController {
 	private let iTunesButtonInsetConstant: CGFloat = 20
 	private let previewCollectionHeightConstant: CGFloat = 250
 
+	private let scrollViewBottomInsetOverflowConstant: CGFloat = -150
+	private let bottomSpacerSizeConstant: CGFloat = 75
+
 	// MARK: - Properties
 	let musicResultVM: MusicResultViewModel
 	let coordinator: ResultDetailViewControllerCoordinator
@@ -107,10 +110,12 @@ class ResultDetailViewController: UIViewController {
 		scrollView.addSubview(clearView)
 
 		addChild(previewCollectionVC)
+		let bottomSpacer = UIView()
 		let stack = UIStackView(arrangedSubviews: [genreLabel,
 												   releaseDateLabel,
 												   previewCollectionVC.view,
-												   copyrightLabel
+												   copyrightLabel,
+												   bottomSpacer
 		])
 		stack.axis = .vertical
 		stack.alignment = .fill
@@ -140,10 +145,12 @@ class ResultDetailViewController: UIViewController {
 
 			previewCollectionVC.view.heightAnchor.constraint(equalToConstant: previewCollectionHeightConstant),
 
+			bottomSpacer.heightAnchor.constraint(equalToConstant: bottomSpacerSizeConstant),
+
 			scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			scrollView.bottomAnchor.constraint(equalTo: itunesStoreButton.topAnchor, constant: -mediumInsetConstant),
+			scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
 			wrapper.topAnchor.constraint(equalTo: clearView.bottomAnchor),
 			wrapper.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
@@ -152,7 +159,7 @@ class ResultDetailViewController: UIViewController {
 			wrapper.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
 			stack.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: smallInsetConstant),
-			stack.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -smallInsetConstant),
+			stack.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: scrollViewBottomInsetOverflowConstant),
 			stack.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: largeInsetConstant),
 			stack.trailingAnchor.constraint(equalTo: wrapper.trailingAnchor, constant: -largeInsetConstant),
 
@@ -163,6 +170,8 @@ class ResultDetailViewController: UIViewController {
 
 		navigationItem.title = musicResultVM.name
 		navigationItem.titleView = artistLabel
+
+		scrollView.contentInset = UIEdgeInsets(bottom: scrollViewBottomInsetOverflowConstant)
 	}
 
 	private func configureLabels() {

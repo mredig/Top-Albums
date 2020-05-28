@@ -9,19 +9,49 @@
 import UIKit
 
 extension UIView {
-	func constrain(subview: UIView, inset: UIEdgeInsets = .zero) {
+	struct SafeAreaToggle {
+		let top: Bool
+		let bottom: Bool
+		let leading: Bool
+		let trailing: Bool
+	}
+
+	func constrain(subview: UIView, inset: UIEdgeInsets = .zero, safeArea: SafeAreaToggle = false) {
 		guard subview.isDescendant(of: self) else {
 			print("Need to add subview: \(subview) to parent: \(self) first.")
 			return
 		}
 
 		subview.translatesAutoresizingMaskIntoConstraints = false
+
+		let topAnchor = safeArea.top ? self.safeAreaLayoutGuide.topAnchor : self.topAnchor
+		let bottomAnchor = safeArea.bottom ? self.safeAreaLayoutGuide.bottomAnchor : self.bottomAnchor
+		let leadingAnchor = safeArea.leading ? self.safeAreaLayoutGuide.leadingAnchor : self.leadingAnchor
+		let trailingAnchor = safeArea.trailing ? self.safeAreaLayoutGuide.trailingAnchor : self.trailingAnchor
+
 		NSLayoutConstraint.activate([
-			subview.topAnchor.constraint(equalTo: self.topAnchor, constant: inset.top),
-			subview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: inset.leading),
-			self.bottomAnchor.constraint(equalTo: subview.bottomAnchor, constant: inset.bottom),
-			self.trailingAnchor.constraint(equalTo: subview.trailingAnchor, constant: inset.trailing),
+			subview.topAnchor.constraint(equalTo: topAnchor, constant: inset.top),
+			subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset.leading),
+			bottomAnchor.constraint(equalTo: subview.bottomAnchor, constant: inset.bottom),
+			trailingAnchor.constraint(equalTo: subview.trailingAnchor, constant: inset.trailing),
 		])
+	}
+}
+
+extension UIView.SafeAreaToggle: ExpressibleByBooleanLiteral {
+	init(uniform: Bool) {
+		self.init(horizontal: uniform, vertical: uniform)
+	}
+
+	init(horizontal: Bool, vertical: Bool) {
+		self.top = vertical
+		self.bottom = vertical
+		self.leading = horizontal
+		self.trailing = horizontal
+	}
+
+	public init(booleanLiteral: Bool) {
+		self.init(uniform: booleanLiteral)
 	}
 }
 
@@ -46,7 +76,7 @@ extension UIEdgeInsets: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 		self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
 	}
 
-	init(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) {
+	init(top: CGFloat = 0, leading: CGFloat = 0, bottom: CGFloat = 0, trailing: CGFloat = 0) {
 		self.init(top: top, left: leading, bottom: bottom, right: trailing)
 	}
 

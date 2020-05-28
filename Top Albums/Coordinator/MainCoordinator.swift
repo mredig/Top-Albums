@@ -73,6 +73,7 @@ class MainCoordinator: NSObject, CoordinatorBase {
 		setupDetailVC(with: nil)
 
 		splitViewController.viewControllers = [masterNavController, detailNavController]
+		splitViewController.preferredDisplayMode = .allVisible
 
 		fetchResults()
 	}
@@ -93,6 +94,10 @@ class MainCoordinator: NSObject, CoordinatorBase {
 			//show dummy placeholder
 			newDetailVC = PlaceholderViewController()
 		}
+		// not sure if i want this or not
+//		newDetailVC.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+//		newDetailVC.navigationItem.leftItemsSupplementBackButton = true
+
 		detailNavController.pushViewController(newDetailVC, animated: false)
 		splitViewController.showDetailViewController(detailNavController, sender: nil)
 	}
